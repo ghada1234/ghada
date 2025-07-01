@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Camera, Utensils, Upload, Video, X, Loader2 } from 'lucide-react';
+import { Camera, Utensils, Upload, Video, X, Loader2, SwitchCamera } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { analyzeFoodImage, type NutritionalInfo } from '@/ai/flows/analyze-food-image';
 import { analyzeDishName } from '@/ai/flows/analyze-dish-name';
@@ -31,6 +31,7 @@ export default function AddFoodPage() {
   // Camera state
   const [isCameraOpen, setIsCameraOpen] = useState(false);
   const [hasCameraPermission, setHasCameraPermission] = useState<boolean | undefined>(undefined);
+  const [facingMode, setFacingMode] = useState<'environment' | 'user'>('environment');
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -103,29 +104,35 @@ export default function AddFoodPage() {
 
   // Camera Logic
   useEffect(() => {
-    if (isCameraOpen) {
-      const getCameraPermission = async () => {
-        try {
-          const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-          setHasCameraPermission(true);
-          if (videoRef.current) {
-            videoRef.current.srcObject = stream;
-          }
-        } catch (error) {
-          console.error('Error accessing camera:', error);
-          setHasCameraPermission(false);
+    let stream: MediaStream | null = null;
+    
+    const getCameraPermission = async () => {
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode } });
+        setHasCameraPermission(true);
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
         }
-      };
-      getCameraPermission();
-    } else {
-      // Turn off the camera stream when the dialog is closed
-      if (videoRef.current && videoRef.current.srcObject) {
-        const stream = videoRef.current.srcObject as MediaStream;
-        stream.getTracks().forEach(track => track.stop());
-        videoRef.current.srcObject = null;
+      } catch (error) {
+        console.error('Error accessing camera:', error);
+        setHasCameraPermission(false);
       }
+    };
+    
+    if (isCameraOpen) {
+      getCameraPermission();
     }
-  }, [isCameraOpen]);
+
+    return () => {
+      if (videoRef.current && videoRef.current.srcObject) {
+        const currentStream = videoRef.current.srcObject as MediaStream;
+        currentStream.getTracks().forEach(track => track.stop());
+        videoRef.current.srcObject = null;
+      } else if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+      }
+    };
+  }, [isCameraOpen, facingMode]);
   
   const handleCapture = () => {
     if (videoRef.current && canvasRef.current) {
@@ -147,6 +154,10 @@ export default function AddFoodPage() {
         setAnalysisResult(null);
       }
     }
+  };
+
+  const handleSwitchCamera = () => {
+    setFacingMode(prev => (prev === 'user' ? 'environment' : 'user'));
   };
 
   const renderNutrient = (label: string, value: number, unit: string) => (
@@ -303,9 +314,14 @@ export default function AddFoodPage() {
               <canvas ref={canvasRef} className="hidden" />
             </>
           )}
-          <DialogFooter>
-             <Button variant="secondary" onClick={() => setIsCameraOpen(false)}><X className="mr-2"/>{t('addFood.cameraCloseButton')}</Button>
-             <Button onClick={handleCapture} disabled={!hasCameraPermission}><Camera className="mr-2"/>{t('addFood.cameraCaptureButton')}</Button>
+          <DialogFooter className="sm:justify-between">
+            <Button variant="ghost" size="icon" onClick={handleSwitchCamera} disabled={!hasCameraPermission} type="button" aria-label={t('addFood.switchCamera')}>
+               <SwitchCamera />
+            </Button>
+            <div className="flex gap-2">
+               <Button variant="secondary" onClick={() => setIsCameraOpen(false)}><X className="mr-2"/>{t('addFood.cameraCloseButton')}</Button>
+               <Button onClick={handleCapture} disabled={!hasCameraPermission}><Camera className="mr-2"/>{t('addFood.cameraCaptureButton')}</Button>
+            </div>
           </DialogFooter>
         </DialogContent>
       </Dialog>

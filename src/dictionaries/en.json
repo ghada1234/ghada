@@ -62,6 +62,7 @@
     "cameraCloseButton": "Close",
     "cameraErrorTitle": "Camera Access Denied",
     "cameraErrorDescription": "Please enable camera permissions in your browser settings to use this feature.",
+    "switchCamera": "Switch Camera",
     "portionLabel": "Portion Size",
     "portionSizeOptional": "(optional)",
     "portionPlaceholder": "e.g., 1 cup, 100g, 1 slice",
@@ -93,5 +94,29 @@
       "iron": "Iron",
       "vitaminC": "Vitamin C"
     }
+  },
+  "login": {
+    "title": "Welcome Back",
+    "description": "Log in to your NutriSnap account.",
+    "emailLabel": "Email",
+    "emailPlaceholder": "m@example.com",
+    "passwordLabel": "Password",
+    "button": "Login",
+    "noAccount": "Don't have an account?",
+    "signUpLink": "Sign up"
+  },
+  "register": {
+    "title": "Create an Account",
+    "description": "Enter your details to get started with NutriSnap.",
+    "nameLabel": "Name",
+    "namePlaceholder": "Your Name",
+    "emailLabel": "Email",
+    "emailPlaceholder": "m@example.com",
+    "passwordLabel": "Password",
+    "button": "Create Account",
+    "hasAccount": "Already have an account?",
+    "signInLink": "Sign in",
+    "toastSuccessTitle": "Registration Successful!",
+    "toastSuccessDescription": "You can now log in with your new account."
   }
 }

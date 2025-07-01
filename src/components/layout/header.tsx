@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/language-context';
 import LanguageSwitcher from './language-switcher';
 import { SidebarTrigger } from '@/components/ui/sidebar';
+import Link from 'next/link';
 
 export default function Header() {
   const { t } = useLanguage();
@@ -16,7 +17,9 @@ export default function Header() {
 
       <div className="flex items-center gap-2 md:gap-4">
         <LanguageSwitcher />
-        <Button>{t('header.login')}</Button>
+        <Link href="/login" passHref>
+          <Button>{t('header.login')}</Button>
+        </Link>
       </div>
     </header>
   );

@@ -62,6 +62,7 @@
     "cameraCloseButton": "إغلاق",
     "cameraErrorTitle": "تم رفض الوصول إلى الكاميرا",
     "cameraErrorDescription": "يرجى تمكين أذونات الكاميرا في إعدادات المتصفح لاستخدام هذه الميزة.",
+    "switchCamera": "تبديل الكاميرا",
     "portionLabel": "حجم الحصة",
     "portionSizeOptional": "(اختياري)",
     "portionPlaceholder": "مثال: 1 كوب، 100 جرام، 1 شريحة",
@@ -93,5 +94,29 @@
       "iron": "الحديد",
       "vitaminC": "فيتامين ج"
     }
+  },
+  "login": {
+    "title": "أهلاً بعودتك",
+    "description": "سجل الدخول إلى حسابك في نوتري سناب.",
+    "emailLabel": "البريد الإلكتروني",
+    "emailPlaceholder": "m@example.com",
+    "passwordLabel": "كلمة المرور",
+    "button": "تسجيل الدخول",
+    "noAccount": "ليس لديك حساب؟",
+    "signUpLink": "إنشاء حساب"
+  },
+  "register": {
+    "title": "إنشاء حساب",
+    "description": "أدخل بياناتك لتبدأ مع نوتري سناب.",
+    "nameLabel": "الاسم",
+    "namePlaceholder": "اسمك",
+    "emailLabel": "البريد الإلكتروني",
+    "emailPlaceholder": "m@example.com",
+    "passwordLabel": "كلمة المرور",
+    "button": "إنشاء حساب",
+    "hasAccount": "لديك حساب بالفعل؟",
+    "signInLink": "تسجيل الدخول",
+    "toastSuccessTitle": "تم التسجيل بنجاح!",
+    "toastSuccessDescription": "يمكنك الآن تسجيل الدخول بحسابك الجديد."
   }
 }

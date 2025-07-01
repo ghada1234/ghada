@@ -1,1 +1,6 @@
-// Flows will be imported for their side effects in this file.
+import { config } from 'dotenv';
+config();
+
+import './flows/suggest-meals';
+import './flows/analyze-food-image';
+import './flows/analyze-dish-name';

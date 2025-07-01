@@ -118,5 +118,12 @@
     "signInLink": "تسجيل الدخول",
     "toastSuccessTitle": "تم التسجيل بنجاح!",
     "toastSuccessDescription": "يمكنك الآن تسجيل الدخول بحسابك الجديد."
+  },
+  "mealPlanner": {
+    "title": "مخطط الوجبات",
+    "description": "أنشئ خطط وجبات يومية مخصصة باستخدام الذكاء الاصطناعي.",
+    "generateButton": "إنشاء خطة وجبات",
+    "generating": "جاري الإنشاء...",
+    "suggestionsEmpty": "اضغط على الزر لإنشاء خطة وجبات جديدة."
   }
 }

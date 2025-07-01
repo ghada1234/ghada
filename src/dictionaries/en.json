@@ -118,5 +118,12 @@
     "signInLink": "Sign in",
     "toastSuccessTitle": "Registration Successful!",
     "toastSuccessDescription": "You can now log in with your new account."
+  },
+  "mealPlanner": {
+    "title": "Meal Planner",
+    "description": "Generate personalized daily meal plans with our AI.",
+    "generateButton": "Generate Meal Plan",
+    "generating": "Generating...",
+    "suggestionsEmpty": "Click the button to generate a new meal plan."
   }
 }

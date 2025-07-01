@@ -13,7 +13,7 @@
     "toggleLanguage": "التبديل إلى الإنجليزية"
   },
   "dashboard": {
-    "title": "لوحة التحكم",
+    "title": "لوحة التحكم اليومية",
     "macrosTitle": "المغذيات الكبيرة",
     "macrosDesc": "مصادر طاقتك الرئيسية لهذا اليوم.",
     "calories": "السعرات الحرارية",
@@ -33,11 +33,18 @@
     "addFoodButton": "إضافة طعام",
     "logEmpty": "لم تسجل أي طعام اليوم.",
     "suggestionsTitle": "اقتراحات وجبات بالذكاء الاصطناعي",
-    "suggestionsDesc": "أفكار وجبات مخصصة لك.",
+    "suggestionsDesc": "أفكار وجبات مخصصة لك باللغة العربية.",
     "breakfast": "الإفطار:",
     "lunch": "الغداء:",
     "dinner": "العشاء:",
-    "generateButton": "توليد أفكار جديدة"
+    "generateButton": "توليد أفكار جديدة",
+    "generating": "جارٍ التوليد...",
+    "suggestionsEmpty": "اضغط على الزر لتوليد أفكار وجبات.",
+    "suggestions": {
+      "ingredients": "المكونات",
+      "nutrition": "معلومات غذائية",
+      "instructions": "التعليمات"
+    }
   },
   "addFood": {
     "title": "سجل وجبتك",

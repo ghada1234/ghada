@@ -5,6 +5,8 @@ import { Toaster } from '@/components/ui/toaster';
 import Header from '@/components/layout/header';
 import { cookies } from 'next/headers';
 import { LanguageProvider } from '@/contexts/language-context';
+import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
+import AppSidebar from '@/components/layout/app-sidebar';
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -41,10 +43,15 @@ export default function RootLayout({
     <html lang={lang} dir={lang === 'ar' ? 'rtl' : 'ltr'} className={`${spaceGrotesk.variable} ${sourceCodePro.variable} ${cairo.variable}`}>
       <body className="min-h-dvh bg-background font-body text-foreground antialiased">
         <LanguageProvider>
-          <div className="relative flex min-h-dvh flex-col">
-            <Header />
-            <main className="flex-1">{children}</main>
-          </div>
+          <SidebarProvider>
+            <div className="flex">
+              <AppSidebar />
+              <SidebarInset>
+                <Header />
+                <main className="flex-1">{children}</main>
+              </SidebarInset>
+            </div>
+          </SidebarProvider>
           <Toaster />
         </LanguageProvider>
       </body>

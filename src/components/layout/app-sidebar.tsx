@@ -1,0 +1,57 @@
+'use client';
+
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { Leaf, LayoutDashboard, PlusSquare, BookOpen } from 'lucide-react';
+
+import {
+  Sidebar,
+  SidebarHeader,
+  SidebarContent,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  useSidebar,
+} from '@/components/ui/sidebar';
+import { useLanguage } from '@/contexts/language-context';
+
+export default function AppSidebar() {
+  const { t } = useLanguage();
+  const pathname = usePathname();
+  const { state } = useSidebar();
+
+  const navLinks = [
+    { href: '/dashboard', label: t('header.dashboard'), icon: LayoutDashboard },
+    { href: '/add-food', label: t('header.addFood'), icon: PlusSquare },
+    { href: '/meal-planner', label: t('header.mealPlanner'), icon: BookOpen },
+  ];
+
+  return (
+    <Sidebar>
+      <SidebarHeader>
+        <Link href="/dashboard" className="flex items-center gap-2">
+          <Leaf className="h-6 w-6 text-primary" />
+          {state === 'expanded' && <span className="font-headline text-xl">{t('header.title')}</span>}
+        </Link>
+      </SidebarHeader>
+      <SidebarContent>
+        <SidebarMenu>
+          {navLinks.map((link) => (
+            <SidebarMenuItem key={link.href}>
+              <SidebarMenuButton
+                asChild
+                isActive={pathname.startsWith(link.href)}
+                tooltip={{ children: link.label }}
+              >
+                <Link href={link.href}>
+                  <link.icon />
+                  <span>{link.label}</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          ))}
+        </SidebarMenu>
+      </SidebarContent>
+    </Sidebar>
+  );
+}

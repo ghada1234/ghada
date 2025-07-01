@@ -13,7 +13,7 @@
     "toggleLanguage": "Switch to Arabic"
   },
   "dashboard": {
-    "title": "Dashboard",
+    "title": "Daily Dashboard",
     "macrosTitle": "Macronutrients",
     "macrosDesc": "Your main energy sources for today.",
     "calories": "Calories",
@@ -33,11 +33,18 @@
     "addFoodButton": "Add Food",
     "logEmpty": "You haven't logged any food today.",
     "suggestionsTitle": "AI Meal Suggestions",
-    "suggestionsDesc": "Personalized meal ideas for you.",
+    "suggestionsDesc": "Personalized meal ideas for you in Arabic.",
     "breakfast": "Breakfast:",
     "lunch": "Lunch:",
     "dinner": "Dinner:",
-    "generateButton": "Generate New Ideas"
+    "generateButton": "Generate New Ideas",
+    "generating": "Generating...",
+    "suggestionsEmpty": "Click the button to generate meal ideas.",
+    "suggestions": {
+      "ingredients": "Ingredients",
+      "nutrition": "Nutritional Info",
+      "instructions": "Instructions"
+    }
   },
   "addFood": {
     "title": "Log Your Meal",

@@ -1,14 +1,63 @@
 'use client';
 
+import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { PlusCircle } from 'lucide-react';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { PlusCircle, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { useLanguage } from '@/contexts/language-context';
+import { suggestMeals, type SuggestMealsOutput, type MealSuggestion } from '@/ai/flows/suggest-meals';
 
 export default function DashboardPage() {
   const { t } = useLanguage();
+  const [suggestions, setSuggestions] = useState<SuggestMealsOutput | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleGenerateSuggestions = async () => {
+    setIsLoading(true);
+    setSuggestions(null);
+    try {
+      const result = await suggestMeals({}); // Empty input for now
+      setSuggestions(result);
+    } catch (error) {
+      console.error("Failed to generate meal suggestions:", error);
+      // Optional: show a toast notification for the error
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const renderSuggestion = (meal: MealSuggestion, mealType: string) => (
+    <AccordionItem value={mealType}>
+      <AccordionTrigger className="text-base">
+        <div className="flex flex-col items-start text-start md:flex-row md:items-center">
+          <span className="font-semibold">{t(`dashboard.${mealType}`)}</span>
+          <span className="md:mx-2">{meal.dishName}</span>
+        </div>
+      </AccordionTrigger>
+      <AccordionContent className="space-y-4">
+        <p className="text-muted-foreground">{meal.description}</p>
+        <div>
+          <h4 className="font-semibold">{t('dashboard.suggestions.ingredients')}</h4>
+          <ul className="mt-2 list-disc list-inside text-muted-foreground">
+            {meal.ingredients.map((item: string, index: number) => <li key={index}>{item}</li>)}
+          </ul>
+        </div>
+        <div>
+          <h4 className="font-semibold">{t('dashboard.suggestions.nutrition')}</h4>
+          <p className="mt-2 text-muted-foreground">{meal.nutritionalInfo}</p>
+        </div>
+        <div>
+          <h4 className="font-semibold">{t('dashboard.suggestions.instructions')}</h4>
+          <ol className="mt-2 list-decimal list-inside space-y-1 text-muted-foreground">
+            {meal.instructions.map((step: string, index: number) => <li key={index}>{step}</li>)}
+          </ol>
+        </div>
+      </AccordionContent>
+    </AccordionItem>
+  );
 
   return (
     <div className="flex flex-col gap-8 p-4 md:p-8">
@@ -118,19 +167,32 @@ export default function DashboardPage() {
             <CardDescription>{t('dashboard.suggestionsDesc')}</CardDescription>
           </CardHeader>
           <CardContent>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <span className="font-semibold">{t('dashboard.breakfast')}</span> Greek Yogurt with Berries
-              </li>
-              <li>
-                <span className="font-semibold">{t('dashboard.lunch')}</span> Grilled Chicken Salad
-              </li>
-              <li>
-                <span className="font-semibold">{t('dashboard.dinner')}</span> Salmon with Quinoa & Asparagus
-              </li>
-            </ul>
-            <Button variant="outline" className="mt-4 w-full">
-              {t('dashboard.generateButton')}
+            {isLoading && (
+              <div className="flex items-center justify-center gap-2 p-8 text-muted-foreground">
+                <Loader2 className="h-6 w-6 animate-spin" />
+                <span>{t('dashboard.generating')}</span>
+              </div>
+            )}
+            {suggestions && (
+              <Accordion type="single" collapsible className="w-full">
+                {renderSuggestion(suggestions.breakfast, 'breakfast')}
+                {renderSuggestion(suggestions.lunch, 'lunch')}
+                {renderSuggestion(suggestions.dinner, 'dinner')}
+              </Accordion>
+            )}
+            {!isLoading && !suggestions && (
+               <p className="py-4 text-center text-sm text-muted-foreground">{t('dashboard.suggestionsEmpty')}</p>
+            )}
+
+            <Button onClick={handleGenerateSuggestions} disabled={isLoading} variant="outline" className="mt-4 w-full">
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  {t('dashboard.generating')}
+                </>
+              ) : (
+                t('dashboard.generateButton')
+              )}
             </Button>
           </CardContent>
         </Card>

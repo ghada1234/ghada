@@ -10,7 +10,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        body: ['var(--font-space-grotesk)', 'sans-serif'],
+        body: ['var(--font-cairo)', 'var(--font-space-grotesk)', 'sans-serif'],
         headline: ['var(--font-space-grotesk)', 'sans-serif'],
         code: ['var(--font-source-code-pro)', 'monospace'],
       },

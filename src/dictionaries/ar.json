@@ -1,0 +1,62 @@
+
+{
+  "metadata": {
+    "title": "نوتري سناب",
+    "description": "التقط صورًا لوجباتك لتحليل غذائي فوري."
+  },
+  "header": {
+    "title": "نوتري سناب",
+    "dashboard": "لوحة التحكم",
+    "addFood": "إضافة طعام",
+    "mealPlanner": "مخطط الوجبات",
+    "login": "تسجيل الدخول",
+    "toggleLanguage": "التبديل إلى الإنجليزية"
+  },
+  "dashboard": {
+    "title": "لوحة التحكم",
+    "macrosTitle": "المغذيات الكبيرة",
+    "macrosDesc": "مصادر طاقتك الرئيسية لهذا اليوم.",
+    "calories": "السعرات الحرارية",
+    "protein": "البروتين",
+    "carbs": "الكربوهيدرات",
+    "fats": "الدهون",
+    "fiber": "الألياف",
+    "microsTitle": "المغذيات الدقيقة",
+    "microsDesc": "الفيتامينات والمعادن الأساسية.",
+    "sodium": "الصوديوم",
+    "sugar": "السكر",
+    "potassium": "البوتاسيوم",
+    "vitaminC": "فيتامين ج",
+    "calcium": "الكالسيوم",
+    "iron": "الحديد",
+    "logTitle": "السجل اليومي",
+    "addFoodButton": "إضافة طعام",
+    "logEmpty": "لم تسجل أي طعام اليوم.",
+    "suggestionsTitle": "اقتراحات وجبات بالذكاء الاصطناعي",
+    "suggestionsDesc": "أفكار وجبات مخصصة لك.",
+    "breakfast": "الإفطار:",
+    "lunch": "الغداء:",
+    "dinner": "العشاء:",
+    "generateButton": "توليد أفكار جديدة"
+  },
+  "addFood": {
+    "title": "سجل وجبتك",
+    "description": "أضف وجبة عن طريق التقاط صورة أو وصفها. سيتولى الذكاء الاصطناعي الباقي.",
+    "tabPhoto": "التقط صورة",
+    "tabDescribe": "صف الوجبة",
+    "uploadLabel": "تحميل صورة",
+    "portionLabel": "حجم الحصة",
+    "portionPlaceholder": "مثال: 1 كوب، 100 جرام، 1 شريحة",
+    "preview": "معاينة:",
+    "analyzePhotoButton": "تحليل الصورة",
+    "analyzing": "جار التحليل...",
+    "descriptionLabel": "وصف الوجبة",
+    "descriptionPlaceholder": "مثال: وعاء من الشوفان مع التوت والمكسرات",
+    "analyzeDescriptionButton": "تحليل الوصف",
+    "toastSuccessTitle": "اكتمل التحليل!",
+    "toastSuccessDescription": "تم تسجيل {dishName} ({calories} سعر حراري).",
+    "toastErrorTitle": "فشل التحليل",
+    "toastErrorPhoto": "تعذر تحليل الصورة. يرجى المحاولة مرة أخرى.",
+    "toastErrorDescription": "تعذر تحليل الوصف. يرجى المحاولة مرة أخرى."
+  }
+}

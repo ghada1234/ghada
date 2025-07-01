@@ -1,0 +1,62 @@
+
+{
+  "metadata": {
+    "title": "NutriSnap",
+    "description": "Snap photos of your meals for instant nutritional analysis."
+  },
+  "header": {
+    "title": "NutriSnap",
+    "dashboard": "Dashboard",
+    "addFood": "Add Food",
+    "mealPlanner": "Meal Planner",
+    "login": "Login",
+    "toggleLanguage": "Switch to Arabic"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "macrosTitle": "Macronutrients",
+    "macrosDesc": "Your main energy sources for today.",
+    "calories": "Calories",
+    "protein": "Protein",
+    "carbs": "Carbs",
+    "fats": "Fats",
+    "fiber": "Fiber",
+    "microsTitle": "Micronutrients",
+    "microsDesc": "Essential vitamins and minerals.",
+    "sodium": "Sodium",
+    "sugar": "Sugar",
+    "potassium": "Potassium",
+    "vitaminC": "Vitamin C",
+    "calcium": "Calcium",
+    "iron": "Iron",
+    "logTitle": "Daily Log",
+    "addFoodButton": "Add Food",
+    "logEmpty": "You haven't logged any food today.",
+    "suggestionsTitle": "AI Meal Suggestions",
+    "suggestionsDesc": "Personalized meal ideas for you.",
+    "breakfast": "Breakfast:",
+    "lunch": "Lunch:",
+    "dinner": "Dinner:",
+    "generateButton": "Generate New Ideas"
+  },
+  "addFood": {
+    "title": "Log Your Meal",
+    "description": "Add a meal by snapping a photo or describing it. Our AI will handle the rest.",
+    "tabPhoto": "Snap a Photo",
+    "tabDescribe": "Describe Meal",
+    "uploadLabel": "Upload Photo",
+    "portionLabel": "Portion Size",
+    "portionPlaceholder": "e.g., 1 cup, 100g, 1 slice",
+    "preview": "Preview:",
+    "analyzePhotoButton": "Analyze Photo",
+    "analyzing": "Analyzing...",
+    "descriptionLabel": "Meal Description",
+    "descriptionPlaceholder": "e.g., A bowl of oatmeal with berries and nuts",
+    "analyzeDescriptionButton": "Analyze Description",
+    "toastSuccessTitle": "Analysis Complete!",
+    "toastSuccessDescription": "{dishName} ({calories} kcal) has been logged.",
+    "toastErrorTitle": "Analysis Failed",
+    "toastErrorPhoto": "Could not analyze the photo. Please try again.",
+    "toastErrorDescription": "Could not analyze the description. Please try again."
+  }
+}

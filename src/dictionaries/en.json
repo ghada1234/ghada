@@ -32,8 +32,11 @@
     "logTitle": "Daily Log",
     "addFoodButton": "Add Food",
     "logEmpty": "You haven't logged any food today.",
+    "log": {
+      "calories": "kcal"
+    },
     "suggestionsTitle": "AI Meal Suggestions",
-    "suggestionsDesc": "Personalized meal ideas for you in Arabic.",
+    "suggestionsDesc": "Personalized meal ideas for you.",
     "breakfast": "Breakfast:",
     "lunch": "Lunch:",
     "dinner": "Dinner:",
@@ -52,7 +55,15 @@
     "tabPhoto": "Snap a Photo",
     "tabDescribe": "Describe Meal",
     "uploadLabel": "Upload Photo",
+    "uploadFromDevice": "Upload from Device",
+    "useCamera": "Use Camera",
+    "cameraDialogTitle": "Capture Meal Photo",
+    "cameraCaptureButton": "Capture",
+    "cameraCloseButton": "Close",
+    "cameraErrorTitle": "Camera Access Denied",
+    "cameraErrorDescription": "Please enable camera permissions in your browser settings to use this feature.",
     "portionLabel": "Portion Size",
+    "portionSizeOptional": "(optional)",
     "portionPlaceholder": "e.g., 1 cup, 100g, 1 slice",
     "preview": "Preview:",
     "analyzePhotoButton": "Analyze Photo",
@@ -60,10 +71,27 @@
     "descriptionLabel": "Meal Description",
     "descriptionPlaceholder": "e.g., A bowl of oatmeal with berries and nuts",
     "analyzeDescriptionButton": "Analyze Description",
+    "analysisResultTitle": "Analysis Result",
+    "logMealButton": "Log Meal",
+    "logSuccessTitle": "Meal Logged!",
+    "logSuccessDescription": "{dishName} has been successfully logged.",
     "toastSuccessTitle": "Analysis Complete!",
     "toastSuccessDescription": "{dishName} ({calories} kcal) has been logged.",
     "toastErrorTitle": "Analysis Failed",
     "toastErrorPhoto": "Could not analyze the photo. Please try again.",
-    "toastErrorDescription": "Could not analyze the description. Please try again."
+    "toastErrorDescription": "Could not analyze the description. Please try again.",
+    "nutrients": {
+      "calories": "Calories",
+      "protein": "Protein",
+      "carbs": "Carbs",
+      "fats": "Fats",
+      "fiber": "Fiber",
+      "sugar": "Sugar",
+      "sodium": "Sodium",
+      "potassium": "Potassium",
+      "calcium": "Calcium",
+      "iron": "Iron",
+      "vitaminC": "Vitamin C"
+    }
   }
 }

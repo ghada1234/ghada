@@ -1,29 +1,68 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { PlusCircle, Loader2 } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useLanguage } from '@/contexts/language-context';
 import { suggestMeals, type SuggestMealsOutput, type MealSuggestion } from '@/ai/flows/suggest-meals';
+import { useMealLog } from '@/contexts/meal-log-context';
+
+// Daily goals - these could come from user settings in a full app
+const DAILY_GOALS = {
+  calories: 2000,
+  protein: 120,
+  carbs: 250,
+  fats: 70,
+  fiber: 30,
+  sodium: 2300,
+  sugar: 50,
+  potassium: 3500,
+  vitaminC: 90,
+  calcium: 1000,
+  iron: 18,
+};
 
 export default function DashboardPage() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const { loggedMeals } = useMealLog();
   const [suggestions, setSuggestions] = useState<SuggestMealsOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  const totals = useMemo(() => {
+    return loggedMeals.reduce((acc, meal) => {
+      acc.calories += meal.calories;
+      acc.protein += meal.protein;
+      acc.carbs += meal.carbs;
+      acc.fats += meal.fats;
+      acc.fiber += meal.fiber;
+      acc.sodium += meal.sodium;
+      acc.sugar += meal.sugar;
+      acc.potassium += meal.potassium;
+      acc.vitaminC += meal.vitaminC;
+      acc.calcium += meal.calcium;
+      acc.iron += meal.iron;
+      return acc;
+    }, {
+      calories: 0, protein: 0, carbs: 0, fats: 0, fiber: 0,
+      sodium: 0, sugar: 0, potassium: 0, vitaminC: 0, calcium: 0, iron: 0,
+    });
+  }, [loggedMeals]);
+
+  const getProgress = (current: number, goal: number) => (goal > 0 ? (current / goal) * 100 : 0);
 
   const handleGenerateSuggestions = async () => {
     setIsLoading(true);
     setSuggestions(null);
     try {
-      const result = await suggestMeals({}); // Empty input for now
+      const result = await suggestMeals({ language: lang });
       setSuggestions(result);
     } catch (error) {
       console.error("Failed to generate meal suggestions:", error);
-      // Optional: show a toast notification for the error
     } finally {
       setIsLoading(false);
     }
@@ -73,37 +112,37 @@ export default function DashboardPage() {
             <div>
               <div className="mb-1 flex justify-between">
                 <span>{t('dashboard.calories')}</span>
-                <span className="font-medium">1,234 / 2,000 kcal</span>
+                <span className="font-medium">{totals.calories.toLocaleString()} / {DAILY_GOALS.calories.toLocaleString()} kcal</span>
               </div>
-              <Progress value={62} />
+              <Progress value={getProgress(totals.calories, DAILY_GOALS.calories)} />
             </div>
             <div>
               <div className="mb-1 flex justify-between">
                 <span>{t('dashboard.protein')}</span>
-                <span className="font-medium">80 / 120 g</span>
+                <span className="font-medium">{totals.protein.toFixed(1)} / {DAILY_GOALS.protein} g</span>
               </div>
-              <Progress value={66} />
+              <Progress value={getProgress(totals.protein, DAILY_GOALS.protein)} />
             </div>
             <div>
               <div className="mb-1 flex justify-between">
                 <span>{t('dashboard.carbs')}</span>
-                <span className="font-medium">150 / 250 g</span>
+                <span className="font-medium">{totals.carbs.toFixed(1)} / {DAILY_GOALS.carbs} g</span>
               </div>
-              <Progress value={60} />
+              <Progress value={getProgress(totals.carbs, DAILY_GOALS.carbs)} />
             </div>
             <div>
               <div className="mb-1 flex justify-between">
                 <span>{t('dashboard.fats')}</span>
-                <span className="font-medium">45 / 70 g</span>
+                <span className="font-medium">{totals.fats.toFixed(1)} / {DAILY_GOALS.fats} g</span>
               </div>
-              <Progress value={64} />
+              <Progress value={getProgress(totals.fats, DAILY_GOALS.fats)} />
             </div>
             <div>
               <div className="mb-1 flex justify-between">
                 <span>{t('dashboard.fiber')}</span>
-                <span className="font-medium">15 / 30 g</span>
+                <span className="font-medium">{totals.fiber.toFixed(1)} / {DAILY_GOALS.fiber} g</span>
               </div>
-              <Progress value={50} />
+              <Progress value={getProgress(totals.fiber, DAILY_GOALS.fiber)} />
             </div>
           </CardContent>
         </Card>
@@ -116,27 +155,27 @@ export default function DashboardPage() {
           <CardContent className="grid grid-cols-2 gap-x-6 gap-y-4">
             <div className="text-sm">
               <p className="text-muted-foreground">{t('dashboard.sodium')}</p>
-              <p className="font-medium">1500 / 2300 mg</p>
+              <p className="font-medium">{totals.sodium.toLocaleString()} / {DAILY_GOALS.sodium.toLocaleString()} mg</p>
             </div>
             <div className="text-sm">
               <p className="text-muted-foreground">{t('dashboard.sugar')}</p>
-              <p className="font-medium">40 / 50 g</p>
+              <p className="font-medium">{totals.sugar.toFixed(1)} / {DAILY_GOALS.sugar} g</p>
             </div>
             <div className="text-sm">
               <p className="text-muted-foreground">{t('dashboard.potassium')}</p>
-              <p className="font-medium">2000 / 3500 mg</p>
+              <p className="font-medium">{totals.potassium.toLocaleString()} / {DAILY_GOALS.potassium.toLocaleString()} mg</p>
             </div>
             <div className="text-sm">
               <p className="text-muted-foreground">{t('dashboard.vitaminC')}</p>
-              <p className="font-medium">75 / 90 mg</p>
+              <p className="font-medium">{totals.vitaminC.toFixed(1)} / {DAILY_GOALS.vitaminC} mg</p>
             </div>
             <div className="text-sm">
               <p className="text-muted-foreground">{t('dashboard.calcium')}</p>
-              <p className="font-medium">800 / 1000 mg</p>
+              <p className="font-medium">{totals.calcium.toLocaleString()} / {DAILY_GOALS.calcium.toLocaleString()} mg</p>
             </div>
             <div className="text-sm">
               <p className="text-muted-foreground">{t('dashboard.iron')}</p>
-              <p className="font-medium">10 / 18 mg</p>
+              <p className="font-medium">{totals.iron.toFixed(1)} / {DAILY_GOALS.iron} mg</p>
             </div>
           </CardContent>
         </Card>
@@ -151,13 +190,37 @@ export default function DashboardPage() {
             </Link>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-muted-foreground">{t('dashboard.logEmpty')}</p>
-            <img
-              src="https://placehold.co/600x400.png"
-              alt="Empty plate"
-              className="mt-4 rounded-md"
-              data-ai-hint="empty plate"
-            />
+            {loggedMeals.length === 0 ? (
+              <>
+                <p className="text-sm text-muted-foreground">{t('dashboard.logEmpty')}</p>
+                <img
+                  src="https://placehold.co/600x400.png"
+                  alt="Empty plate"
+                  className="mt-4 rounded-md"
+                  data-ai-hint="empty plate"
+                />
+              </>
+            ) : (
+              <div className="mt-4 space-y-4">
+                {loggedMeals.map(meal => (
+                  <div key={meal.id} className="flex items-center gap-4">
+                    {meal.photoDataUri && (
+                      <Image
+                        src={meal.photoDataUri}
+                        alt={meal.dishName}
+                        width={64}
+                        height={64}
+                        className="h-16 w-16 rounded-md object-cover"
+                      />
+                    )}
+                    <div className="flex-1">
+                      <p className="font-semibold">{meal.dishName}</p>
+                      <p className="text-sm text-muted-foreground">{meal.calories} {t('dashboard.log.calories')}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </CardContent>
         </Card>
 

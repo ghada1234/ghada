@@ -1,6 +1,6 @@
 'use server';
 /**
- * @fileOverview An AI flow to suggest meals in Arabic.
+ * @fileOverview An AI flow to suggest meals.
  */
 
 import { ai } from '@/ai/genkit';
@@ -17,6 +17,7 @@ const SuggestMealsOutputSchema = z.object({
 export type SuggestMealsOutput = z.infer<typeof SuggestMealsOutputSchema>;
 
 const SuggestMealsInputSchema = z.object({
+    language: z.enum(['en', 'ar']).default('ar').describe('The language for the meal suggestions.'),
     dietaryPreference: z.string().optional().describe('Optional dietary preference, e.g., vegetarian, low-carb.')
 });
 export type SuggestMealsInput = z.infer<typeof SuggestMealsInputSchema>;
@@ -32,10 +33,10 @@ const prompt = ai.definePrompt({
   output: { schema: SuggestMealsOutputSchema },
   prompt: `You are an expert nutritionist and chef specializing in healthy and delicious meals, with a deep knowledge of Middle Eastern and specifically Iraqi cuisine.
 Your task is to generate a full day's meal plan (breakfast, lunch, and dinner) for a user.
-All output MUST be in Arabic.
+All output MUST be in the specified language: {{language}}.
 
 Based on the user's dietary preference if provided ({{dietaryPreference}}), suggest one meal for breakfast, one for lunch, and one for dinner.
-For each meal, provide the following details in Arabic:
+For each meal, provide the following details in {{language}}:
 - A creative and appealing dish name.
 - A short, mouth-watering description.
 - A list of ingredients.

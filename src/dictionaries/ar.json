@@ -32,8 +32,11 @@
     "logTitle": "السجل اليومي",
     "addFoodButton": "إضافة طعام",
     "logEmpty": "لم تسجل أي طعام اليوم.",
+    "log": {
+      "calories": "سعر حراري"
+    },
     "suggestionsTitle": "اقتراحات وجبات بالذكاء الاصطناعي",
-    "suggestionsDesc": "أفكار وجبات مخصصة لك باللغة العربية.",
+    "suggestionsDesc": "أفكار وجبات مخصصة لك.",
     "breakfast": "الإفطار:",
     "lunch": "الغداء:",
     "dinner": "العشاء:",
@@ -52,7 +55,15 @@
     "tabPhoto": "التقط صورة",
     "tabDescribe": "صف الوجبة",
     "uploadLabel": "تحميل صورة",
+    "uploadFromDevice": "تحميل من الجهاز",
+    "useCamera": "استخدام الكاميرا",
+    "cameraDialogTitle": "التقط صورة الوجبة",
+    "cameraCaptureButton": "التقاط",
+    "cameraCloseButton": "إغلاق",
+    "cameraErrorTitle": "تم رفض الوصول إلى الكاميرا",
+    "cameraErrorDescription": "يرجى تمكين أذونات الكاميرا في إعدادات المتصفح لاستخدام هذه الميزة.",
     "portionLabel": "حجم الحصة",
+    "portionSizeOptional": "(اختياري)",
     "portionPlaceholder": "مثال: 1 كوب، 100 جرام، 1 شريحة",
     "preview": "معاينة:",
     "analyzePhotoButton": "تحليل الصورة",
@@ -60,10 +71,27 @@
     "descriptionLabel": "وصف الوجبة",
     "descriptionPlaceholder": "مثال: وعاء من الشوفان مع التوت والمكسرات",
     "analyzeDescriptionButton": "تحليل الوصف",
+    "analysisResultTitle": "نتيجة التحليل",
+    "logMealButton": "تسجيل الوجبة",
+    "logSuccessTitle": "تم تسجيل الوجبة!",
+    "logSuccessDescription": "تم تسجيل {dishName} بنجاح.",
     "toastSuccessTitle": "اكتمل التحليل!",
     "toastSuccessDescription": "تم تسجيل {dishName} ({calories} سعر حراري).",
     "toastErrorTitle": "فشل التحليل",
     "toastErrorPhoto": "تعذر تحليل الصورة. يرجى المحاولة مرة أخرى.",
-    "toastErrorDescription": "تعذر تحليل الوصف. يرجى المحاولة مرة أخرى."
+    "toastErrorDescription": "تعذر تحليل الوصف. يرجى المحاولة مرة أخرى.",
+    "nutrients": {
+      "calories": "السعرات الحرارية",
+      "protein": "البروتين",
+      "carbs": "الكربوهيدرات",
+      "fats": "الدهون",
+      "fiber": "الألياف",
+      "sugar": "السكر",
+      "sodium": "الصوديوم",
+      "potassium": "البوتاسيوم",
+      "calcium": "الكالسيوم",
+      "iron": "الحديد",
+      "vitaminC": "فيتامين ج"
+    }
   }
 }

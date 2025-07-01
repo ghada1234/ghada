@@ -13,6 +13,7 @@ export default function AddFoodPage() {
   const { toast } = useToast();
   const [image, setImage] = useState<File | null>(null);
   const [description, setDescription] = useState('');
+  const [portionSize, setPortionSize] = useState('');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,6 +61,15 @@ export default function AddFoodPage() {
                   <Label htmlFor="picture">Upload Photo</Label>
                   <Input id="picture" type="file" accept="image/*" onChange={handleImageChange} />
                 </div>
+                <div>
+                  <Label htmlFor="photo-portion">Portion Size</Label>
+                  <Input
+                    id="photo-portion"
+                    placeholder="e.g., 1 cup, 100g, 1 slice"
+                    value={portionSize}
+                    onChange={(e) => setPortionSize(e.target.value)}
+                  />
+                </div>
                 {image && (
                   <div className="mt-4">
                     <p className="text-sm font-medium">Preview:</p>
@@ -70,7 +80,7 @@ export default function AddFoodPage() {
                     />
                   </div>
                 )}
-                <Button onClick={handleAnalyze} disabled={!image || isAnalyzing} className="w-full">
+                <Button onClick={handleAnalyze} disabled={!image || !portionSize || isAnalyzing} className="w-full">
                   {isAnalyzing ? 'Analyzing...' : 'Analyze Photo'}
                 </Button>
               </div>
@@ -86,7 +96,16 @@ export default function AddFoodPage() {
                     onChange={(e) => setDescription(e.target.value)}
                   />
                 </div>
-                 <Button onClick={handleAnalyze} disabled={!description || isAnalyzing} className="w-full">
+                <div>
+                  <Label htmlFor="describe-portion">Portion Size</Label>
+                  <Input
+                    id="describe-portion"
+                    placeholder="e.g., 1 cup, 100g, 1 slice"
+                    value={portionSize}
+                    onChange={(e) => setPortionSize(e.target.value)}
+                  />
+                </div>
+                 <Button onClick={handleAnalyze} disabled={!description || !portionSize || isAnalyzing} className="w-full">
                    {isAnalyzing ? 'Analyzing...' : 'Analyze Description'}
                  </Button>
               </div>

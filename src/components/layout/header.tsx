@@ -20,7 +20,7 @@ export default function Header() {
             className="flex items-center gap-2 text-lg font-semibold md:text-base"
           >
             <CookingPot className="h-6 w-6 text-primary" />
-            <span className="font-headline text-xl">NutriTrack AI</span>
+            <span className="font-headline text-xl">NutriSnap</span>
           </Link>
           {navLinks.map((link) => (
             <Link
@@ -47,7 +47,7 @@ export default function Header() {
                 className="mb-4 flex items-center gap-2 text-lg font-semibold"
               >
                 <CookingPot className="h-6 w-6 text-primary" />
-                <span className="font-headline text-xl">NutriTrack AI</span>
+                <span className="font-headline text-xl">NutriSnap</span>
               </Link>
               {navLinks.map((link) => (
                 <Link
@@ -66,7 +66,7 @@ export default function Header() {
         <div className="flex items-center gap-2 md:hidden">
           <Link href="/dashboard" className="flex items-center gap-2 text-lg font-semibold">
             <CookingPot className="h-6 w-6 text-primary" />
-            <span className="font-headline text-xl">NutriTrack AI</span>
+            <span className="font-headline text-xl">NutriSnap</span>
           </Link>
         </div>
       </div>

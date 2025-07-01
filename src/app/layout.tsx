@@ -17,8 +17,8 @@ const sourceCodePro = Source_Code_Pro({
 });
 
 export const metadata: Metadata = {
-  title: 'NutriTrack AI',
-  description: 'AI-Powered Meal Analysis and Diet Planning',
+  title: 'NutriSnap',
+  description: 'Snap photos of your meals for instant nutritional analysis.',
 };
 
 export default function RootLayout({

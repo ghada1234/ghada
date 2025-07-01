@@ -40,7 +40,7 @@ For each meal, provide the following details in {{language}}:
 - A creative and appealing dish name.
 - A short, mouth-watering description.
 - A list of ingredients.
-- A summary of the nutritional benefits.
+- A detailed nutritional breakdown including estimated values for: calories, protein, carbs, fats, fiber, sodium, sugar, potassium, vitaminC, calcium, and iron.
 - Simple, step-by-step cooking instructions.
 
 Ensure the suggestions are healthy, balanced, and appealing. If no preference is given, provide a generally healthy and balanced plan.`,

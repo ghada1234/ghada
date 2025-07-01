@@ -5,28 +5,15 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'zod';
+import { NutritionalInfoSchema, type NutritionalInfo } from '@/ai/schemas';
 
-export const AnalyzeDishNameInputSchema = z.object({
+const AnalyzeDishNameInputSchema = z.object({
   description: z.string().describe('The description of the dish to analyze.'),
   portionSize: z.string().describe('The portion size of the dish.'),
 });
 export type AnalyzeDishNameInput = z.infer<typeof AnalyzeDishNameInputSchema>;
 
-export const NutritionalInfoSchema = z.object({
-  dishName: z.string().describe('The name of the identified dish based on the description.'),
-  calories: z.number().describe('Estimated calories.'),
-  protein: z.number().describe('Grams of protein.'),
-  carbs: z.number().describe('Grams of carbohydrates.'),
-  fats: z.number().describe('Grams of fat.'),
-  fiber: z.number().describe('Grams of fiber.'),
-  sodium: z.number().describe('Milligrams of sodium.'),
-  sugar: z.number().describe('Grams of sugar.'),
-  potassium: z.number().describe('Milligrams of potassium.'),
-  vitaminC: z.number().describe('Milligrams of Vitamin C.'),
-  calcium: z.number().describe('Milligrams of calcium.'),
-  iron: z.number().describe('Milligrams of iron.'),
-});
-export type NutritionalInfo = z.infer<typeof NutritionalInfoSchema>;
+export type { NutritionalInfo };
 
 
 export async function analyzeDishName(input: AnalyzeDishNameInput): Promise<NutritionalInfo> {

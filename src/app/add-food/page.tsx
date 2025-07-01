@@ -8,6 +8,8 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Camera, Utensils } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { analyzeFoodImage } from '@/ai/flows/analyze-food-image';
+import { analyzeDishName } from '@/ai/flows/analyze-dish-name';
 
 export default function AddFoodPage() {
   const { toast } = useToast();
@@ -22,15 +24,58 @@ export default function AddFoodPage() {
     }
   };
 
-  const handleAnalyze = async () => {
-    // Placeholder for AI analysis
-    setIsAnalyzing(true);
-    await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate API call
-    setIsAnalyzing(false);
-    toast({
-      title: 'Analysis Complete!',
-      description: 'Your meal has been logged.',
+  const toDataUri = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
     });
+  };
+
+  const handleAnalyzePhoto = async () => {
+    if (!image || !portionSize) return;
+
+    setIsAnalyzing(true);
+    try {
+      const photoDataUri = await toDataUri(image);
+      const result = await analyzeFoodImage({ photoDataUri, portionSize });
+      toast({
+        title: 'Analysis Complete!',
+        description: `${result.dishName} (${result.calories} kcal) has been logged.`,
+      });
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        title: 'Analysis Failed',
+        description: 'Could not analyze the photo. Please try again.',
+      });
+      console.error(error);
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
+
+  const handleAnalyzeDescription = async () => {
+    if (!description || !portionSize) return;
+    
+    setIsAnalyzing(true);
+    try {
+      const result = await analyzeDishName({ description, portionSize });
+       toast({
+        title: 'Analysis Complete!',
+        description: `${result.dishName} (${result.calories} kcal) has been logged.`,
+      });
+    } catch (error) {
+       toast({
+        variant: 'destructive',
+        title: 'Analysis Failed',
+        description: 'Could not analyze the description. Please try again.',
+      });
+       console.error(error);
+    } finally {
+      setIsAnalyzing(false);
+    }
   };
 
 
@@ -80,7 +125,7 @@ export default function AddFoodPage() {
                     />
                   </div>
                 )}
-                <Button onClick={handleAnalyze} disabled={!image || !portionSize || isAnalyzing} className="w-full">
+                <Button onClick={handleAnalyzePhoto} disabled={!image || !portionSize || isAnalyzing} className="w-full">
                   {isAnalyzing ? 'Analyzing...' : 'Analyze Photo'}
                 </Button>
               </div>
@@ -105,7 +150,7 @@ export default function AddFoodPage() {
                     onChange={(e) => setPortionSize(e.target.value)}
                   />
                 </div>
-                 <Button onClick={handleAnalyze} disabled={!description || !portionSize || isAnalyzing} className="w-full">
+                 <Button onClick={handleAnalyzeDescription} disabled={!description || !portionSize || isAnalyzing} className="w-full">
                    {isAnalyzing ? 'Analyzing...' : 'Analyze Description'}
                  </Button>
               </div>

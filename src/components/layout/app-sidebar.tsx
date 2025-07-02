@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Leaf, LayoutDashboard, PlusSquare, BookOpen } from 'lucide-react';
+import { Leaf, LayoutDashboard, PlusSquare, BookOpen, Settings } from 'lucide-react';
 
 import {
   Sidebar,
@@ -24,6 +24,7 @@ export default function AppSidebar() {
     { href: '/dashboard', label: t('header.dashboard'), icon: LayoutDashboard },
     { href: '/add-food', label: t('header.addFood'), icon: PlusSquare },
     { href: '/meal-planner', label: t('header.mealPlanner'), icon: BookOpen },
+    { href: '/settings', label: t('header.settings'), icon: Settings },
   ];
 
   return (

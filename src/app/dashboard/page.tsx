@@ -11,30 +11,23 @@ import Image from 'next/image';
 import { useLanguage } from '@/contexts/language-context';
 import { suggestMeals, type SuggestMealsOutput, type MealSuggestion } from '@/ai/flows/suggest-meals';
 import { useMealLog } from '@/contexts/meal-log-context';
-
-// Daily goals - these could come from user settings in a full app
-const DAILY_GOALS = {
-  calories: 2000,
-  protein: 120,
-  carbs: 250,
-  fats: 70,
-  fiber: 30,
-  sodium: 2300,
-  sugar: 50,
-  potassium: 3500,
-  vitaminC: 90,
-  calcium: 1000,
-  iron: 18,
-};
+import { useUserSettings } from '@/contexts/user-settings-context';
+import { isToday } from 'date-fns';
 
 export default function DashboardPage() {
   const { t, lang } = useLanguage();
   const { loggedMeals } = useMealLog();
+  const { dailyGoals } = useUserSettings(); // Use settings from context
   const [suggestions, setSuggestions] = useState<SuggestMealsOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  // Filter for today's meals
+  const todaysMeals = useMemo(() => {
+    return loggedMeals.filter(meal => isToday(new Date(meal.loggedAt)));
+  }, [loggedMeals]);
+
   const totals = useMemo(() => {
-    return loggedMeals.reduce((acc, meal) => {
+    return todaysMeals.reduce((acc, meal) => {
       acc.calories += meal.calories;
       acc.protein += meal.protein;
       acc.carbs += meal.carbs;
@@ -51,7 +44,7 @@ export default function DashboardPage() {
       calories: 0, protein: 0, carbs: 0, fats: 0, fiber: 0,
       sodium: 0, sugar: 0, potassium: 0, vitaminC: 0, calcium: 0, iron: 0,
     });
-  }, [loggedMeals]);
+  }, [todaysMeals]);
 
   const getProgress = (current: number, goal: number) => (goal > 0 ? (current / goal) * 100 : 0);
 
@@ -131,37 +124,37 @@ export default function DashboardPage() {
             <div>
               <div className="mb-1 flex justify-between">
                 <span>{t('dashboard.calories')}</span>
-                <span className="font-medium">{totals.calories.toLocaleString()} / {DAILY_GOALS.calories.toLocaleString()} kcal</span>
+                <span className="font-medium">{totals.calories.toLocaleString()} / {dailyGoals.calories.toLocaleString()} kcal</span>
               </div>
-              <Progress value={getProgress(totals.calories, DAILY_GOALS.calories)} />
+              <Progress value={getProgress(totals.calories, dailyGoals.calories)} />
             </div>
             <div>
               <div className="mb-1 flex justify-between">
                 <span>{t('dashboard.protein')}</span>
-                <span className="font-medium">{totals.protein.toFixed(1)} / {DAILY_GOALS.protein} g</span>
+                <span className="font-medium">{totals.protein.toFixed(1)} / {dailyGoals.protein} g</span>
               </div>
-              <Progress value={getProgress(totals.protein, DAILY_GOALS.protein)} />
+              <Progress value={getProgress(totals.protein, dailyGoals.protein)} />
             </div>
             <div>
               <div className="mb-1 flex justify-between">
                 <span>{t('dashboard.carbs')}</span>
-                <span className="font-medium">{totals.carbs.toFixed(1)} / {DAILY_GOALS.carbs} g</span>
+                <span className="font-medium">{totals.carbs.toFixed(1)} / {dailyGoals.carbs} g</span>
               </div>
-              <Progress value={getProgress(totals.carbs, DAILY_GOALS.carbs)} />
+              <Progress value={getProgress(totals.carbs, dailyGoals.carbs)} />
             </div>
             <div>
               <div className="mb-1 flex justify-between">
                 <span>{t('dashboard.fats')}</span>
-                <span className="font-medium">{totals.fats.toFixed(1)} / {DAILY_GOALS.fats} g</span>
+                <span className="font-medium">{totals.fats.toFixed(1)} / {dailyGoals.fats} g</span>
               </div>
-              <Progress value={getProgress(totals.fats, DAILY_GOALS.fats)} />
+              <Progress value={getProgress(totals.fats, dailyGoals.fats)} />
             </div>
             <div>
               <div className="mb-1 flex justify-between">
                 <span>{t('dashboard.fiber')}</span>
-                <span className="font-medium">{totals.fiber.toFixed(1)} / {DAILY_GOALS.fiber} g</span>
+                <span className="font-medium">{totals.fiber.toFixed(1)} / {dailyGoals.fiber} g</span>
               </div>
-              <Progress value={getProgress(totals.fiber, DAILY_GOALS.fiber)} />
+              <Progress value={getProgress(totals.fiber, dailyGoals.fiber)} />
             </div>
           </CardContent>
         </Card>
@@ -174,27 +167,27 @@ export default function DashboardPage() {
           <CardContent className="grid grid-cols-2 gap-x-6 gap-y-4">
             <div className="text-sm">
               <p className="text-muted-foreground">{t('dashboard.sodium')}</p>
-              <p className="font-medium">{totals.sodium.toLocaleString()} / {DAILY_GOALS.sodium.toLocaleString()} mg</p>
+              <p className="font-medium">{totals.sodium.toLocaleString()} / {dailyGoals.sodium.toLocaleString()} mg</p>
             </div>
             <div className="text-sm">
               <p className="text-muted-foreground">{t('dashboard.sugar')}</p>
-              <p className="font-medium">{totals.sugar.toFixed(1)} / {DAILY_GOALS.sugar} g</p>
+              <p className="font-medium">{totals.sugar.toFixed(1)} / {dailyGoals.sugar} g</p>
             </div>
             <div className="text-sm">
               <p className="text-muted-foreground">{t('dashboard.potassium')}</p>
-              <p className="font-medium">{totals.potassium.toLocaleString()} / {DAILY_GOALS.potassium.toLocaleString()} mg</p>
+              <p className="font-medium">{totals.potassium.toLocaleString()} / {dailyGoals.potassium.toLocaleString()} mg</p>
             </div>
             <div className="text-sm">
               <p className="text-muted-foreground">{t('dashboard.vitaminC')}</p>
-              <p className="font-medium">{totals.vitaminC.toFixed(1)} / {DAILY_GOALS.vitaminC} mg</p>
+              <p className="font-medium">{totals.vitaminC.toFixed(1)} / {dailyGoals.vitaminC} mg</p>
             </div>
             <div className="text-sm">
               <p className="text-muted-foreground">{t('dashboard.calcium')}</p>
-              <p className="font-medium">{totals.calcium.toLocaleString()} / {DAILY_GOALS.calcium.toLocaleString()} mg</p>
+              <p className="font-medium">{totals.calcium.toLocaleString()} / {dailyGoals.calcium.toLocaleString()} mg</p>
             </div>
             <div className="text-sm">
               <p className="text-muted-foreground">{t('dashboard.iron')}</p>
-              <p className="font-medium">{totals.iron.toFixed(1)} / {DAILY_GOALS.iron} mg</p>
+              <p className="font-medium">{totals.iron.toFixed(1)} / {dailyGoals.iron} mg</p>
             </div>
           </CardContent>
         </Card>
@@ -209,7 +202,7 @@ export default function DashboardPage() {
             </Link>
           </CardHeader>
           <CardContent>
-            {loggedMeals.length === 0 ? (
+            {todaysMeals.length === 0 ? (
               <>
                 <p className="text-sm text-muted-foreground">{t('dashboard.logEmpty')}</p>
                 <img
@@ -221,7 +214,7 @@ export default function DashboardPage() {
               </>
             ) : (
               <div className="mt-4 space-y-4">
-                {loggedMeals.map(meal => (
+                {todaysMeals.map(meal => (
                   <div key={meal.id} className="flex items-center gap-4">
                     {meal.photoDataUri && (
                       <Image

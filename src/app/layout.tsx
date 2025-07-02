@@ -8,6 +8,7 @@ import { LanguageProvider } from '@/contexts/language-context';
 import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
 import AppSidebar from '@/components/layout/app-sidebar';
 import { MealLogProvider } from '@/contexts/meal-log-context';
+import { UserSettingsProvider } from '@/contexts/user-settings-context';
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -44,17 +45,19 @@ export default function RootLayout({
     <html lang={lang} dir={lang === 'ar' ? 'rtl' : 'ltr'} className={`${spaceGrotesk.variable} ${sourceCodePro.variable} ${cairo.variable}`}>
       <body className="min-h-dvh bg-background font-body text-foreground antialiased">
         <LanguageProvider>
-          <MealLogProvider>
-            <SidebarProvider>
-              <div className="flex">
-                <AppSidebar />
-                <SidebarInset>
-                  <Header />
-                  <main className="flex-1">{children}</main>
-                </SidebarInset>
-              </div>
-            </SidebarProvider>
-          </MealLogProvider>
+          <UserSettingsProvider>
+            <MealLogProvider>
+              <SidebarProvider>
+                <div className="flex">
+                  <AppSidebar />
+                  <SidebarInset>
+                    <Header />
+                    <main className="flex-1">{children}</main>
+                  </SidebarInset>
+                </div>
+              </SidebarProvider>
+            </MealLogProvider>
+          </UserSettingsProvider>
           <Toaster />
         </LanguageProvider>
       </body>

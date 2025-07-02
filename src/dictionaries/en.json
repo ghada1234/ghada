@@ -9,6 +9,7 @@
     "dashboard": "Dashboard",
     "addFood": "Add Food",
     "mealPlanner": "Meal Planner",
+    "settings": "Settings",
     "login": "Login",
     "toggleLanguage": "Switch to Arabic"
   },
@@ -125,5 +126,27 @@
     "generateButton": "Generate Meal Plan",
     "generating": "Generating...",
     "suggestionsEmpty": "Click the button to generate a new meal plan."
+  },
+  "settings": {
+    "title": "Settings",
+    "description": "Customize your daily nutritional goals.",
+    "macrosTitle": "Macronutrient Goals",
+    "microsTitle": "Micronutrient Goals",
+    "saveButton": "Save Changes",
+    "toastSuccessTitle": "Settings Saved",
+    "toastSuccessDescription": "Your daily goals have been updated.",
+    "goals": {
+      "calories": "Calories",
+      "protein": "Protein",
+      "carbs": "Carbs",
+      "fats": "Fats",
+      "fiber": "Fiber",
+      "sugar": "Sugar",
+      "sodium": "Sodium",
+      "potassium": "Potassium",
+      "calcium": "Calcium",
+      "iron": "Iron",
+      "vitaminC": "Vitamin C"
+    }
   }
 }

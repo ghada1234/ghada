@@ -9,6 +9,7 @@
     "dashboard": "لوحة التحكم",
     "addFood": "إضافة طعام",
     "mealPlanner": "مخطط الوجبات",
+    "settings": "الإعدادات",
     "login": "تسجيل الدخول",
     "toggleLanguage": "التبديل إلى الإنجليزية"
   },
@@ -125,5 +126,27 @@
     "generateButton": "إنشاء خطة وجبات",
     "generating": "جاري الإنشاء...",
     "suggestionsEmpty": "اضغط على الزر لإنشاء خطة وجبات جديدة."
+  },
+  "settings": {
+    "title": "الإعدادات",
+    "description": "خصص أهدافك الغذائية اليومية.",
+    "macrosTitle": "أهداف المغذيات الكبيرة",
+    "microsTitle": "أهداف المغذيات الدقيقة",
+    "saveButton": "حفظ التغييرات",
+    "toastSuccessTitle": "تم حفظ الإعدادات",
+    "toastSuccessDescription": "تم تحديث أهدافك اليومية.",
+    "goals": {
+      "calories": "السعرات الحرارية",
+      "protein": "البروتين",
+      "carbs": "الكربوهيدرات",
+      "fats": "الدهون",
+      "fiber": "الألياف",
+      "sugar": "السكر",
+      "sodium": "الصوديوم",
+      "potassium": "البوتاسيوم",
+      "calcium": "الكالسيوم",
+      "iron": "الحديد",
+      "vitaminC": "فيتامين ج"
+    }
   }
 }

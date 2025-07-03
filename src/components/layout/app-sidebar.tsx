@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Leaf, LayoutDashboard, PlusSquare, BookOpen, Settings } from 'lucide-react';
+import { Leaf, LayoutDashboard, PlusSquare, BookOpen, Settings, Home } from 'lucide-react';
 
 import {
   Sidebar,
@@ -25,6 +25,7 @@ export default function AppSidebar() {
     { href: '/add-food', label: t('header.addFood'), icon: PlusSquare },
     { href: '/meal-planner', label: t('header.mealPlanner'), icon: BookOpen },
     { href: '/settings', label: t('header.settings'), icon: Settings },
+    { href: '/', label: t('header.home'), icon: Home },
   ];
 
   return (
@@ -41,7 +42,7 @@ export default function AppSidebar() {
             <SidebarMenuItem key={link.href}>
               <SidebarMenuButton
                 asChild
-                isActive={pathname.startsWith(link.href)}
+                isActive={pathname.startsWith(link.href) && (link.href !== '/' || pathname === '/')}
                 tooltip={{ children: link.label }}
               >
                 <Link href={link.href}>

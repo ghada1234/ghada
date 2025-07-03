@@ -6,6 +6,7 @@
   },
   "header": {
     "title": "NutriSnap",
+    "home": "Home",
     "dashboard": "Dashboard",
     "addFood": "Add Food",
     "mealPlanner": "Meal Planner",

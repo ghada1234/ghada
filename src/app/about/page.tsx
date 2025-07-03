@@ -1,8 +1,9 @@
 'use client';
 
-import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useLanguage } from '@/contexts/language-context';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { User } from 'lucide-react';
 
 export default function AboutPage() {
   const { t } = useLanguage();
@@ -15,15 +16,18 @@ export default function AboutPage() {
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="grid gap-8 md:grid-cols-3">
-            <div className="md:col-span-1">
-              <Image
-                src="https://placehold.co/400x400.png"
-                alt="Ghada Al-Ani"
-                width={400}
-                height={400}
-                className="rounded-lg object-cover shadow-lg"
-                data-ai-hint="woman portrait"
-              />
+            <div className="flex justify-center items-center md:col-span-1">
+              <Avatar className="h-64 w-64 shadow-lg">
+                <AvatarImage
+                  src="https://placehold.co/400x400.png"
+                  alt="Ghada Al-Ani"
+                  data-ai-hint="woman portrait"
+                  className="object-cover"
+                />
+                <AvatarFallback>
+                  <User className="h-32 w-32" />
+                </AvatarFallback>
+              </Avatar>
             </div>
             <div className="space-y-4 md:col-span-2">
               <p className="text-lg leading-relaxed text-muted-foreground">

@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useLanguage } from '@/contexts/language-context';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { User } from 'lucide-react';
 
 export default function AboutPage() {
@@ -18,11 +18,6 @@ export default function AboutPage() {
           <div className="flex flex-col items-center gap-6 md:flex-row md:items-start">
             <div className="flex-shrink-0">
               <Avatar className="h-40 w-40">
-                <AvatarImage
-                  src="https://placehold.co/200x200.png"
-                  alt="Ghada Al-Ani"
-                  data-ai-hint="woman portrait"
-                />
                 <AvatarFallback>
                   <User className="h-20 w-20" />
                 </AvatarFallback>

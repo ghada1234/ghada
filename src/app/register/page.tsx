@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -17,9 +17,8 @@ import { useLanguage } from '@/contexts/language-context';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useUserSettings } from '@/contexts/user-settings-context';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { User } from 'lucide-react';
+import { User, Upload } from 'lucide-react';
 
 export default function RegisterPage() {
   const { t } = useLanguage();
@@ -31,9 +30,7 @@ export default function RegisterPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [avatar, setAvatar] = useState<string | null>(null);
-
-  const MALE_AVATAR = 'https://placehold.co/100x100.png';
-  const FEMALE_AVATAR = 'https://placehold.co/100x100.png';
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const toDataUri = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -50,7 +47,7 @@ export default function RegisterPage() {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
       const preview = await toDataUri(file);
-      setAvatar(preview); // Also set the main avatar state
+      setAvatar(preview);
     }
   };
 
@@ -122,64 +119,19 @@ export default function RegisterPage() {
                     <User className="h-12 w-12" />
                   </AvatarFallback>
                 </Avatar>
-                <div className="flex-1 space-y-2">
-                  <RadioGroup
-                    onValueChange={setAvatar}
-                    value={avatar || ''}
-                    className="flex gap-4"
+                <div className="flex-1">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => fileInputRef.current?.click()}
                   >
-                    <Label
-                      htmlFor="male-avatar"
-                      className="flex flex-col items-center gap-2 cursor-pointer"
-                    >
-                      <RadioGroupItem
-                        value={MALE_AVATAR}
-                        id="male-avatar"
-                        className="sr-only"
-                      />
-                      <Avatar
-                        className={`h-12 w-12 ${avatar === MALE_AVATAR ? 'ring-2 ring-primary' : ''}`}
-                      >
-                        <AvatarImage
-                          src={MALE_AVATAR}
-                          data-ai-hint="male avatar"
-                          alt="Male Avatar"
-                        />
-                        <AvatarFallback>M</AvatarFallback>
-                      </Avatar>
-                      <span>{t('register.male')}</span>
-                    </Label>
-                    <Label
-                      htmlFor="female-avatar"
-                      className="flex flex-col items-center gap-2 cursor-pointer"
-                    >
-                      <RadioGroupItem
-                        value={FEMALE_AVATAR}
-                        id="female-avatar"
-                        className="sr-only"
-                      />
-                      <Avatar
-                        className={`h-12 w-12 ${avatar === FEMALE_AVATAR ? 'ring-2 ring-primary' : ''}`}
-                      >
-                        <AvatarImage
-                          src={FEMALE_AVATAR}
-                          data-ai-hint="female avatar"
-                          alt="Female Avatar"
-                        />
-                        <AvatarFallback>F</AvatarFallback>
-                      </Avatar>
-                      <span>{t('register.female')}</span>
-                    </Label>
-                  </RadioGroup>
-                  <Label
-                    htmlFor="custom-avatar"
-                    className="text-sm underline cursor-pointer text-primary"
-                  >
+                    <Upload className="mr-2 h-4 w-4" />
                     {t('register.uploadAvatar')}
-                  </Label>
+                  </Button>
                   <Input
                     id="custom-avatar"
                     type="file"
+                    ref={fileInputRef}
                     accept="image/*"
                     className="hidden"
                     onChange={handleCustomAvatarChange}

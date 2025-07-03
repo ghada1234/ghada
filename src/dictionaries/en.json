@@ -128,9 +128,7 @@
     "toastSuccessTitle": "Registration Successful!",
     "toastSuccessDescription": "Your account has been created. Welcome to NutriSnap!",
     "avatarLabel": "Choose your Avatar",
-    "male": "Male",
-    "female": "Female",
-    "uploadAvatar": "Or upload your own"
+    "uploadAvatar": "Upload a Photo"
   },
   "mealPlanner": {
     "title": "Meal Planner",

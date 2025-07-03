@@ -21,12 +21,12 @@ export default function AppSidebar() {
   const { state } = useSidebar();
 
   const navLinks = [
+    { href: '/', label: t('header.home'), icon: Home },
     { href: '/dashboard', label: t('header.dashboard'), icon: LayoutDashboard },
     { href: '/add-food', label: t('header.addFood'), icon: PlusSquare },
     { href: '/meal-planner', label: t('header.mealPlanner'), icon: BookOpen },
     { href: '/settings', label: t('header.settings'), icon: Settings },
     { href: '/about', label: t('header.about'), icon: Info },
-    { href: '/', label: t('header.home'), icon: Home },
   ];
 
   return (

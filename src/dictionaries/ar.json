@@ -128,9 +128,7 @@
     "toastSuccessTitle": "تم التسجيل بنجاح!",
     "toastSuccessDescription": "تم إنشاء حسابك. أهلاً بك في نوتري سناب!",
     "avatarLabel": "اختر صورتك الرمزية",
-    "male": "ذكر",
-    "female": "أنثى",
-    "uploadAvatar": "أو قم بتحميل صورتك الخاصة"
+    "uploadAvatar": "تحميل صورة"
   },
   "mealPlanner": {
     "title": "مخطط الوجبات",

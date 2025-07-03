@@ -19,7 +19,6 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import { Save, User, Upload } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
 export default function SettingsPage() {
   const { t } = useLanguage();
@@ -30,9 +29,6 @@ export default function SettingsPage() {
     settings.dailyGoals
   );
   const [profileFormState, setProfileFormState] = useState(settings.profile);
-
-  const MALE_AVATAR = 'https://placehold.co/100x100.png';
-  const FEMALE_AVATAR = 'https://placehold.co/100x100.png';
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -158,62 +154,7 @@ export default function SettingsPage() {
                         <User className="h-12 w-12" />
                       </AvatarFallback>
                     </Avatar>
-                    <RadioGroup
-                      onValueChange={(value) =>
-                        setProfileFormState((p) => ({ ...p, avatar: value }))
-                      }
-                      value={profileFormState.avatar || ''}
-                      className="flex gap-4"
-                    >
-                      <Label
-                        htmlFor="male-avatar"
-                        className="flex flex-col items-center gap-2 cursor-pointer"
-                      >
-                        <RadioGroupItem
-                          value={MALE_AVATAR}
-                          id="male-avatar"
-                          className="sr-only"
-                        />
-                        <Avatar
-                          className={
-                            profileFormState.avatar === MALE_AVATAR
-                              ? 'ring-2 ring-primary'
-                              : ''
-                          }
-                        >
-                          <AvatarImage
-                            src={MALE_AVATAR}
-                            data-ai-hint="male avatar"
-                            alt="Male Avatar"
-                          />
-                          <AvatarFallback>M</AvatarFallback>
-                        </Avatar>
-                      </Label>
-                      <Label
-                        htmlFor="female-avatar"
-                        className="flex flex-col items-center gap-2 cursor-pointer"
-                      >
-                        <RadioGroupItem
-                          value={FEMALE_AVATAR}
-                          id="female-avatar"
-                          className="sr-only"
-                        />
-                        <Avatar
-                          className={
-                            profileFormState.avatar === FEMALE_AVATAR
-                              ? 'ring-2 ring-primary'
-                              : ''
-                          }
-                        >
-                          <AvatarImage
-                            src={FEMALE_AVATAR}
-                            data-ai-hint="female avatar"
-                            alt="Female Avatar"
-                          />
-                          <AvatarFallback>F</AvatarFallback>
-                        </Avatar>
-                      </Label>
-                    </RadioGroup>
+                    
                     <Button
                       type="button"
                       variant="outline"

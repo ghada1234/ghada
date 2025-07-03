@@ -38,14 +38,6 @@ export default function Header() {
       </div>
 
       <div className="flex items-center gap-2 md:gap-4">
-        <nav className="hidden items-center gap-1 md:flex">
-          <Button variant="ghost" asChild>
-            <Link href="/">{t('header.home')}</Link>
-          </Button>
-          <Button variant="ghost" asChild>
-            <Link href="/about">{t('header.about')}</Link>
-          </Button>
-        </nav>
         <LanguageSwitcher />
         {user.name ? (
           <DropdownMenu>

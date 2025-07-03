@@ -39,6 +39,7 @@
   },
   "dashboard": {
     "title": "لوحة التحكم اليومية",
+    "greeting": "أهلاً بعودتك، {name}!",
     "macrosTitle": "المغذيات الكبيرة",
     "macrosTitleFormatted": "═ المغذيات الكبيرة ═",
     "macrosDesc": "مصادر طاقتك الرئيسية لهذا اليوم.",

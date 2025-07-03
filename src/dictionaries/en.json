@@ -39,6 +39,7 @@
   },
   "dashboard": {
     "title": "Daily Dashboard",
+    "greeting": "Welcome back, {name}!",
     "macrosTitle": "Macronutrients",
     "macrosTitleFormatted": "═ MACRONUTRIENTS ═",
     "macrosDesc": "Your main energy sources for today.",

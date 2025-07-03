@@ -214,7 +214,10 @@ export default function DashboardPage() {
   return (
     <div className="relative min-h-[calc(100vh-4rem)]">
     <div className="flex flex-col gap-8 p-4 md:p-8">
-      <h1 className="font-headline text-3xl font-bold">{t('dashboard.title')}</h1>
+      <div>
+        <h1 className="font-headline text-3xl font-bold">{t('dashboard.title')}</h1>
+        {profile.name && <p className="text-lg text-muted-foreground">{t('dashboard.greeting').replace('{name}', profile.name)}</p>}
+      </div>
 
       <div className="grid gap-6 md:grid-cols-2">
         <Card>

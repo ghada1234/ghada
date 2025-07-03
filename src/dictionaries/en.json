@@ -104,7 +104,8 @@
       "intro": "🍎 My NutriSnap Daily Summary 🍎",
       "macrosHeader": "MACRONUTRIENTS",
       "microsHeader": "MICRONUTRIENTS",
-      "outro": "Checked with NutriSnap! ✅"
+      "outro": "Checked with NutriSnap! ✅",
+      "todaysMealsHeader": "Today's Meals:"
     }
   },
   "addFood": {

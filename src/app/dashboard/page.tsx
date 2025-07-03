@@ -129,22 +129,37 @@ export default function DashboardPage() {
   };
 
   const handleShareOnWhatsApp = () => {
+    let mealLogText = '';
+    if (todaysMeals.length > 0) {
+      const mealItems = todaysMeals
+        .map((meal) => {
+          const mealTypeName = meal.mealType
+            ? t(`addFood.mealTypes.${meal.mealType}`)
+            : '';
+          return `- ${mealTypeName ? `*${mealTypeName}*: ` : ''}${
+            meal.dishName
+          }`;
+        })
+        .join('\n');
+      mealLogText = `\n*${t('dashboard.shareMessage.todaysMealsHeader')}*\n${mealItems}\n`;
+    }
+
     const message =
-      `${t('dashboard.shareMessage.intro')}\n\n` +
-      `═ ${t('dashboard.shareMessage.macrosHeader')} ═\n` +
-      `🔥 ${t('dashboard.calories')}: ${totals.calories.toLocaleString()} / ${dailyGoals.calories.toLocaleString()} kcal\n` +
-      `💪 ${t('dashboard.protein')}: ${totals.protein.toFixed(1)} / ${dailyGoals.protein} g\n` +
-      `🍞 ${t('dashboard.carbs')}: ${totals.carbs.toFixed(1)} / ${dailyGoals.carbs} g\n` +
-      `🥑 ${t('dashboard.fats')}: ${totals.fats.toFixed(1)} / ${dailyGoals.fats} g\n` +
-      `🌾 ${t('dashboard.fiber')}: ${totals.fiber.toFixed(1)} / ${dailyGoals.fiber} g\n\n` +
-      `═ ${t('dashboard.shareMessage.microsHeader')} ═\n` +
-      `🧂 ${t('dashboard.sodium')}: ${totals.sodium.toLocaleString()} / ${dailyGoals.sodium.toLocaleString()} mg\n` +
-      `🍬 ${t('dashboard.sugar')}: ${totals.sugar.toFixed(1)} / ${dailyGoals.sugar} g\n` +
-      `🍌 ${t('dashboard.potassium')}: ${totals.potassium.toLocaleString()} / ${dailyGoals.potassium.toLocaleString()} mg\n` +
-      `🍊 ${t('dashboard.vitaminC')}: ${totals.vitaminC.toFixed(1)} / ${dailyGoals.vitaminC} mg\n` +
-      `🥛 ${t('dashboard.calcium')}: ${totals.calcium.toLocaleString()} / ${dailyGoals.calcium.toLocaleString()} mg\n` +
-      `🔩 ${t('dashboard.iron')}: ${totals.iron.toFixed(1)} / ${dailyGoals.iron} mg\n\n` +
-      `${t('dashboard.shareMessage.outro')}`;
+      `*${t('dashboard.shareMessage.intro')}*${mealLogText}\n` +
+      `*═ ${t('dashboard.shareMessage.macrosHeader')} ═*\n` +
+      `_${t('dashboard.calories')}_ 🔥: *${totals.calories.toLocaleString()}* / ${dailyGoals.calories.toLocaleString()} kcal\n` +
+      `_${t('dashboard.protein')}_ 💪: *${totals.protein.toFixed(1)}* / ${dailyGoals.protein} g\n` +
+      `_${t('dashboard.carbs')}_ 🍞: *${totals.carbs.toFixed(1)}* / ${dailyGoals.carbs} g\n` +
+      `_${t('dashboard.fats')}_ 🥑: *${totals.fats.toFixed(1)}* / ${dailyGoals.fats} g\n` +
+      `_${t('dashboard.fiber')}_ 🌾: *${totals.fiber.toFixed(1)}* / ${dailyGoals.fiber} g\n\n` +
+      `*═ ${t('dashboard.shareMessage.microsHeader')} ═*\n` +
+      `_${t('dashboard.sodium')}_ 🧂: *${totals.sodium.toLocaleString()}* / ${dailyGoals.sodium.toLocaleString()} mg\n` +
+      `_${t('dashboard.sugar')}_ 🍬: *${totals.sugar.toFixed(1)}* / ${dailyGoals.sugar} g\n` +
+      `_${t('dashboard.potassium')}_ 🍌: *${totals.potassium.toLocaleString()}* / ${dailyGoals.potassium.toLocaleString()} mg\n` +
+      `_${t('dashboard.vitaminC')}_ 🍊: *${totals.vitaminC.toFixed(1)}* / ${dailyGoals.vitaminC} mg\n` +
+      `_${t('dashboard.calcium')}_ 🥛: *${totals.calcium.toLocaleString()}* / ${dailyGoals.calcium.toLocaleString()} mg\n` +
+      `_${t('dashboard.iron')}_ 🔩: *${totals.iron.toFixed(1)}* / ${dailyGoals.iron} mg\n\n` +
+      `*${t('dashboard.shareMessage.outro')}*`;
 
     const encodedMessage = encodeURIComponent(message);
     window.open(`https://wa.me/?text=${encodedMessage}`, '_blank');

@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { PlusCircle, Loader2 } from 'lucide-react';
+import { PlusCircle, Loader2, Utensils, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useLanguage } from '@/contexts/language-context';
@@ -16,7 +16,7 @@ import { isToday } from 'date-fns';
 
 export default function DashboardPage() {
   const { t, lang } = useLanguage();
-  const { loggedMeals } = useMealLog();
+  const { loggedMeals, removeMeal } = useMealLog();
   const { settings } = useUserSettings(); // Use settings from context
   const { dailyGoals } = settings;
   const [suggestions, setSuggestions] = useState<SuggestMealsOutput | null>(null);
@@ -204,20 +204,12 @@ export default function DashboardPage() {
           </CardHeader>
           <CardContent>
             {todaysMeals.length === 0 ? (
-              <>
-                <p className="text-sm text-muted-foreground">{t('dashboard.logEmpty')}</p>
-                <img
-                  src="https://placehold.co/600x400.png"
-                  alt="Empty plate"
-                  className="mt-4 rounded-md"
-                  data-ai-hint="empty plate"
-                />
-              </>
+              <p className="py-8 text-center text-sm text-muted-foreground">{t('dashboard.logEmpty')}</p>
             ) : (
               <div className="mt-4 space-y-4">
                 {todaysMeals.map(meal => (
-                  <div key={meal.id} className="flex items-center gap-4">
-                    {meal.photoDataUri && (
+                  <div key={meal.id} className="group flex items-center gap-4">
+                    {meal.photoDataUri ? (
                       <Image
                         src={meal.photoDataUri}
                         alt={meal.dishName}
@@ -225,11 +217,24 @@ export default function DashboardPage() {
                         height={64}
                         className="h-16 w-16 rounded-md object-cover"
                       />
+                    ) : (
+                      <div className="flex h-16 w-16 items-center justify-center rounded-md bg-muted">
+                        <Utensils className="h-8 w-8 text-muted-foreground" />
+                      </div>
                     )}
                     <div className="flex-1">
                       <p className="font-semibold">{meal.dishName}</p>
                       <p className="text-sm text-muted-foreground">{meal.calories} {t('dashboard.log.calories')}</p>
                     </div>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => removeMeal(meal.id)}
+                      aria-label={t('dashboard.log.removeMeal')}
+                      className="opacity-0 transition-opacity group-hover:opacity-100"
+                    >
+                      <Trash2 className="h-4 w-4 text-destructive" />
+                    </Button>
                   </div>
                 ))}
               </div>

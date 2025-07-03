@@ -41,7 +41,8 @@
     "addFoodButton": "Add Food",
     "logEmpty": "You haven't logged any food today.",
     "log": {
-      "calories": "kcal"
+      "calories": "kcal",
+      "removeMeal": "Remove meal"
     },
     "suggestionsTitle": "AI Meal Suggestions",
     "suggestionsDesc": "Personalized meal ideas for you.",

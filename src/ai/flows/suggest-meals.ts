@@ -31,7 +31,8 @@ const prompt = ai.definePrompt({
   name: 'suggestMealsPrompt',
   input: { schema: SuggestMealsInputSchema },
   output: { schema: SuggestMealsOutputSchema },
-  prompt: `You are an expert nutritionist and chef specializing in healthy and delicious meals, with a deep knowledge of Middle Eastern and specifically Iraqi cuisine.
+  prompt: `You are an expert nutritionist and chef specializing in healthy and delicious meals, with a deep knowledge of international cuisines, including Middle Eastern and specifically Iraqi cuisine.
+Your suggestions should be diverse and can include dishes from various culinary traditions around the world.
 Your task is to generate a full day's meal plan (breakfast, lunch, and dinner) for a user.
 All output MUST be in the specified language: {{language}}.
 

@@ -12,6 +12,7 @@ export type LoggedMeal = NutritionalInfo & {
 interface MealLogContextType {
   loggedMeals: LoggedMeal[];
   addMeal: (meal: Omit<LoggedMeal, 'id' | 'loggedAt'>) => void;
+  removeMeal: (mealId: string) => void;
 }
 
 const MealLogContext = createContext<MealLogContextType | undefined>(undefined);
@@ -50,9 +51,22 @@ export const MealLogProvider = ({ children }: { children: ReactNode }) => {
     });
   }, []);
 
+  const removeMeal = useCallback((mealId: string) => {
+    setLoggedMeals(prevMeals => {
+      const updatedMeals = prevMeals.filter(meal => meal.id !== mealId);
+      try {
+        localStorage.setItem(MEAL_LOG_STORAGE_KEY, JSON.stringify(updatedMeals));
+      } catch (error) {
+        console.error("Failed to save meals to localStorage", error);
+      }
+      return updatedMeals;
+    });
+  }, []);
+
   const value = {
     loggedMeals,
     addMeal,
+    removeMeal,
   };
 
   return (

@@ -41,7 +41,8 @@
     "addFoodButton": "إضافة طعام",
     "logEmpty": "لم تسجل أي طعام اليوم.",
     "log": {
-      "calories": "سعر حراري"
+      "calories": "سعر حراري",
+      "removeMeal": "إزالة الوجبة"
     },
     "suggestionsTitle": "اقتراحات وجبات بالذكاء الاصطناعي",
     "suggestionsDesc": "أفكار وجبات مخصصة لك.",

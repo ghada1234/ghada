@@ -120,10 +120,19 @@ export default function DashboardPage() {
 
   const handleShareOnWhatsApp = () => {
     const message = t('dashboard.shareMessage.intro') + '\n\n' +
+        `*${t('dashboard.macrosTitle')}*\n` +
         `*${t('dashboard.calories')}*: ${totals.calories.toLocaleString()}/${dailyGoals.calories.toLocaleString()} kcal\n` +
         `*${t('dashboard.protein')}*: ${totals.protein.toFixed(1)}/${dailyGoals.protein} g\n` +
         `*${t('dashboard.carbs')}*: ${totals.carbs.toFixed(1)}/${dailyGoals.carbs} g\n` +
-        `*${t('dashboard.fats')}*: ${totals.fats.toFixed(1)}/${dailyGoals.fats} g\n\n` +
+        `*${t('dashboard.fats')}*: ${totals.fats.toFixed(1)}/${dailyGoals.fats} g\n` +
+        `*${t('dashboard.fiber')}*: ${totals.fiber.toFixed(1)}/${dailyGoals.fiber} g\n\n` +
+        `*${t('dashboard.microsTitle')}*\n` +
+        `*${t('dashboard.sodium')}*: ${totals.sodium.toLocaleString()}/${dailyGoals.sodium.toLocaleString()} mg\n` +
+        `*${t('dashboard.sugar')}*: ${totals.sugar.toFixed(1)}/${dailyGoals.sugar} g\n` +
+        `*${t('dashboard.potassium')}*: ${totals.potassium.toLocaleString()}/${dailyGoals.potassium.toLocaleString()} mg\n` +
+        `*${t('dashboard.vitaminC')}*: ${totals.vitaminC.toFixed(1)}/${dailyGoals.vitaminC} mg\n` +
+        `*${t('dashboard.calcium')}*: ${totals.calcium.toLocaleString()}/${dailyGoals.calcium.toLocaleString()} mg\n` +
+        `*${t('dashboard.iron')}*: ${totals.iron.toFixed(1)}/${dailyGoals.iron} g\n\n` +
         t('dashboard.shareMessage.outro');
     
     const encodedMessage = encodeURIComponent(message);

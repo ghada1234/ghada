@@ -1,7 +1,8 @@
+
 'use client';
 
 import { useState, useMemo } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -197,15 +198,9 @@ export default function DashboardPage() {
 
       <div className="grid gap-6 md:grid-cols-2">
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between">
-            <div>
-                <CardTitle>{t('dashboard.macrosTitle')}</CardTitle>
-                <CardDescription>{t('dashboard.macrosDesc')}</CardDescription>
-            </div>
-            <Button variant="outline" size="sm" onClick={handleShareOnWhatsApp}>
-                <MessageSquare className="mr-2 h-4 w-4" />
-                {t('dashboard.shareOnWhatsApp')}
-            </Button>
+          <CardHeader>
+            <CardTitle>{t('dashboard.macrosTitle')}</CardTitle>
+            <CardDescription>{t('dashboard.macrosDesc')}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <MacroProgress nutrientKey="calories" label={t('dashboard.calories')} unit="kcal" currentValue={totals.calories} goalValue={dailyGoals.calories} tooltip={t('dashboard.tooltips.calories')} />
@@ -214,6 +209,12 @@ export default function DashboardPage() {
             <MacroProgress nutrientKey="fats" label={t('dashboard.fats')} unit="g" currentValue={totals.fats} goalValue={dailyGoals.fats} tooltip={t('dashboard.tooltips.fats')} />
             <MacroProgress nutrientKey="fiber" label={t('dashboard.fiber')} unit="g" currentValue={totals.fiber} goalValue={dailyGoals.fiber} tooltip={t('dashboard.tooltips.fiber')} />
           </CardContent>
+          <CardFooter>
+            <Button className="w-full" onClick={handleShareOnWhatsApp}>
+                <MessageSquare className="mr-2 h-4 w-4" />
+                {t('dashboard.shareOnWhatsApp')}
+            </Button>
+          </CardFooter>
         </Card>
 
         <Card>

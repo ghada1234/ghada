@@ -38,7 +38,7 @@ export default function MealPlannerPage() {
     <AccordionItem value={mealType}>
       <AccordionTrigger className="text-base">
         <div className="flex flex-col items-start text-start md:flex-row md:items-center">
-          <span className="font-semibold">{t(`dashboard.${mealType}`)}</span>
+          <span className="font-semibold">{t(`addFood.mealTypes.${mealType}`)}:</span>
           <span className="md:mx-2">{meal.dishName}</span>
         </div>
       </AccordionTrigger>
@@ -107,6 +107,8 @@ export default function MealPlannerPage() {
                 {renderSuggestion(suggestions.breakfast, 'breakfast')}
                 {renderSuggestion(suggestions.lunch, 'lunch')}
                 {renderSuggestion(suggestions.dinner, 'dinner')}
+                {renderSuggestion(suggestions.snack, 'snack')}
+                {renderSuggestion(suggestions.dessert, 'dessert')}
               </Accordion>
             )}
             {!isLoading && !suggestions && (

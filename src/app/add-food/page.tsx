@@ -13,7 +13,8 @@ import { analyzeDishName } from '@/ai/flows/analyze-dish-name';
 import { useLanguage } from '@/contexts/language-context';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { useMealLog } from '@/contexts/meal-log-context';
+import { useMealLog, type MealType } from '@/contexts/meal-log-context';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 export default function AddFoodPage() {
   const { t } = useLanguage();
@@ -27,6 +28,7 @@ export default function AddFoodPage() {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisResult, setAnalysisResult] = useState<NutritionalInfo | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [mealType, setMealType] = useState<MealType>('snack');
 
   // Camera state
   const [isCameraOpen, setIsCameraOpen] = useState(false);
@@ -43,6 +45,7 @@ export default function AddFoodPage() {
     setIsAnalyzing(false);
     setAnalysisResult(null);
     setImagePreview(null);
+    setMealType('snack');
   }, []);
   
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -93,7 +96,8 @@ export default function AddFoodPage() {
     if (!analysisResult) return;
     addMeal({
       ...analysisResult,
-      photoDataUri: imagePreview // Use the preview which could be from file or camera
+      photoDataUri: imagePreview, // Use the preview which could be from file or camera
+      mealType,
     });
     toast({
       title: t('addFood.logSuccessTitle'),
@@ -295,7 +299,25 @@ export default function AddFoodPage() {
                 {renderNutrient(t('addFood.nutrients.iron'), analysisResult.iron, 'mg')}
                 {renderNutrient(t('addFood.nutrients.vitaminC'), analysisResult.vitaminC, 'mg')}
               </CardContent>
-              <CardFooter>
+              <CardFooter className="flex-col items-stretch gap-4">
+                <div>
+                  <Label htmlFor="meal-type">{t('addFood.mealTypeLabel')}</Label>
+                  <Select
+                    value={mealType}
+                    onValueChange={(value) => setMealType(value as MealType)}
+                  >
+                    <SelectTrigger id="meal-type">
+                      <SelectValue placeholder={t('addFood.mealTypeLabel')} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="breakfast">{t('addFood.mealTypes.breakfast')}</SelectItem>
+                      <SelectItem value="lunch">{t('addFood.mealTypes.lunch')}</SelectItem>
+                      <SelectItem value="dinner">{t('addFood.mealTypes.dinner')}</SelectItem>
+                      <SelectItem value="snack">{t('addFood.mealTypes.snack')}</SelectItem>
+                      <SelectItem value="dessert">{t('addFood.mealTypes.dessert')}</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
                 <Button onClick={handleLogMeal} className="w-full">{t('addFood.logMealButton')}</Button>
               </CardFooter>
             </Card>

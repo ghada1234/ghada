@@ -13,6 +13,8 @@ const SuggestMealsOutputSchema = z.object({
   breakfast: MealSuggestionSchema.describe('A suggestion for breakfast.'),
   lunch: MealSuggestionSchema.describe('A suggestion for lunch.'),
   dinner: MealSuggestionSchema.describe('A suggestion for dinner.'),
+  snack: MealSuggestionSchema.describe('A suggestion for a snack.'),
+  dessert: MealSuggestionSchema.describe('A suggestion for a dessert.'),
 });
 export type SuggestMealsOutput = z.infer<typeof SuggestMealsOutputSchema>;
 
@@ -33,10 +35,10 @@ const prompt = ai.definePrompt({
   output: { schema: SuggestMealsOutputSchema },
   prompt: `You are an expert nutritionist and chef specializing in healthy and delicious meals, with a deep knowledge of international cuisines, including Middle Eastern and specifically Iraqi cuisine.
 Your suggestions should be diverse and can include dishes from various culinary traditions around the world.
-Your task is to generate a full day's meal plan (breakfast, lunch, and dinner) for a user.
+Your task is to generate a full day's meal plan (breakfast, lunch, dinner, a snack, and a dessert) for a user.
 All output MUST be in the specified language: {{language}}.
 
-Based on the user's dietary preference if provided ({{dietaryPreference}}), suggest one meal for breakfast, one for lunch, and one for dinner.
+Based on the user's dietary preference if provided ({{dietaryPreference}}), suggest one meal for breakfast, one for lunch, one for dinner, one for a snack, and one for a dessert.
 For each meal, provide the following details in {{language}}:
 - A creative and appealing dish name.
 - A short, mouth-watering description.

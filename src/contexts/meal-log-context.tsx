@@ -3,10 +3,13 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
 import type { NutritionalInfo } from '@/ai/schemas';
 
+export type MealType = 'breakfast' | 'lunch' | 'dinner' | 'snack' | 'dessert';
+
 export type LoggedMeal = NutritionalInfo & {
   id: string;
   photoDataUri?: string | null;
   loggedAt: string;
+  mealType: MealType;
 };
 
 interface MealLogContextType {

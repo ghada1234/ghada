@@ -1,13 +1,14 @@
+
 'use client';
 
 import { useState, useMemo } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useLanguage } from '@/contexts/language-context';
 import { useMealLog } from '@/contexts/meal-log-context';
 import { Bar, BarChart as RechartsBarChart, CartesianGrid, XAxis, YAxis } from 'recharts';
 import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from '@/components/ui/chart';
-import { Flame } from 'lucide-react';
+import { Flame, MessageSquare } from 'lucide-react';
 import {
   format,
   parseISO,
@@ -22,6 +23,8 @@ import {
   differenceInCalendarDays,
   subDays,
 } from 'date-fns';
+import { useUserSettings } from '@/contexts/user-settings-context';
+import { Button } from '@/components/ui/button';
 
 type AggregatedData = {
   name: string;
@@ -29,11 +32,19 @@ type AggregatedData = {
   protein: number;
   carbs: number;
   fats: number;
+  fiber: number;
+  sodium: number;
+  sugar: number;
+  potassium: number;
+  vitaminC: number;
+  calcium: number;
+  iron: number;
 };
 
 export default function ReportsPage() {
   const { t } = useLanguage();
   const { loggedMeals } = useMealLog();
+  const { settings } = useUserSettings();
 
   const chartConfig = {
     calories: {
@@ -74,7 +85,6 @@ export default function ReportsPage() {
     const aggregated = intervals.map(intervalStart => {
       let intervalEnd;
       let name;
-      let numDaysInPeriod = 1;
 
       if (period === 'day') {
         intervalEnd = intervalStart;
@@ -82,11 +92,9 @@ export default function ReportsPage() {
       } else if (period === 'week') {
         intervalEnd = endOfWeek(intervalStart, { weekStartsOn });
         name = format(intervalStart, 'd MMM');
-        numDaysInPeriod = differenceInCalendarDays(intervalEnd, intervalStart) + 1;
       } else { // month
         intervalEnd = endOfMonth(intervalStart);
         name = format(intervalStart, 'MMMM');
-        numDaysInPeriod = differenceInCalendarDays(intervalEnd, intervalStart) + 1;
       }
 
       const mealsInInterval = loggedMeals.filter(meal => {
@@ -97,15 +105,26 @@ export default function ReportsPage() {
       const daysWithLogs = new Set(mealsInInterval.map(m => format(parseISO(m.loggedAt), 'yyyy-MM-dd'))).size;
       const divisor = period === 'day' ? 1 : (daysWithLogs || 1);
 
-      const totals = mealsInInterval.reduce(
-        (acc, meal) => {
+      const initialTotals = {
+        calories: 0, protein: 0, carbs: 0, fats: 0, fiber: 0,
+        sodium: 0, sugar: 0, potassium: 0, vitaminC: 0, calcium: 0, iron: 0,
+      };
+
+      const totals = mealsInInterval.reduce((acc, meal) => {
           acc.calories += meal.calories;
           acc.protein += meal.protein;
           acc.carbs += meal.carbs;
           acc.fats += meal.fats;
+          acc.fiber += meal.fiber;
+          acc.sodium += meal.sodium;
+          acc.sugar += meal.sugar;
+          acc.potassium += meal.potassium;
+          acc.vitaminC += meal.vitaminC;
+          acc.calcium += meal.calcium;
+          acc.iron += meal.iron;
           return acc;
         },
-        { calories: 0, protein: 0, carbs: 0, fats: 0 }
+        initialTotals
       );
       
       const avg = {
@@ -113,6 +132,13 @@ export default function ReportsPage() {
         protein: totals.protein / divisor,
         carbs: totals.carbs / divisor,
         fats: totals.fats / divisor,
+        fiber: totals.fiber / divisor,
+        sodium: totals.sodium / divisor,
+        sugar: totals.sugar / divisor,
+        potassium: totals.potassium / divisor,
+        vitaminC: totals.vitaminC / divisor,
+        calcium: totals.calcium / divisor,
+        iron: totals.iron / divisor,
       };
       
       return {
@@ -121,6 +147,13 @@ export default function ReportsPage() {
         protein: Math.round(avg.protein),
         carbs: Math.round(avg.carbs),
         fats: Math.round(avg.fats),
+        fiber: Math.round(avg.fiber),
+        sodium: Math.round(avg.sodium),
+        sugar: Math.round(avg.sugar),
+        potassium: Math.round(avg.potassium),
+        vitaminC: Math.round(avg.vitaminC),
+        calcium: Math.round(avg.calcium),
+        iron: Math.round(avg.iron * 10) / 10, // Round to one decimal place
       };
     });
     
@@ -182,6 +215,66 @@ export default function ReportsPage() {
     
     return streak;
   }, [loggedMeals]);
+  
+  const handleShareOnWhatsApp = () => {
+    if (chartData.length === 0) return;
+
+    const { dailyGoals } = settings;
+
+    const initialTotals = {
+        name: '',
+        calories: 0, protein: 0, carbs: 0, fats: 0, fiber: 0,
+        sodium: 0, sugar: 0, potassium: 0, vitaminC: 0, calcium: 0, iron: 0,
+    };
+
+    const sumTotals = chartData.reduce((acc, data) => {
+        (Object.keys(acc) as Array<keyof typeof acc>).forEach(key => {
+            if (key !== 'name') {
+                acc[key as keyof Omit<AggregatedData, 'name'>] += data[key as keyof Omit<AggregatedData, 'name'>];
+            }
+        });
+        return acc;
+    }, initialTotals);
+
+    const averageTotals: Omit<AggregatedData, 'name'> = {
+        calories: 0, protein: 0, carbs: 0, fats: 0, fiber: 0,
+        sodium: 0, sugar: 0, potassium: 0, vitaminC: 0, calcium: 0, iron: 0,
+    };
+    
+    (Object.keys(averageTotals) as Array<keyof typeof averageTotals>).forEach(key => {
+        if (chartData.length > 0) {
+            averageTotals[key] = sumTotals[key] / chartData.length;
+        }
+    });
+
+
+    const getTitle = () => {
+      if (activeTab === 'daily') return t('reports.shareMessage.title.daily');
+      if (activeTab === 'weekly') return t('reports.shareMessage.title.weekly');
+      if (activeTab === 'monthly') return t('reports.shareMessage.title.monthly');
+      return '';
+    }
+
+    const message =
+      `*${getTitle()}*\n\n` +
+      `*═ ${t('reports.shareMessage.macrosHeader')} ═*\n` +
+      `🔥 _${t('dashboard.calories')}_: *${averageTotals.calories.toLocaleString(undefined, { maximumFractionDigits: 0 })}* / ${dailyGoals.calories.toLocaleString()} kcal\n` +
+      `💪 _${t('dashboard.protein')}_: *${averageTotals.protein.toFixed(1)}* / ${dailyGoals.protein} g\n` +
+      `🍞 _${t('dashboard.carbs')}_: *${averageTotals.carbs.toFixed(1)}* / ${dailyGoals.carbs} g\n` +
+      `🥑 _${t('dashboard.fats')}_: *${averageTotals.fats.toFixed(1)}* / ${dailyGoals.fats} g\n` +
+      `🌾 _${t('dashboard.fiber')}_: *${averageTotals.fiber.toFixed(1)}* / ${dailyGoals.fiber} g\n\n` +
+      `*═ ${t('reports.shareMessage.microsHeader')} ═*\n` +
+      `🧂 _${t('dashboard.sodium')}_: *${averageTotals.sodium.toLocaleString(undefined, { maximumFractionDigits: 0 })}* / ${dailyGoals.sodium.toLocaleString()} mg\n` +
+      `🍬 _${t('dashboard.sugar')}_: *${averageTotals.sugar.toFixed(1)}* / ${dailyGoals.sugar} g\n` +
+      `🍌 _${t('dashboard.potassium')}_: *${averageTotals.potassium.toLocaleString(undefined, { maximumFractionDigits: 0 })}* / ${dailyGoals.potassium.toLocaleString()} mg\n` +
+      `🍊 _${t('dashboard.vitaminC')}_: *${averageTotals.vitaminC.toFixed(1)}* / ${dailyGoals.vitaminC} mg\n` +
+      `🥛 _${t('dashboard.calcium')}_: *${averageTotals.calcium.toLocaleString(undefined, { maximumFractionDigits: 0 })}* / ${dailyGoals.calcium.toLocaleString()} mg\n` +
+      `🔩 _${t('dashboard.iron')}_: *${averageTotals.iron.toFixed(1)}* / ${dailyGoals.iron} mg\n\n` +
+      `*${t('reports.shareMessage.outro')}*`;
+
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`https://wa.me/?text=${encodedMessage}`, '_blank');
+  };
 
   const renderChart = (data: AggregatedData[]) => (
     <ChartContainer config={chartConfig} className="min-h-[250px] w-full">
@@ -251,6 +344,12 @@ export default function ReportsPage() {
               </div>
             )}
           </CardContent>
+           <CardFooter>
+            <Button className="w-full" onClick={handleShareOnWhatsApp} disabled={chartData.length === 0}>
+                <MessageSquare className="mr-2 h-4 w-4" />
+                {t('reports.shareOnWhatsApp')}
+            </Button>
+          </CardFooter>
         </Card>
       </div>
     </div>

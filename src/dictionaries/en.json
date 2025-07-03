@@ -102,10 +102,10 @@
     "shareOnWhatsApp": "Share on WhatsApp",
     "shareMessage": {
       "intro": "🍎 My NutriSnap Daily Summary 🍎",
-      "macrosHeader": "MACRONUTRIENTS",
-      "microsHeader": "MICRONUTRIENTS",
+      "macrosHeader": "═ MACRONUTRIENTS ═",
+      "microsHeader": "═ MICRONUTRIENTS ═",
       "outro": "Checked with NutriSnap! ✅",
-      "todaysMealsHeader": "Today's Meals:"
+      "todaysMealsHeader": "*Today's Meals:*"
     }
   },
   "addFood": {
@@ -279,6 +279,17 @@
       "description": "Log your meals every day to build up your streak!",
       "currentStreak": "Current Streak",
       "days": "days"
+    },
+    "shareOnWhatsApp": "Share Report on WhatsApp",
+    "shareMessage": {
+      "title": {
+        "daily": "🍎 My 7-Day NutriSnap Summary 🍎",
+        "weekly": "🍎 My Weekly Average NutriSnap Report 🍎",
+        "monthly": "🍎 My Monthly Average NutriSnap Report 🍎"
+      },
+      "macrosHeader": "AVERAGE MACRONUTRIENTS",
+      "microsHeader": "AVERAGE MICRONUTRIENTS",
+      "outro": "Tracked with NutriSnap! ✅"
     }
   }
 }

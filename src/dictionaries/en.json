@@ -7,6 +7,7 @@
   "header": {
     "title": "NutriSnap",
     "home": "Home",
+    "about": "About",
     "dashboard": "Dashboard",
     "addFood": "Add Food",
     "mealPlanner": "Meal Planner",
@@ -162,6 +163,14 @@
       "calcium": "Calcium",
       "iron": "Iron",
       "vitaminC": "Vitamin C"
+    }
+  },
+  "about": {
+    "title": "About NutriSnap",
+    "story": {
+      "p1": "NutriSnap was founded by Ghada Al-Ani, a passionate nutritionist with deep roots in Baghdad, Iraq. Growing up surrounded by the rich flavors and communal joy of traditional Iraqi cuisine, Ghada developed a profound appreciation for how food connects us to our heritage and to each other.",
+      "p2": "After moving abroad to pursue her education in nutritional science, she noticed a critical gap: most health and wellness apps failed to recognize the complexity and diversity of international foods. Calorie counters were often inaccurate for dishes like Dolma or Masgouf, leaving people from her culture and many others without the tools to track their health effectively.",
+      "p3": "Driven by a desire to bridge this gap, Ghada envisioned a tool that was both technologically advanced and culturally intelligent. She created NutriSnap to empower individuals to understand their diet without sacrificing their traditions. It's more than just an app; it's a celebration of global cuisine and a commitment to making personalized nutrition accessible to everyone, one snap at a time."
     }
   }
 }

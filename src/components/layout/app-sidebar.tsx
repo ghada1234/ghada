@@ -32,7 +32,7 @@ export default function AppSidebar() {
   return (
     <Sidebar>
       <SidebarHeader>
-        <Link href="/dashboard" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2">
           <Leaf className="h-6 w-6 text-primary" />
           {state === 'expanded' && <span className="font-headline text-xl">{t('header.title')}</span>}
         </Link>

@@ -19,6 +19,10 @@
   "home": {
     "subtitle": "The smart way to track your nutrition. Snap a photo or describe your meal to get an instant, AI-powered nutritional analysis. Take control of your health today.",
     "getStarted": "Get Started",
+    "loggedIn": {
+      "subtitle": "Ready to track your day or plan your next meal? Your dashboard is just a click away.",
+      "goToDashboard": "Go to Dashboard"
+    },
     "testimonials": {
       "title": "What Our Users Say",
       "reviews": [

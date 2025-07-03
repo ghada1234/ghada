@@ -87,7 +87,7 @@ export default function RegisterPage() {
       title: t('register.toastSuccessTitle'),
       description: t('register.toastSuccessDescription'),
     });
-    router.push('/dashboard'); // Push to dashboard instead of login
+    router.push('/'); // Push to home page instead of dashboard
   };
 
   return (

@@ -7,9 +7,12 @@ import { useLanguage } from '@/contexts/language-context';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { cn } from '@/lib/utils';
+import { useUserSettings } from '@/contexts/user-settings-context';
 
 export default function HomePage() {
   const { t } = useLanguage();
+  const { settings } = useUserSettings();
+  const user = settings.profile;
 
   const testimonials = [
     {
@@ -32,6 +35,29 @@ export default function HomePage() {
   // The 'as any' is used here because t() can return a complex object (array of objects)
   // based on the JSON structure, not just a string.
   const translatedTestimonials = t('home.testimonials.reviews') as any[];
+
+  if (user && user.name) {
+    // Logged-in view
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] p-4 text-center">
+        <Leaf className="h-16 w-16 text-primary" />
+        <h1 className="mt-6 text-4xl font-bold font-headline">
+          {t('dashboard.greeting').replace('{name}', user.name)}
+        </h1>
+        <p className="max-w-md mx-auto mt-4 text-lg text-muted-foreground">
+          {t('home.loggedIn.subtitle')}
+        </p>
+        <div className="mt-8 flex flex-col sm:flex-row gap-4">
+          <Button asChild size="lg">
+            <Link href="/dashboard">{t('home.loggedIn.goToDashboard')}</Link>
+          </Button>
+          <Button asChild size="lg" variant="outline">
+            <Link href="/add-food">{t('header.addFood')}</Link>
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>

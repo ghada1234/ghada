@@ -55,7 +55,6 @@
     "title": "Daily Dashboard",
     "greeting": "Welcome back, {name}!",
     "macrosTitle": "Macronutrients",
-    "macrosTitleFormatted": "═ MACRONUTRIENTS ═",
     "macrosDesc": "Your main energy sources for today.",
     "calories": "Calories",
     "protein": "Protein",
@@ -63,7 +62,6 @@
     "fats": "Fats",
     "fiber": "Fiber",
     "microsTitle": "Micronutrients",
-    "microsTitleFormatted": "═ MICRONUTRIENTS ═",
     "microsDesc": "Essential vitamins and minerals.",
     "sodium": "Sodium",
     "sugar": "Sugar",
@@ -103,8 +101,10 @@
     "shareOnWhatsApp": "Share on WhatsApp",
     "shareMessage": {
       "intro": "🍎 *My NutriSnap Daily Summary* 🍎",
-      "todaysMeals": "🍴 *Today's Meals* 🍴",
-      "outro": "Checked with NutriSnap! ✅"
+      "todaysMeals": "🍴 Today's Meals",
+      "macrosHeader": "📊 Daily Progress",
+      "microsHeader": "🔬 Micronutrients",
+      "outro": "✅ Checked with NutriSnap!"
     }
   },
   "addFood": {

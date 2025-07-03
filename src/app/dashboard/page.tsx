@@ -129,6 +129,7 @@ export default function DashboardPage() {
   };
 
   const handleShareOnWhatsApp = () => {
+    const separator = '-----------------------------------';
     let mealsSection = '';
     if (todaysMeals.length > 0) {
       const mealsList = todaysMeals.map(meal => `- ${meal.dishName} (${meal.calories} ${t('dashboard.log.calories')})`).join('\n');
@@ -136,36 +137,50 @@ export default function DashboardPage() {
     }
 
     const message = 
-        `${t('dashboard.shareMessage.intro')}\n\n` +
+        `${t('dashboard.shareMessage.intro')}\n` +
+        `${separator}\n\n` +
         mealsSection +
-        `*${t('dashboard.macrosTitleFormatted')}*\n` +
-        `🔥 *${t('dashboard.calories')}*: ${totals.calories.toLocaleString()} / ${dailyGoals.calories.toLocaleString()} kcal\n` +
-        `💪 *${t('dashboard.protein')}*: ${totals.protein.toFixed(1)} / ${dailyGoals.protein} g\n` +
-        `🍞 *${t('dashboard.carbs')}*: ${totals.carbs.toFixed(1)} / ${dailyGoals.carbs} g\n` +
-        `🥑 *${t('dashboard.fats')}*: ${totals.fats.toFixed(1)} / ${dailyGoals.fats} g\n` +
-        `🌾 *${t('dashboard.fiber')}*: ${totals.fiber.toFixed(1)} / ${dailyGoals.fiber} g\n\n` +
-        `*${t('dashboard.microsTitleFormatted')}*\n` +
-        `🧂 *${t('dashboard.sodium')}*: ${totals.sodium.toLocaleString()} / ${dailyGoals.sodium.toLocaleString()} mg\n` +
-        `🍬 *${t('dashboard.sugar')}*: ${totals.sugar.toFixed(1)} / ${dailyGoals.sugar} g\n` +
-        `🍌 *${t('dashboard.potassium')}*: ${totals.potassium.toLocaleString()} / ${dailyGoals.potassium.toLocaleString()} mg\n` +
-        `🍊 *${t('dashboard.vitaminC')}*: ${totals.vitaminC.toFixed(1)} / ${dailyGoals.vitaminC} mg\n` +
-        `🥛 *${t('dashboard.calcium')}*: ${totals.calcium.toLocaleString()} / ${dailyGoals.calcium.toLocaleString()} mg\n` +
-        `🔩 *${t('dashboard.iron')}*: ${totals.iron.toFixed(1)} / ${dailyGoals.iron} g\n\n` +
+        `*${t('dashboard.shareMessage.macrosHeader')}*\n` +
+        `🔥 ${t('dashboard.calories')}: *${totals.calories.toLocaleString()} / ${dailyGoals.calories.toLocaleString()} kcal*\n` +
+        `💪 ${t('dashboard.protein')}: *${totals.protein.toFixed(1)} / ${dailyGoals.protein} g*\n` +
+        `🍞 ${t('dashboard.carbs')}: *${totals.carbs.toFixed(1)} / ${dailyGoals.carbs} g*\n` +
+        `🥑 ${t('dashboard.fats')}: *${totals.fats.toFixed(1)} / ${dailyGoals.fats} g*\n` +
+        `🌾 ${t('dashboard.fiber')}: *${totals.fiber.toFixed(1)} / ${dailyGoals.fiber} g*\n\n` +
+        `*${t('dashboard.shareMessage.microsHeader')}*\n` +
+        `🧂 ${t('dashboard.sodium')}: *${totals.sodium.toLocaleString()} / ${dailyGoals.sodium.toLocaleString()} mg*\n` +
+        `🍬 ${t('dashboard.sugar')}: *${totals.sugar.toFixed(1)} / ${dailyGoals.sugar} g*\n` +
+        `🍌 ${t('dashboard.potassium')}: *${totals.potassium.toLocaleString()} / ${dailyGoals.potassium.toLocaleString()} mg*\n` +
+        `🍊 ${t('dashboard.vitaminC')}: *${totals.vitaminC.toFixed(1)} / ${dailyGoals.vitaminC} mg*\n` +
+        `🥛 ${t('dashboard.calcium')}: *${totals.calcium.toLocaleString()} / ${dailyGoals.calcium.toLocaleString()} mg*\n` +
+        `🔩 ${t('dashboard.iron')}: *${totals.iron.toFixed(1)} / ${dailyGoals.iron} mg*\n\n` +
+        `${separator}\n` +
         `${t('dashboard.shareMessage.outro')}`;
     
     const encodedMessage = encodeURIComponent(message);
     window.open(`https://wa.me/?text=${encodedMessage}`, '_blank');
   };
   
-  const renderNutrient = (label: string, value: number, unit: string) => (
+  const renderNutrient = (label: string, value: number, goal: number, unit: string, decimalPlaces = 0) => (
     <div className="flex justify-between text-sm">
       <span className="text-muted-foreground">{label}</span>
-      <span className="font-medium">{value != null ? value.toLocaleString() : 'N/A'} {unit}</span>
+      <span className="font-medium">
+        {value != null ? value.toLocaleString(undefined, { minimumFractionDigits: decimalPlaces, maximumFractionDigits: decimalPlaces }) : 'N/A'}
+        <span className="text-muted-foreground"> / {goal.toLocaleString()} {unit}</span>
+      </span>
     </div>
   );
 
   const renderSuggestion = (meal: MealSuggestion | undefined, mealType: string) => {
     if (!meal) return null;
+    const nutritionalInfoWithUnit = (labelKey: string, value: number, unit: string, decimalPlaces = 0) => (
+      <div className="flex justify-between text-sm">
+        <span className="text-muted-foreground">{t(labelKey)}</span>
+        <span className="font-medium">
+          {value != null ? value.toLocaleString(undefined, { minimumFractionDigits: decimalPlaces, maximumFractionDigits: decimalPlaces }) : 'N/A'} {unit}
+        </span>
+      </div>
+    );
+
     return (
     <AccordionItem value={mealType}>
       <AccordionTrigger className="text-base">
@@ -185,17 +200,17 @@ export default function DashboardPage() {
         <div>
           <h4 className="font-semibold">{t('dashboard.suggestions.nutrition')}</h4>
            <div className="mt-2 space-y-1">
-            {renderNutrient(t('addFood.nutrients.calories'), meal.nutritionalInfo.calories, 'kcal')}
-            {renderNutrient(t('addFood.nutrients.protein'), meal.nutritionalInfo.protein, 'g')}
-            {renderNutrient(t('addFood.nutrients.carbs'), meal.nutritionalInfo.carbs, 'g')}
-            {renderNutrient(t('addFood.nutrients.fats'), meal.nutritionalInfo.fats, 'g')}
-            {renderNutrient(t('addFood.nutrients.fiber'), meal.nutritionalInfo.fiber, 'g')}
-            {renderNutrient(t('addFood.nutrients.sugar'), meal.nutritionalInfo.sugar, 'g')}
-            {renderNutrient(t('addFood.nutrients.sodium'), meal.nutritionalInfo.sodium, 'mg')}
-            {renderNutrient(t('addFood.nutrients.potassium'), meal.nutritionalInfo.potassium, 'mg')}
-            {renderNutrient(t('addFood.nutrients.calcium'), meal.nutritionalInfo.calcium, 'mg')}
-            {renderNutrient(t('addFood.nutrients.iron'), meal.nutritionalInfo.iron, 'mg')}
-            {renderNutrient(t('addFood.nutrients.vitaminC'), meal.nutritionalInfo.vitaminC, 'mg')}
+            {nutritionalInfoWithUnit('addFood.nutrients.calories', meal.nutritionalInfo.calories, 'kcal')}
+            {nutritionalInfoWithUnit('addFood.nutrients.protein', meal.nutritionalInfo.protein, 'g', 1)}
+            {nutritionalInfoWithUnit('addFood.nutrients.carbs', meal.nutritionalInfo.carbs, 'g', 1)}
+            {nutritionalInfoWithUnit('addFood.nutrients.fats', meal.nutritionalInfo.fats, 'g', 1)}
+            {nutritionalInfoWithUnit('addFood.nutrients.fiber', meal.nutritionalInfo.fiber, 'g', 1)}
+            {nutritionalInfoWithUnit('addFood.nutrients.sugar', meal.nutritionalInfo.sugar, 'g', 1)}
+            {nutritionalInfoWithUnit('addFood.nutrients.sodium', meal.nutritionalInfo.sodium, 'mg')}
+            {nutritionalInfoWithUnit('addFood.nutrients.potassium', meal.nutritionalInfo.potassium, 'mg')}
+            {nutritionalInfoWithUnit('addFood.nutrients.calcium', meal.nutritionalInfo.calcium, 'mg')}
+            {nutritionalInfoWithUnit('addFood.nutrients.iron', meal.nutritionalInfo.iron, 'mg', 1)}
+            {nutritionalInfoWithUnit('addFood.nutrients.vitaminC', meal.nutritionalInfo.vitaminC, 'mg', 1)}
           </div>
         </div>
         <div>
@@ -253,12 +268,12 @@ export default function DashboardPage() {
             <CardDescription>{t('dashboard.microsDesc')}</CardDescription>
           </CardHeader>
           <CardContent className="grid grid-cols-2 gap-x-6 gap-y-4">
-              {renderNutrient(t('dashboard.sodium'), totals.sodium, `mg / ${dailyGoals.sodium.toLocaleString()} mg`)}
-              {renderNutrient(t('dashboard.sugar'), totals.sugar, `g / ${dailyGoals.sugar} g`)}
-              {renderNutrient(t('dashboard.potassium'), totals.potassium, `mg / ${dailyGoals.potassium.toLocaleString()} mg`)}
-              {renderNutrient(t('dashboard.vitaminC'), totals.vitaminC, `mg / ${dailyGoals.vitaminC} mg`)}
-              {renderNutrient(t('dashboard.calcium'), totals.calcium, `mg / ${dailyGoals.calcium.toLocaleString()} mg`)}
-              {renderNutrient(t('dashboard.iron'), totals.iron, `g / ${dailyGoals.iron} g`)}
+              {renderNutrient(t('dashboard.sodium'), totals.sodium, dailyGoals.sodium, 'mg')}
+              {renderNutrient(t('dashboard.sugar'), totals.sugar, dailyGoals.sugar, 'g', 1)}
+              {renderNutrient(t('dashboard.potassium'), totals.potassium, dailyGoals.potassium, 'mg')}
+              {renderNutrient(t('dashboard.vitaminC'), totals.vitaminC, dailyGoals.vitaminC, 'mg', 1)}
+              {renderNutrient(t('dashboard.calcium'), totals.calcium, dailyGoals.calcium, 'mg')}
+              {renderNutrient(t('dashboard.iron'), totals.iron, dailyGoals.iron, 'mg', 1)}
           </CardContent>
         </Card>
 
@@ -372,3 +387,4 @@ export default function DashboardPage() {
     </div>
   );
 }
+

@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Camera, Utensils, Upload, Video, X, Loader2, SwitchCamera, Percent, Barcode } from 'lucide-react';
+import { Camera, Utensils, Upload, Video, X, Loader2, SwitchCamera, Percent, Barcode, ThumbsUp, ThumbsDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { analyzeFoodImage, type NutritionalInfo } from '@/ai/flows/analyze-food-image';
 import { analyzeDishName } from '@/ai/flows/analyze-dish-name';
@@ -17,11 +17,13 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { useMealLog, type MealType } from '@/contexts/meal-log-context';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useUserSettings } from '@/contexts/user-settings-context';
 
 export default function AddFoodPage() {
   const { t } = useLanguage();
   const { toast } = useToast();
   const { addMeal } = useMealLog();
+  const { addPositiveFeedback, addNegativeFeedback } = useUserSettings();
 
   // Form state
   const [image, setImage] = useState<File | null>(null);
@@ -31,6 +33,7 @@ export default function AddFoodPage() {
   const [analysisResult, setAnalysisResult] = useState<NutritionalInfo | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [mealType, setMealType] = useState<MealType>('snack');
+  const [loggedMealForFeedback, setLoggedMealForFeedback] = useState<NutritionalInfo | null>(null);
 
   // Camera state
   const [isCameraOpen, setIsCameraOpen] = useState(false);
@@ -48,6 +51,7 @@ export default function AddFoodPage() {
     setAnalysisResult(null);
     setImagePreview(null);
     setMealType('snack');
+    setLoggedMealForFeedback(null);
   }, []);
   
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -112,8 +116,31 @@ export default function AddFoodPage() {
       title: t('addFood.logSuccessTitle'),
       description: t('addFood.logSuccessDescription').replace('{dishName}', analysisResult.dishName),
     });
-    resetForm();
+    setLoggedMealForFeedback(analysisResult);
+    setAnalysisResult(null);
+    setImage(null);
+    setImagePreview(null);
+    setDescription('');
+    setPortionSize('');
   };
+  
+  const handleFeedback = (isPositive: boolean) => {
+    if (!loggedMealForFeedback) return;
+    const dishName = loggedMealForFeedback.dishName;
+
+    if (isPositive) {
+      addPositiveFeedback(dishName);
+    } else {
+      addNegativeFeedback(dishName);
+    }
+
+    toast({
+      description: t('addFood.feedback.thanks'),
+    });
+
+    setLoggedMealForFeedback(null);
+  };
+
 
   // Camera Logic
   useEffect(() => {
@@ -363,6 +390,34 @@ export default function AddFoodPage() {
                   </Select>
                 </div>
                 <Button onClick={handleLogMeal} className="w-full">{t('addFood.logMealButton')}</Button>
+              </CardFooter>
+            </Card>
+          )}
+
+          {loggedMealForFeedback && (
+            <Card className="mt-6 border-dashed border-primary/50">
+              <CardHeader className="text-center">
+                <CardTitle className="text-lg">
+                  {t('addFood.feedback.question').replace('{dishName}', loggedMealForFeedback.dishName)}
+                </CardTitle>
+              </CardHeader>
+              <CardFooter className="flex justify-center gap-4">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="h-14 w-14 rounded-full border-2 hover:bg-green-100 dark:hover:bg-green-900/50"
+                  onClick={() => handleFeedback(true)}
+                >
+                  <ThumbsUp className="h-7 w-7 text-green-600" />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="h-14 w-14 rounded-full border-2 hover:bg-red-100 dark:hover:bg-red-900/50"
+                  onClick={() => handleFeedback(false)}
+                >
+                  <ThumbsDown className="h-7 w-7 text-red-600" />
+                </Button>
               </CardFooter>
             </Card>
           )}

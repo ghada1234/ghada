@@ -25,6 +25,8 @@ const SuggestMealsInputSchema = z.object({
     likes: z.string().optional().describe('A list of preferred foods or flavors.'),
     dislikes: z.string().optional().describe('A list of foods or flavors to avoid.'),
     remainingCalories: z.number().optional().describe('The remaining calories for the day to target for the suggested meals.'),
+    positiveFeedbackOn: z.array(z.string()).optional().describe('A list of dishes the user has previously liked.'),
+    negativeFeedbackOn: z.array(z.string()).optional().describe('A list of dishes the user has previously disliked.'),
 });
 export type SuggestMealsInput = z.infer<typeof SuggestMealsInputSchema>;
 
@@ -59,6 +61,12 @@ Consider the following user constraints:
 - The total calories for all suggested meals (breakfast, lunch, dinner, snack, dessert) should be approximately {{{remainingCalories}}} calories.
 {{else}}
 - Provide a generally healthy and balanced plan.
+{{/if}}
+{{#if positiveFeedbackOn}}
+- The user has previously given positive feedback on these dishes, so you can suggest similar items: {{{positiveFeedbackOn}}}
+{{/if}}
+{{#if negativeFeedbackOn}}
+- The user has previously given negative feedback on these dishes, so you should avoid them or dishes like them: {{{negativeFeedbackOn}}}
 {{/if}}
 
 For each meal, provide the following details in {{language}}:

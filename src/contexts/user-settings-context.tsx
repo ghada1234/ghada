@@ -32,6 +32,8 @@ export interface UserProfile {
   allergies?: string | null;
   likes?: string | null;
   dislikes?: string | null;
+  positiveFeedbackOn?: string[];
+  negativeFeedbackOn?: string[];
 }
 
 export interface UserSettings {
@@ -47,6 +49,8 @@ const DEFAULT_SETTINGS: UserSettings = {
     allergies: null,
     likes: null,
     dislikes: null,
+    positiveFeedbackOn: [],
+    negativeFeedbackOn: [],
   },
   dailyGoals: DEFAULT_GOALS,
 };
@@ -55,6 +59,8 @@ interface UserSettingsContextType {
   settings: UserSettings;
   updateGoals: (newGoals: Partial<DailyGoals>) => void;
   updateProfile: (newProfile: Partial<UserProfile>) => void;
+  addPositiveFeedback: (dishName: string) => void;
+  addNegativeFeedback: (dishName: string) => void;
 }
 
 const UserSettingsContext = createContext<UserSettingsContextType | undefined>(
@@ -76,8 +82,8 @@ export const UserSettingsProvider = ({ children }: { children: ReactNode }) => {
           ...currentSettings,
           ...parsedSettings,
           profile: {
-            ...currentSettings.profile,
             ...DEFAULT_SETTINGS.profile,
+            ...currentSettings.profile,
             ...parsedSettings.profile,
           },
           dailyGoals: {
@@ -121,10 +127,41 @@ export const UserSettingsProvider = ({ children }: { children: ReactNode }) => {
     });
   }, []);
 
+  const addPositiveFeedback = useCallback((dishName: string) => {
+    setSettings((prevSettings) => {
+      const updatedProfile = {
+        ...prevSettings.profile,
+        positiveFeedbackOn: Array.from(
+          new Set([...(prevSettings.profile.positiveFeedbackOn || []), dishName])
+        ),
+      };
+      const updatedSettings = { ...prevSettings, profile: updatedProfile };
+      saveSettings(updatedSettings);
+      return updatedSettings;
+    });
+  }, []);
+
+  const addNegativeFeedback = useCallback((dishName: string) => {
+    setSettings((prevSettings) => {
+      const updatedProfile = {
+        ...prevSettings.profile,
+        negativeFeedbackOn: Array.from(
+          new Set([...(prevSettings.profile.negativeFeedbackOn || []), dishName])
+        ),
+      };
+      const updatedSettings = { ...prevSettings, profile: updatedProfile };
+      saveSettings(updatedSettings);
+      return updatedSettings;
+    });
+  }, []);
+
+
   const value = {
     settings,
     updateGoals,
     updateProfile,
+    addPositiveFeedback,
+    addNegativeFeedback,
   };
 
   return (

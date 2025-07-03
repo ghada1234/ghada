@@ -129,6 +129,10 @@
       "iron": "الحديد",
       "vitaminC": "فيتامين ج",
       "confidence": "مستوى الثقة"
+    },
+    "feedback": {
+      "question": "هل كان تحليل '{dishName}' دقيقًا ومفيدًا؟",
+      "thanks": "شكراً لملاحظاتك!"
     }
   },
   "login": {

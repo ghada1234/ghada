@@ -129,6 +129,10 @@
       "iron": "Iron",
       "vitaminC": "Vitamin C",
       "confidence": "Confidence"
+    },
+    "feedback": {
+      "question": "Was the analysis for '{dishName}' accurate and useful?",
+      "thanks": "Thanks for your feedback!"
     }
   },
   "login": {

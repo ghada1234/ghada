@@ -117,6 +117,8 @@ export default function DashboardPage() {
         likes: profile.likes,
         dislikes: profile.dislikes,
         remainingCalories: remainingCalories > 0 ? remainingCalories : undefined,
+        positiveFeedbackOn: profile.positiveFeedbackOn,
+        negativeFeedbackOn: profile.negativeFeedbackOn,
       });
       setSuggestions(result);
     } catch (error) {

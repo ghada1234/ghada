@@ -7,7 +7,8 @@
   "header": {
     "title": "NutriSnap",
     "home": "Home",
-    "about": "About & Feedback",
+    "about": "About",
+    "feedback": "Feedback",
     "dashboard": "Dashboard",
     "addFood": "Add Food",
     "mealPlanner": "Meal Planner",
@@ -236,10 +237,12 @@
       "p1": "NutriSnap was founded by Ghada Al-Ani, a talented software engineer from Baghdad, Iraq. Growing up with the rich flavors of Iraqi cuisine, she developed a deep appreciation for how food connects us to our heritage.",
       "p2": "While living abroad, she noticed a critical flaw in popular health and wellness apps: they struggled to accurately analyze diverse, international dishes. As an engineer, she saw a technical challenge and an opportunity. The apps lacked the sophisticated models to understand complex recipes from her culture and many others.",
       "p3": "Driven to solve this problem, Ghada leveraged her engineering expertise to create a tool that was both technologically advanced and culturally intelligent. She built NutriSnap to empower individuals to understand their diet with precision, without sacrificing their traditions. It's more than just an app; it's a celebration of global cuisine and a commitment to making personalized nutrition accessible to everyone, one snap at a time."
-    },
-    "feedback": {
-      "title": "Rate Your Experience",
-      "description": "We'd love to hear your feedback on how we can improve NutriSnap.",
+    }
+  },
+  "feedbackpage": {
+    "title": "Rate Your Experience",
+    "description": "We'd love to hear your feedback on how we can improve NutriSnap.",
+    "form": {
       "ratingLabel": "How would you rate your experience?",
       "commentLabel": "Any comments or suggestions?",
       "commentPlaceholder": "Tell us what you think...",

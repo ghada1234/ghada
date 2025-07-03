@@ -9,6 +9,7 @@ import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
 import AppSidebar from '@/components/layout/app-sidebar';
 import { MealLogProvider } from '@/contexts/meal-log-context';
 import { UserSettingsProvider } from '@/contexts/user-settings-context';
+import { TestimonialProvider } from '@/contexts/testimonials-context';
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -46,17 +47,19 @@ export default async function RootLayout({
       <body className="min-h-dvh bg-background font-body text-foreground antialiased">
         <LanguageProvider>
           <UserSettingsProvider>
-            <MealLogProvider>
-              <SidebarProvider>
-                <div className="flex">
-                  <AppSidebar />
-                  <SidebarInset>
-                    <Header />
-                    <main className="flex-1">{children}</main>
-                  </SidebarInset>
-                </div>
-              </SidebarProvider>
-            </MealLogProvider>
+            <TestimonialProvider>
+              <MealLogProvider>
+                <SidebarProvider>
+                  <div className="flex">
+                    <AppSidebar />
+                    <SidebarInset>
+                      <Header />
+                      <main className="flex-1">{children}</main>
+                    </SidebarInset>
+                  </div>
+                </SidebarProvider>
+              </MealLogProvider>
+            </TestimonialProvider>
           </UserSettingsProvider>
           <Toaster />
         </LanguageProvider>

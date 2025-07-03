@@ -9,33 +9,23 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { cn } from '@/lib/utils';
 import { useUserSettings } from '@/contexts/user-settings-context';
 import FeedbackForm from '@/components/feedback-form';
+import { useTestimonials } from '@/contexts/testimonials-context';
 
 export default function HomePage() {
   const { t } = useLanguage();
   const { settings } = useUserSettings();
   const user = settings.profile;
-
-  const testimonials = [
-    {
-      avatar: 'https://placehold.co/100x100.png',
-      dataAiHint: 'woman portrait',
-      rating: 5,
-    },
-    {
-      avatar: 'https://placehold.co/100x100.png',
-      dataAiHint: 'man portrait',
-      rating: 5,
-    },
-    {
-      avatar: 'https://placehold.co/100x100.png',
-      dataAiHint: 'woman smiling',
-      rating: 4,
-    },
-  ];
-
+  const { testimonials: userTestimonials } = useTestimonials();
+  
   // The 'as any' is used here because t() can return a complex object (array of objects)
   // based on the JSON structure, not just a string.
-  const translatedTestimonials = t('home.testimonials.reviews') as any[];
+  const defaultTestimonials = t('home.testimonials.reviews') as any[];
+
+  // Combine user-submitted testimonials with default ones, showing newest user ones first.
+  const allTestimonials = [
+    ...userTestimonials.slice().reverse(),
+    ...defaultTestimonials
+  ];
 
   if (user && user.name) {
     // Logged-in view
@@ -88,23 +78,23 @@ export default function HomePage() {
             {t('home.testimonials.title')}
           </h2>
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {testimonials.map((testimonial, index) => (
-              <Card key={index} className="flex flex-col">
+            {allTestimonials.map((testimonial, index) => (
+              <Card key={testimonial.id || index} className="flex flex-col">
                 <CardHeader>
                   <div className="flex items-center gap-4">
                     <Avatar className="h-14 w-14">
                       <AvatarImage
-                        src={testimonial.avatar}
-                        alt={translatedTestimonials[index]?.name}
+                        src={testimonial.avatar || undefined}
+                        alt={testimonial.name}
                         data-ai-hint={testimonial.dataAiHint}
                       />
                       <AvatarFallback>
-                        {translatedTestimonials[index]?.name.charAt(0)}
+                        {testimonial.name.charAt(0)}
                       </AvatarFallback>
                     </Avatar>
                     <div>
                       <p className="font-semibold">
-                        {translatedTestimonials[index]?.name}
+                        {testimonial.name}
                       </p>
                       <div className="flex items-center gap-0.5">
                         {[...Array(5)].map((_, i) => (
@@ -124,7 +114,7 @@ export default function HomePage() {
                 </CardHeader>
                 <CardContent className="flex-1">
                   <p className="text-muted-foreground">
-                    &ldquo;{translatedTestimonials[index]?.text}&rdquo;
+                    &ldquo;{testimonial.text}&rdquo;
                   </p>
                 </CardContent>
               </Card>

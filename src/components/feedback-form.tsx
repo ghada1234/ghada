@@ -16,10 +16,15 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
+import { useTestimonials } from '@/contexts/testimonials-context';
+import { useUserSettings } from '@/contexts/user-settings-context';
 
 export default function FeedbackForm() {
   const { t } = useLanguage();
   const { toast } = useToast();
+  const { addTestimonial } = useTestimonials();
+  const { settings } = useUserSettings();
+
   const [rating, setRating] = useState(0);
   const [feedback, setFeedback] = useState('');
 
@@ -28,8 +33,13 @@ export default function FeedbackForm() {
   };
 
   const handleFeedbackSubmit = () => {
-    // In a real app, this would be sent to a server.
-    // For this prototype, we just show a thank you message.
+    addTestimonial({
+      name: settings.profile.name || 'Anonymous',
+      avatar: settings.profile.avatar,
+      rating: rating,
+      text: feedback,
+    });
+    
     toast({
       title: t('feedbackpage.form.thanksTitle'),
       description: t('feedbackpage.form.thanksDescription'),
@@ -82,7 +92,7 @@ export default function FeedbackForm() {
         </div>
       </CardContent>
       <CardFooter>
-        <Button onClick={handleFeedbackSubmit} disabled={rating === 0}>
+        <Button onClick={handleFeedbackSubmit} disabled={rating === 0 || !feedback}>
           {t('feedbackpage.form.submitButton')}
         </Button>
       </CardFooter>

@@ -18,7 +18,24 @@
   },
   "home": {
     "subtitle": "The smart way to track your nutrition. Snap a photo or describe your meal to get an instant, AI-powered nutritional analysis. Take control of your health today.",
-    "getStarted": "Get Started"
+    "getStarted": "Get Started",
+    "testimonials": {
+      "title": "What Our Users Say",
+      "reviews": [
+        {
+          "name": "Sarah K.",
+          "text": "NutriSnap has revolutionized how I track my meals. The photo analysis is incredibly accurate and saves me so much time!"
+        },
+        {
+          "name": "Ahmed M.",
+          "text": "As someone with specific dietary goals, the personalized meal suggestions are a game-changer. The Iraqi dish recognition is a huge plus!"
+        },
+        {
+          "name": "Fatima A.",
+          "text": "I love the dashboard view! It's so easy to see my progress at a glance. The barcode scanner is super convenient for packaged foods."
+        }
+      ]
+    }
   },
   "dashboard": {
     "title": "Daily Dashboard",

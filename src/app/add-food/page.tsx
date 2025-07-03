@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useRef, useEffect, useCallback } from 'react';
@@ -370,7 +371,7 @@ export default function AddFoodPage() {
       </Card>
 
       <Dialog open={isCameraOpen} onOpenChange={setIsCameraOpen}>
-        <DialogContent>
+        <DialogContent className="max-w-2xl">
           <DialogHeader>
             <DialogTitle>{t('addFood.cameraDialogTitle')}</DialogTitle>
           </DialogHeader>

@@ -103,6 +103,7 @@
     "shareOnWhatsApp": "Share on WhatsApp",
     "shareMessage": {
       "intro": "🍎 *My NutriSnap Daily Summary* 🍎",
+      "todaysMeals": "🍴 *Today's Meals* 🍴",
       "outro": "Checked with NutriSnap! ✅"
     }
   },

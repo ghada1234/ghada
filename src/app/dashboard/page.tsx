@@ -129,8 +129,15 @@ export default function DashboardPage() {
   };
 
   const handleShareOnWhatsApp = () => {
+    let mealsSection = '';
+    if (todaysMeals.length > 0) {
+      const mealsList = todaysMeals.map(meal => `- ${meal.dishName} (${meal.calories} ${t('dashboard.log.calories')})`).join('\n');
+      mealsSection = `*${t('dashboard.shareMessage.todaysMeals')}*\n${mealsList}\n\n`;
+    }
+
     const message = 
         `${t('dashboard.shareMessage.intro')}\n\n` +
+        mealsSection +
         `*${t('dashboard.macrosTitleFormatted')}*\n` +
         `🔥 *${t('dashboard.calories')}*: ${totals.calories.toLocaleString()} / ${dailyGoals.calories.toLocaleString()} kcal\n` +
         `💪 *${t('dashboard.protein')}*: ${totals.protein.toFixed(1)} / ${dailyGoals.protein} g\n` +

@@ -112,7 +112,10 @@
     "passwordLabel": "Password",
     "button": "Login",
     "noAccount": "Don't have an account?",
-    "signUpLink": "Sign up"
+    "signUpLink": "Sign up",
+    "orContinueWith": "Or continue with",
+    "google": "Google",
+    "facebook": "Facebook"
   },
   "register": {
     "title": "Create an Account",
@@ -128,7 +131,10 @@
     "toastSuccessTitle": "Registration Successful!",
     "toastSuccessDescription": "Your account has been created. Welcome to NutriSnap!",
     "avatarLabel": "Choose your Avatar",
-    "uploadAvatar": "Upload a Photo"
+    "uploadAvatar": "Upload a Photo",
+    "orContinueWith": "Or continue with",
+    "google": "Google",
+    "facebook": "Facebook"
   },
   "mealPlanner": {
     "title": "Meal Planner",

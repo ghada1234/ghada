@@ -112,7 +112,10 @@
     "passwordLabel": "كلمة المرور",
     "button": "تسجيل الدخول",
     "noAccount": "ليس لديك حساب؟",
-    "signUpLink": "إنشاء حساب"
+    "signUpLink": "إنشاء حساب",
+    "orContinueWith": "أو المتابعة باستخدام",
+    "google": "جوجل",
+    "facebook": "فيسبوك"
   },
   "register": {
     "title": "إنشاء حساب",
@@ -128,7 +131,10 @@
     "toastSuccessTitle": "تم التسجيل بنجاح!",
     "toastSuccessDescription": "تم إنشاء حسابك. أهلاً بك في نوتري سناب!",
     "avatarLabel": "اختر صورتك الرمزية",
-    "uploadAvatar": "تحميل صورة"
+    "uploadAvatar": "تحميل صورة",
+    "orContinueWith": "أو المتابعة باستخدام",
+    "google": "جوجل",
+    "facebook": "فيسبوك"
   },
   "mealPlanner": {
     "title": "مخطط الوجبات",

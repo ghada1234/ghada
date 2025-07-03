@@ -12,6 +12,7 @@
     "dashboard": "Dashboard",
     "addFood": "Add Food",
     "mealPlanner": "Meal Planner",
+    "reports": "Reports",
     "settings": "Settings",
     "login": "Login",
     "logout": "Logout",
@@ -259,6 +260,25 @@
       "submitButton": "Submit Feedback",
       "thanksTitle": "Thank You!",
       "thanksDescription": "Your feedback has been received. We appreciate you taking the time to help us improve."
+    }
+  },
+  "reports": {
+    "title": "Progress Reports",
+    "description": "Track your nutritional journey and celebrate your progress.",
+    "daily": "Daily",
+    "weekly": "Weekly",
+    "monthly": "Monthly",
+    "calories": "Calories",
+    "protein": "Protein",
+    "carbs": "Carbs",
+    "fats": "Fats",
+    "avgCalories": "Avg. Daily Calories",
+    "noData": "Not enough data to display a chart. Keep logging your meals!",
+    "gamification": {
+      "title": "Your Progress Streak",
+      "description": "Log your meals every day to build up your streak!",
+      "currentStreak": "Current Streak",
+      "days": "days"
     }
   }
 }

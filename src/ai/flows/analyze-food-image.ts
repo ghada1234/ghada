@@ -38,7 +38,8 @@ const prompt = ai.definePrompt({
   
   Photo: {{media url=photoDataUri}}
 
-  First, identify the dish. Then provide a nutritional breakdown.`,
+  First, identify the dish. Then provide a nutritional breakdown.
+  Finally, provide a confidence score (from 0.0 to 1.0) for the accuracy of the entire analysis.`,
 });
 
 const analyzeFoodImageFlow = ai.defineFlow(

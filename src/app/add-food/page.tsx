@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Camera, Utensils, Upload, Video, X, Loader2, SwitchCamera } from 'lucide-react';
+import { Camera, Utensils, Upload, Video, X, Loader2, SwitchCamera, Percent } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { analyzeFoodImage, type NutritionalInfo } from '@/ai/flows/analyze-food-image';
 import { analyzeDishName } from '@/ai/flows/analyze-dish-name';
@@ -274,7 +274,13 @@ export default function AddFoodPage() {
           {analysisResult && (
             <Card className="mt-6">
               <CardHeader>
-                <CardTitle>{t('addFood.analysisResultTitle')}: {analysisResult.dishName}</CardTitle>
+                <div className="flex justify-between items-start">
+                  <CardTitle>{t('addFood.analysisResultTitle')}: {analysisResult.dishName}</CardTitle>
+                   <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+                       <Percent className="h-4 w-4" />
+                       <span>{t('addFood.nutrients.confidence')}: {(analysisResult.confidence * 100).toFixed(0)}%</span>
+                   </div>
+                </div>
               </CardHeader>
               <CardContent className="space-y-2">
                 {renderNutrient(t('addFood.nutrients.calories'), analysisResult.calories, 'kcal')}

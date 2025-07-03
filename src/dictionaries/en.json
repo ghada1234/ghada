@@ -13,6 +13,10 @@
     "login": "Login",
     "toggleLanguage": "Switch to Arabic"
   },
+  "home": {
+    "subtitle": "The smart way to track your nutrition. Snap a photo or describe your meal to get an instant, AI-powered nutritional analysis. Take control of your health today.",
+    "getStarted": "Get Started"
+  },
   "dashboard": {
     "title": "Daily Dashboard",
     "macrosTitle": "Macronutrients",
@@ -93,7 +97,8 @@
       "potassium": "Potassium",
       "calcium": "Calcium",
       "iron": "Iron",
-      "vitaminC": "Vitamin C"
+      "vitaminC": "Vitamin C",
+      "confidence": "Confidence"
     }
   },
   "login": {
@@ -109,8 +114,8 @@
   "register": {
     "title": "Create an Account",
     "description": "Enter your details to get started with NutriSnap.",
-    "nameLabel": "Name",
-    "namePlaceholder": "Your Name",
+    "nameLabel": "Username",
+    "namePlaceholder": "Choose a username",
     "emailLabel": "Email",
     "emailPlaceholder": "m@example.com",
     "passwordLabel": "Password",

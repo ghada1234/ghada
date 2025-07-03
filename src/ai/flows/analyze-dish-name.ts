@@ -34,7 +34,8 @@ const prompt = ai.definePrompt({
   Assume a standard single serving portion size.
   {{/if}}
 
-  First, identify the dish name from the description. Then provide a nutritional breakdown.`,
+  First, identify the dish name from the description. Then provide a nutritional breakdown.
+  Finally, provide a confidence score (from 0.0 to 1.0) for the accuracy of the entire analysis.`,
 });
 
 const analyzeDishNameFlow = ai.defineFlow(

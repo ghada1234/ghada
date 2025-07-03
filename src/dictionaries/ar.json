@@ -13,6 +13,10 @@
     "login": "تسجيل الدخول",
     "toggleLanguage": "التبديل إلى الإنجليزية"
   },
+  "home": {
+    "subtitle": "الطريقة الذكية لتتبع تغذيتك. التقط صورة أو صف وجبتك للحصول على تحليل غذائي فوري مدعوم بالذكاء الاصطناعي. تحكم بصحتك اليوم.",
+    "getStarted": "ابدأ الآن"
+  },
   "dashboard": {
     "title": "لوحة التحكم اليومية",
     "macrosTitle": "المغذيات الكبيرة",
@@ -93,7 +97,8 @@
       "potassium": "البوتاسيوم",
       "calcium": "الكالسيوم",
       "iron": "الحديد",
-      "vitaminC": "فيتامين ج"
+      "vitaminC": "فيتامين ج",
+      "confidence": "مستوى الثقة"
     }
   },
   "login": {
@@ -109,8 +114,8 @@
   "register": {
     "title": "إنشاء حساب",
     "description": "أدخل بياناتك لتبدأ مع نوتري سناب.",
-    "nameLabel": "الاسم",
-    "namePlaceholder": "اسمك",
+    "nameLabel": "اسم المستخدم",
+    "namePlaceholder": "اختر اسم مستخدم",
     "emailLabel": "البريد الإلكتروني",
     "emailPlaceholder": "m@example.com",
     "passwordLabel": "كلمة المرور",

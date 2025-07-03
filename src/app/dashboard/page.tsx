@@ -5,24 +5,81 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { PlusCircle, Loader2, Utensils, Trash2 } from 'lucide-react';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import { PlusCircle, Loader2, Utensils, Trash2, Info, Sparkles, Droplets } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useLanguage } from '@/contexts/language-context';
 import { suggestMeals, type SuggestMealsOutput, type MealSuggestion } from '@/ai/flows/suggest-meals';
-import { useMealLog } from '@/contexts/meal-log-context';
+import { useMealLog, type LoggedMeal } from '@/contexts/meal-log-context';
 import { useUserSettings } from '@/contexts/user-settings-context';
 import { isToday } from 'date-fns';
+import type { DailyGoals } from '@/contexts/user-settings-context';
+
+
+const MacroProgress = ({
+  nutrientKey,
+  label,
+  unit,
+  currentValue,
+  goalValue,
+  tooltip,
+}: {
+  nutrientKey: keyof DailyGoals;
+  label: string;
+  unit: string;
+  currentValue: number;
+  goalValue: number;
+  tooltip: string;
+}) => {
+  const getProgress = (current: number, goal: number) => (goal > 0 ? (current / goal) * 100 : 0);
+
+  const getProgressColorClass = (current: number, goal: number): string => {
+    if (goal <= 0) return 'bg-primary';
+    const percentage = (current / goal) * 100;
+    if (percentage > 105) return 'bg-destructive';
+    if (percentage > 90) return 'bg-warning';
+    return 'bg-primary';
+  };
+
+  const isCalories = nutrientKey === 'calories';
+
+  return (
+    <div>
+      <div className={`mb-1 flex justify-between ${isCalories ? 'items-baseline' : 'items-center'}`}>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <div className={`flex items-center gap-1.5 cursor-help ${isCalories ? 'text-lg font-semibold' : ''}`}>
+              <span>{label}</span>
+              <Info className="h-3.5 w-3.5 text-muted-foreground" />
+            </div>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>{tooltip}</p>
+          </TooltipContent>
+        </Tooltip>
+        <span className={`${isCalories ? 'text-xl font-bold font-headline' : 'font-medium'}`}>
+          {currentValue.toLocaleString(undefined, { maximumFractionDigits: isCalories ? 0 : 1 })} / {goalValue.toLocaleString()} {unit}
+        </span>
+      </div>
+      <Progress
+        value={getProgress(currentValue, goalValue)}
+        indicatorClassName={getProgressColorClass(currentValue, goalValue)}
+        className={isCalories ? 'h-4' : 'h-2'}
+      />
+    </div>
+  );
+};
+
 
 export default function DashboardPage() {
   const { t, lang } = useLanguage();
   const { loggedMeals, removeMeal } = useMealLog();
-  const { settings } = useUserSettings(); // Use settings from context
-  const { dailyGoals } = settings;
+  const { settings } = useUserSettings();
+  const { dailyGoals, profile } = settings;
   const [suggestions, setSuggestions] = useState<SuggestMealsOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Filter for today's meals
   const todaysMeals = useMemo(() => {
     return loggedMeals.filter(meal => isToday(new Date(meal.loggedAt)));
   }, [loggedMeals]);
@@ -47,13 +104,11 @@ export default function DashboardPage() {
     });
   }, [todaysMeals]);
 
-  const getProgress = (current: number, goal: number) => (goal > 0 ? (current / goal) * 100 : 0);
-
   const handleGenerateSuggestions = async () => {
     setIsLoading(true);
     setSuggestions(null);
     try {
-      const result = await suggestMeals({ language: lang });
+      const result = await suggestMeals({ language: lang, dietaryPreference: profile.dietaryPreference });
       setSuggestions(result);
     } catch (error) {
       console.error("Failed to generate meal suggestions:", error);
@@ -69,11 +124,13 @@ export default function DashboardPage() {
     </div>
   );
 
-  const renderSuggestion = (meal: MealSuggestion, mealType: string) => (
+  const renderSuggestion = (meal: MealSuggestion | undefined, mealType: string) => {
+    if (!meal) return null;
+    return (
     <AccordionItem value={mealType}>
       <AccordionTrigger className="text-base">
         <div className="flex flex-col items-start text-start md:flex-row md:items-center">
-          <span className="font-semibold">{t(`dashboard.${mealType}`)}</span>
+          <span className="font-semibold">{t(`addFood.mealTypes.${mealType}`)}:</span>
           <span className="md:mx-2">{meal.dishName}</span>
         </div>
       </AccordionTrigger>
@@ -109,9 +166,20 @@ export default function DashboardPage() {
         </div>
       </AccordionContent>
     </AccordionItem>
-  );
+    )
+  };
+
+  const MealTypeTag = ({ mealType }: { mealType: LoggedMeal['mealType']}) => {
+    if (!mealType) return null;
+    return (
+      <div className="text-xs capitalize px-2 py-0.5 rounded-full bg-muted text-muted-foreground">
+        {t(`addFood.mealTypes.${mealType}`)}
+      </div>
+    );
+  };
 
   return (
+    <div className="relative min-h-[calc(100vh-4rem)]">
     <div className="flex flex-col gap-8 p-4 md:p-8">
       <h1 className="font-headline text-3xl font-bold">{t('dashboard.title')}</h1>
 
@@ -122,41 +190,11 @@ export default function DashboardPage() {
             <CardDescription>{t('dashboard.macrosDesc')}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div>
-              <div className="mb-1 flex justify-between">
-                <span>{t('dashboard.calories')}</span>
-                <span className="font-medium">{totals.calories.toLocaleString()} / {dailyGoals.calories.toLocaleString()} kcal</span>
-              </div>
-              <Progress value={getProgress(totals.calories, dailyGoals.calories)} />
-            </div>
-            <div>
-              <div className="mb-1 flex justify-between">
-                <span>{t('dashboard.protein')}</span>
-                <span className="font-medium">{totals.protein.toFixed(1)} / {dailyGoals.protein} g</span>
-              </div>
-              <Progress value={getProgress(totals.protein, dailyGoals.protein)} />
-            </div>
-            <div>
-              <div className="mb-1 flex justify-between">
-                <span>{t('dashboard.carbs')}</span>
-                <span className="font-medium">{totals.carbs.toFixed(1)} / {dailyGoals.carbs} g</span>
-              </div>
-              <Progress value={getProgress(totals.carbs, dailyGoals.carbs)} />
-            </div>
-            <div>
-              <div className="mb-1 flex justify-between">
-                <span>{t('dashboard.fats')}</span>
-                <span className="font-medium">{totals.fats.toFixed(1)} / {dailyGoals.fats} g</span>
-              </div>
-              <Progress value={getProgress(totals.fats, dailyGoals.fats)} />
-            </div>
-            <div>
-              <div className="mb-1 flex justify-between">
-                <span>{t('dashboard.fiber')}</span>
-                <span className="font-medium">{totals.fiber.toFixed(1)} / {dailyGoals.fiber} g</span>
-              </div>
-              <Progress value={getProgress(totals.fiber, dailyGoals.fiber)} />
-            </div>
+            <MacroProgress nutrientKey="calories" label={t('dashboard.calories')} unit="kcal" currentValue={totals.calories} goalValue={dailyGoals.calories} tooltip={t('dashboard.tooltips.calories')} />
+            <MacroProgress nutrientKey="protein" label={t('dashboard.protein')} unit="g" currentValue={totals.protein} goalValue={dailyGoals.protein} tooltip={t('dashboard.tooltips.protein')} />
+            <MacroProgress nutrientKey="carbs" label={t('dashboard.carbs')} unit="g" currentValue={totals.carbs} goalValue={dailyGoals.carbs} tooltip={t('dashboard.tooltips.carbs')} />
+            <MacroProgress nutrientKey="fats" label={t('dashboard.fats')} unit="g" currentValue={totals.fats} goalValue={dailyGoals.fats} tooltip={t('dashboard.tooltips.fats')} />
+            <MacroProgress nutrientKey="fiber" label={t('dashboard.fiber')} unit="g" currentValue={totals.fiber} goalValue={dailyGoals.fiber} tooltip={t('dashboard.tooltips.fiber')} />
           </CardContent>
         </Card>
 
@@ -166,45 +204,28 @@ export default function DashboardPage() {
             <CardDescription>{t('dashboard.microsDesc')}</CardDescription>
           </CardHeader>
           <CardContent className="grid grid-cols-2 gap-x-6 gap-y-4">
-            <div className="text-sm">
-              <p className="text-muted-foreground">{t('dashboard.sodium')}</p>
-              <p className="font-medium">{totals.sodium.toLocaleString()} / {dailyGoals.sodium.toLocaleString()} mg</p>
-            </div>
-            <div className="text-sm">
-              <p className="text-muted-foreground">{t('dashboard.sugar')}</p>
-              <p className="font-medium">{totals.sugar.toFixed(1)} / {dailyGoals.sugar} g</p>
-            </div>
-            <div className="text-sm">
-              <p className="text-muted-foreground">{t('dashboard.potassium')}</p>
-              <p className="font-medium">{totals.potassium.toLocaleString()} / {dailyGoals.potassium.toLocaleString()} mg</p>
-            </div>
-            <div className="text-sm">
-              <p className="text-muted-foreground">{t('dashboard.vitaminC')}</p>
-              <p className="font-medium">{totals.vitaminC.toFixed(1)} / {dailyGoals.vitaminC} mg</p>
-            </div>
-            <div className="text-sm">
-              <p className="text-muted-foreground">{t('dashboard.calcium')}</p>
-              <p className="font-medium">{totals.calcium.toLocaleString()} / {dailyGoals.calcium.toLocaleString()} mg</p>
-            </div>
-            <div className="text-sm">
-              <p className="text-muted-foreground">{t('dashboard.iron')}</p>
-              <p className="font-medium">{totals.iron.toFixed(1)} / {dailyGoals.iron} mg</p>
-            </div>
+              {renderNutrient(t('dashboard.sodium'), totals.sodium, `mg / ${dailyGoals.sodium.toLocaleString()} mg`)}
+              {renderNutrient(t('dashboard.sugar'), totals.sugar, `g / ${dailyGoals.sugar} g`)}
+              {renderNutrient(t('dashboard.potassium'), totals.potassium, `mg / ${dailyGoals.potassium.toLocaleString()} mg`)}
+              {renderNutrient(t('dashboard.vitaminC'), totals.vitaminC, `mg / ${dailyGoals.vitaminC} mg`)}
+              {renderNutrient(t('dashboard.calcium'), totals.calcium, `mg / ${dailyGoals.calcium.toLocaleString()} mg`)}
+              {renderNutrient(t('dashboard.iron'), totals.iron, `g / ${dailyGoals.iron} g`)}
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
+        <Card className="md:col-span-2">
+          <CardHeader>
             <CardTitle>{t('dashboard.logTitle')}</CardTitle>
-            <Link href="/add-food">
-              <Button size="sm">
-                <PlusCircle className="mx-2 h-4 w-4" /> {t('dashboard.addFoodButton')}
-              </Button>
-            </Link>
           </CardHeader>
           <CardContent>
             {todaysMeals.length === 0 ? (
-              <p className="py-8 text-center text-sm text-muted-foreground">{t('dashboard.logEmpty')}</p>
+              <div className="flex flex-col items-center justify-center py-8 text-center">
+                <div className="mb-4 rounded-full bg-secondary p-4">
+                  <Utensils className="h-10 w-10 text-secondary-foreground" />
+                </div>
+                <h3 className="text-lg font-semibold">{t('dashboard.logEmpty.title')}</h3>
+                <p className="text-sm text-muted-foreground">{t('dashboard.logEmpty.subtitle')}</p>
+              </div>
             ) : (
               <div className="mt-4 space-y-4">
                 {todaysMeals.map(meal => (
@@ -224,7 +245,10 @@ export default function DashboardPage() {
                     )}
                     <div className="flex-1">
                       <p className="font-semibold">{meal.dishName}</p>
-                      <p className="text-sm text-muted-foreground">{meal.calories} {t('dashboard.log.calories')}</p>
+                      <div className="flex items-center gap-2">
+                        <p className="text-sm text-muted-foreground">{meal.calories} {t('dashboard.log.calories')}</p>
+                        <MealTypeTag mealType={meal.mealType} />
+                      </div>
                     </div>
                     <Button
                       variant="ghost"
@@ -242,9 +266,9 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="md:col-span-2">
           <CardHeader>
-            <CardTitle>{t('dashboard.suggestionsTitle')}</CardTitle>
+            <CardTitle>{t('dashboard.smartMealIdeasTitle')}</CardTitle>
             <CardDescription>{t('dashboard.suggestionsDesc')}</CardDescription>
           </CardHeader>
           <CardContent>
@@ -259,10 +283,18 @@ export default function DashboardPage() {
                 {renderSuggestion(suggestions.breakfast, 'breakfast')}
                 {renderSuggestion(suggestions.lunch, 'lunch')}
                 {renderSuggestion(suggestions.dinner, 'dinner')}
+                {renderSuggestion(suggestions.snack, 'snack')}
+                {renderSuggestion(suggestions.dessert, 'dessert')}
               </Accordion>
             )}
             {!isLoading && !suggestions && (
-               <p className="py-4 text-center text-sm text-muted-foreground">{t('dashboard.suggestionsEmpty')}</p>
+              <div className="flex flex-col items-center justify-center py-8 text-center">
+                 <div className="mb-4 rounded-full bg-secondary p-4">
+                   <Sparkles className="h-8 w-8 text-secondary-foreground" />
+                 </div>
+                 <h3 className="text-lg font-semibold">{t('dashboard.suggestionsEmpty.title')}</h3>
+                 <p className="text-sm text-muted-foreground">{t('dashboard.suggestionsEmpty.subtitle')}</p>
+              </div>
             )}
 
             <Button onClick={handleGenerateSuggestions} disabled={isLoading} variant="outline" className="mt-4 w-full">
@@ -278,6 +310,16 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
       </div>
+    </div>
+      <Link href="/add-food" passHref>
+        <Button
+          className="fixed bottom-6 end-6 h-16 w-16 rounded-full shadow-lg z-50 rtl:end-auto rtl:start-6"
+          size="icon"
+          aria-label={t('addFood.title')}
+        >
+          <PlusCircle className="h-8 w-8" />
+        </Button>
+      </Link>
     </div>
   );
 }

@@ -37,25 +37,34 @@
     "vitaminC": "فيتامين ج",
     "calcium": "الكالسيوم",
     "iron": "الحديد",
-    "logTitle": "السجل اليومي",
-    "addFoodButton": "إضافة طعام",
-    "logEmpty": "لم تسجل أي طعام اليوم.",
+    "logTitle": "سجل اليوم",
+    "logEmpty": {
+      "title": "لم يتم تسجيل أي طعام بعد",
+      "subtitle": "دعنا نسجل وجبتك الأولى للبدء!"
+    },
     "log": {
       "calories": "سعر حراري",
       "removeMeal": "إزالة الوجبة"
     },
-    "suggestionsTitle": "اقتراحات وجبات بالذكاء الاصطناعي",
-    "suggestionsDesc": "أفكار وجبات مخصصة لك.",
-    "breakfast": "الإفطار:",
-    "lunch": "الغداء:",
-    "dinner": "العشاء:",
+    "smartMealIdeasTitle": "أفكار وجبات ذكية",
+    "suggestionsDesc": "أفكار وجبات مخصصة تم إنشاؤها بواسطة الذكاء الاصطناعي.",
     "generateButton": "توليد أفكار جديدة",
     "generating": "جارٍ التوليد...",
-    "suggestionsEmpty": "اضغط على الزر لتوليد أفكار وجبات.",
+    "suggestionsEmpty": {
+      "title": "هل أنت مستعد لبعض الإلهام؟",
+      "subtitle": "انقر على الزر للحصول على أفكار وجبات مخصصة."
+    },
     "suggestions": {
       "ingredients": "المكونات",
       "nutrition": "معلومات غذائية",
       "instructions": "التعليمات"
+    },
+    "tooltips": {
+      "calories": "هدفك اليومي من الطاقة. لا بأس في تجاوزه أو النقصان عنه قليلاً.",
+      "protein": "ضروري لإصلاح العضلات ونموها ووظائف الجسم بشكل عام.",
+      "carbs": "المصدر الأساسي للطاقة في الجسم لوظائف الدماغ والعضلات.",
+      "fats": "مهم لإنتاج الهرمونات وامتصاص الفيتامينات وصحة الخلايا.",
+      "fiber": "يساعد في الهضم، ويحافظ على استقرار نسبة السكر في الدم، ويبقيك شبعاً."
     }
   },
   "addFood": {
@@ -78,6 +87,7 @@
     "preview": "معاينة:",
     "analyzePhotoButton": "تحليل الصورة",
     "analyzing": "جار التحليل...",
+    "processingPhoto": "جار معالجة الصورة...",
     "descriptionLabel": "وصف الوجبة",
     "descriptionPlaceholder": "مثال: وعاء من الشوفان مع التوت والمكسرات",
     "analyzeDescriptionButton": "تحليل الوصف",
@@ -85,11 +95,17 @@
     "logMealButton": "تسجيل الوجبة",
     "logSuccessTitle": "تم تسجيل الوجبة!",
     "logSuccessDescription": "تم تسجيل {dishName} بنجاح.",
-    "toastSuccessTitle": "اكتمل التحليل!",
-    "toastSuccessDescription": "تم تسجيل {dishName} ({calories} سعر حراري).",
     "toastErrorTitle": "فشل التحليل",
     "toastErrorPhoto": "تعذر تحليل الصورة. يرجى المحاولة مرة أخرى.",
     "toastErrorDescription": "تعذر تحليل الوصف. يرجى المحاولة مرة أخرى.",
+    "mealTypeLabel": "نوع الوجبة",
+    "mealTypes": {
+      "breakfast": "إفطار",
+      "lunch": "غداء",
+      "dinner": "عشاء",
+      "snack": "وجبة خفيفة",
+      "dessert": "تحلية"
+    },
     "nutrients": {
       "calories": "السعرات الحرارية",
       "protein": "البروتين",
@@ -149,7 +165,9 @@
     "description": "خصص أهدافك الغذائية اليومية وملفك الشخصي.",
     "profileTitle": "إعدادات الملف الشخصي",
     "profile": {
-      "name": "الاسم"
+      "name": "الاسم",
+      "dietaryPreference": "التفضيلات الغذائية",
+      "dietaryPreferencePlaceholder": "مثال: نباتي، قليل الكربوهيدرات، خالي من الغلوتين"
     },
     "macrosTitle": "أهداف المغذيات الكبيرة",
     "microsTitle": "أهداف المغذيات الدقيقة",

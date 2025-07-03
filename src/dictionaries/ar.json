@@ -49,7 +49,7 @@
       "removeMeal": "إزالة الوجبة"
     },
     "smartMealIdeasTitle": "أفكار وجبات ذكية",
-    "suggestionsDesc": "أفكار وجبات مخصصة تم إنشاؤها بواسطة الذكاء الاصطناعي.",
+    "suggestionsDesc": "أفكار وجبات مخصصة بناءً على تفضيلاتك والسعرات الحرارية المتبقية.",
     "generateButton": "توليد أفكار جديدة",
     "generating": "جارٍ التوليد...",
     "suggestionsEmpty": {
@@ -177,7 +177,13 @@
     "profile": {
       "name": "الاسم",
       "dietaryPreference": "التفضيلات الغذائية",
-      "dietaryPreferencePlaceholder": "مثال: نباتي، قليل الكربوهيدرات، خالي من الغلوتين"
+      "dietaryPreferencePlaceholder": "مثال: نباتي، قليل الكربوهيدرات، خالي من الغلوتين",
+      "allergies": "الحساسية",
+      "allergiesPlaceholder": "مثال: فول سوداني، محار، منتجات ألبان",
+      "likes": "الأطعمة المفضلة",
+      "likesPlaceholder": "مثال: طعام حار، سلمون، أفوكادو",
+      "dislikes": "الأطعمة غير المفضلة",
+      "dislikesPlaceholder": "مثال: كزبرة، زيتون، توفو"
     },
     "macrosTitle": "أهداف المغذيات الكبيرة",
     "microsTitle": "أهداف المغذيات الدقيقة",

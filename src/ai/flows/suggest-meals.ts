@@ -20,7 +20,11 @@ export type SuggestMealsOutput = z.infer<typeof SuggestMealsOutputSchema>;
 
 const SuggestMealsInputSchema = z.object({
     language: z.enum(['en', 'ar']).default('ar').describe('The language for the meal suggestions.'),
-    dietaryPreference: z.string().optional().describe('Optional dietary preference, e.g., vegetarian, low-carb.')
+    dietaryPreference: z.string().optional().describe('Optional dietary preference, e.g., vegetarian, low-carb.'),
+    allergies: z.string().optional().describe('A list of allergies to avoid, e.g., Peanuts, Shellfish.'),
+    likes: z.string().optional().describe('A list of preferred foods or flavors.'),
+    dislikes: z.string().optional().describe('A list of foods or flavors to avoid.'),
+    remainingCalories: z.number().optional().describe('The remaining calories for the day to target for the suggested meals.'),
 });
 export type SuggestMealsInput = z.infer<typeof SuggestMealsInputSchema>;
 
@@ -38,7 +42,25 @@ Your suggestions should be diverse and can include dishes from various culinary 
 Your task is to generate a full day's meal plan (breakfast, lunch, dinner, a snack, and a dessert) for a user.
 All output MUST be in the specified language: {{language}}.
 
-Based on the user's dietary preference if provided ({{dietaryPreference}}), suggest one meal for breakfast, one for lunch, one for dinner, one for a snack, and one for a dessert.
+Consider the following user constraints:
+{{#if dietaryPreference}}
+- Dietary Preference: {{{dietaryPreference}}}
+{{/if}}
+{{#if allergies}}
+- Allergies to avoid: {{{allergies}}}
+{{/if}}
+{{#if likes}}
+- User likes: {{{likes}}}
+{{/if}}
+{{#if dislikes}}
+- User dislikes: {{{dislikes}}}
+{{/if}}
+{{#if remainingCalories}}
+- The total calories for all suggested meals (breakfast, lunch, dinner, snack, dessert) should be approximately {{{remainingCalories}}} calories.
+{{else}}
+- Provide a generally healthy and balanced plan.
+{{/if}}
+
 For each meal, provide the following details in {{language}}:
 - A creative and appealing dish name.
 - A short, mouth-watering description.
@@ -46,7 +68,7 @@ For each meal, provide the following details in {{language}}:
 - A detailed nutritional breakdown including estimated values for: calories, protein, carbs, fats, fiber, sodium, sugar, potassium, vitaminC, calcium, and iron.
 - Simple, step-by-step cooking instructions.
 
-Ensure the suggestions are healthy, balanced, and appealing. If no preference is given, provide a generally healthy and balanced plan.`,
+Ensure the suggestions are healthy, balanced, and appealing.`,
 });
 
 const suggestMealsFlow = ai.defineFlow(

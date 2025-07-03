@@ -109,7 +109,15 @@ export default function DashboardPage() {
     setIsLoading(true);
     setSuggestions(null);
     try {
-      const result = await suggestMeals({ language: lang, dietaryPreference: profile.dietaryPreference });
+      const remainingCalories = Math.max(0, dailyGoals.calories - totals.calories);
+      const result = await suggestMeals({
+        language: lang,
+        dietaryPreference: profile.dietaryPreference,
+        allergies: profile.allergies,
+        likes: profile.likes,
+        dislikes: profile.dislikes,
+        remainingCalories: remainingCalories > 0 ? remainingCalories : undefined,
+      });
       setSuggestions(result);
     } catch (error) {
       console.error("Failed to generate meal suggestions:", error);

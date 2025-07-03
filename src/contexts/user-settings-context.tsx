@@ -28,6 +28,10 @@ export type DailyGoals = typeof DEFAULT_GOALS;
 export interface UserProfile {
   name: string | null;
   avatar: string | null; // URL to avatar image
+  dietaryPreference?: string | null;
+  allergies?: string | null;
+  likes?: string | null;
+  dislikes?: string | null;
 }
 
 export interface UserSettings {
@@ -39,6 +43,10 @@ const DEFAULT_SETTINGS: UserSettings = {
   profile: {
     name: null,
     avatar: null,
+    dietaryPreference: null,
+    allergies: null,
+    likes: null,
+    dislikes: null,
   },
   dailyGoals: DEFAULT_GOALS,
 };
@@ -67,7 +75,11 @@ export const UserSettingsProvider = ({ children }: { children: ReactNode }) => {
         setSettings((currentSettings) => ({
           ...currentSettings,
           ...parsedSettings,
-          profile: { ...currentSettings.profile, ...parsedSettings.profile },
+          profile: {
+            ...currentSettings.profile,
+            ...DEFAULT_SETTINGS.profile,
+            ...parsedSettings.profile,
+          },
           dailyGoals: {
             ...currentSettings.dailyGoals,
             ...parsedSettings.dailyGoals,

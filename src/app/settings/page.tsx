@@ -15,10 +15,12 @@ import { useLanguage } from '@/contexts/language-context';
 import {
   useUserSettings,
   type DailyGoals,
+  type UserProfile,
 } from '@/contexts/user-settings-context';
 import { useToast } from '@/hooks/use-toast';
 import { Save, User, Upload } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Textarea } from '@/components/ui/textarea';
 
 export default function SettingsPage() {
   const { t } = useLanguage();
@@ -28,7 +30,8 @@ export default function SettingsPage() {
   const [goalsFormState, setGoalsFormState] = useState<DailyGoals>(
     settings.dailyGoals
   );
-  const [profileFormState, setProfileFormState] = useState(settings.profile);
+  const [profileFormState, setProfileFormState] =
+    useState<UserProfile>(settings.profile);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -47,7 +50,9 @@ export default function SettingsPage() {
     }
   };
 
-  const handleProfileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleProfileChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setProfileFormState((prevState) => ({
       ...prevState,
@@ -127,8 +132,8 @@ export default function SettingsPage() {
                 {t('settings.profileTitle')}
               </h3>
               <div className="mt-4 space-y-4">
-                <div className="grid grid-cols-2 items-center gap-4">
-                  <Label htmlFor="name" className="text-base">
+                <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-2">
+                  <Label htmlFor="name" className="text-base pt-2">
                     {t('settings.profile.name')}
                   </Label>
                   <Input
@@ -140,7 +145,7 @@ export default function SettingsPage() {
                     placeholder={t('register.namePlaceholder')}
                   />
                 </div>
-                <div className="grid grid-cols-2 items-start gap-4">
+                <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-2">
                   <Label className="text-base pt-2">
                     {t('register.avatarLabel')}
                   </Label>
@@ -154,7 +159,7 @@ export default function SettingsPage() {
                         <User className="h-12 w-12" />
                       </AvatarFallback>
                     </Avatar>
-                    
+
                     <Button
                       type="button"
                       variant="outline"
@@ -171,6 +176,57 @@ export default function SettingsPage() {
                       onChange={handleAvatarFileChange}
                     />
                   </div>
+                </div>
+                <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-2">
+                  <Label htmlFor="dietaryPreference" className="text-base pt-2">
+                    {t('settings.profile.dietaryPreference')}
+                  </Label>
+                  <Input
+                    id="dietaryPreference"
+                    name="dietaryPreference"
+                    type="text"
+                    value={profileFormState.dietaryPreference || ''}
+                    onChange={handleProfileChange}
+                    placeholder={t(
+                      'settings.profile.dietaryPreferencePlaceholder'
+                    )}
+                  />
+                </div>
+                <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-2">
+                  <Label htmlFor="allergies" className="text-base pt-2">
+                    {t('settings.profile.allergies')}
+                  </Label>
+                  <Textarea
+                    id="allergies"
+                    name="allergies"
+                    value={profileFormState.allergies || ''}
+                    onChange={handleProfileChange}
+                    placeholder={t('settings.profile.allergiesPlaceholder')}
+                  />
+                </div>
+                <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-2">
+                  <Label htmlFor="likes" className="text-base pt-2">
+                    {t('settings.profile.likes')}
+                  </Label>
+                  <Textarea
+                    id="likes"
+                    name="likes"
+                    value={profileFormState.likes || ''}
+                    onChange={handleProfileChange}
+                    placeholder={t('settings.profile.likesPlaceholder')}
+                  />
+                </div>
+                <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-2">
+                  <Label htmlFor="dislikes" className="text-base pt-2">
+                    {t('settings.profile.dislikes')}
+                  </Label>
+                  <Textarea
+                    id="dislikes"
+                    name="dislikes"
+                    value={profileFormState.dislikes || ''}
+                    onChange={handleProfileChange}
+                    placeholder={t('settings.profile.dislikesPlaceholder')}
+                  />
                 </div>
               </div>
             </div>

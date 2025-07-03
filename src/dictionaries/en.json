@@ -65,6 +65,11 @@
       "carbs": "Your body's primary source of energy for brain and muscle function.",
       "fats": "Important for hormone production, vitamin absorption, and cell health.",
       "fiber": "Aids in digestion, helps maintain stable blood sugar, and keeps you full."
+    },
+    "shareOnWhatsApp": "Share on WhatsApp",
+    "shareMessage": {
+      "intro": "Here's my NutriSnap summary for today!",
+      "outro": "Tracked with NutriSnap!"
     }
   },
   "addFood": {
@@ -72,6 +77,7 @@
     "description": "Add a meal by snapping a photo or describing it. Our AI will handle the rest.",
     "tabPhoto": "Snap a Photo",
     "tabDescribe": "Describe Meal",
+    "tabBarcode": "Scan Barcode",
     "uploadLabel": "Upload Photo",
     "uploadFromDevice": "Upload from Device",
     "useCamera": "Use Camera",
@@ -86,6 +92,7 @@
     "portionPlaceholder": "e.g., 1 cup, 100g, 1 slice",
     "preview": "Preview:",
     "analyzePhotoButton": "Analyze Photo",
+    "analyzeBarcodeButton": "Analyze Barcode",
     "analyzing": "Analyzing...",
     "processingPhoto": "Processing photo...",
     "descriptionLabel": "Meal Description",
@@ -98,6 +105,7 @@
     "toastErrorTitle": "Analysis Failed",
     "toastErrorPhoto": "Could not analyze the photo. Please try again.",
     "toastErrorDescription": "Could not analyze the description. Please try again.",
+    "toastErrorBarcode": "Could not analyze the barcode. Please try again.",
     "mealTypeLabel": "Meal Type",
     "mealTypes": {
       "breakfast": "Breakfast",

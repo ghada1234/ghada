@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
-import { PlusCircle, Loader2, Utensils, Trash2, Info, Sparkles, Droplets } from 'lucide-react';
+import { PlusCircle, Loader2, Utensils, Trash2, Info, Sparkles, Droplets, MessageSquare } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useLanguage } from '@/contexts/language-context';
@@ -116,6 +116,18 @@ export default function DashboardPage() {
       setIsLoading(false);
     }
   };
+
+  const handleShareOnWhatsApp = () => {
+    const message = t('dashboard.shareMessage.intro') + '\n\n' +
+        `*${t('dashboard.calories')}*: ${totals.calories.toLocaleString()}/${dailyGoals.calories.toLocaleString()} kcal\n` +
+        `*${t('dashboard.protein')}*: ${totals.protein.toFixed(1)}/${dailyGoals.protein} g\n` +
+        `*${t('dashboard.carbs')}*: ${totals.carbs.toFixed(1)}/${dailyGoals.carbs} g\n` +
+        `*${t('dashboard.fats')}*: ${totals.fats.toFixed(1)}/${dailyGoals.fats} g\n\n` +
+        t('dashboard.shareMessage.outro');
+    
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`https://wa.me/?text=${encodedMessage}`, '_blank');
+  };
   
   const renderNutrient = (label: string, value: number, unit: string) => (
     <div className="flex justify-between text-sm">
@@ -185,9 +197,15 @@ export default function DashboardPage() {
 
       <div className="grid gap-6 md:grid-cols-2">
         <Card>
-          <CardHeader>
-            <CardTitle>{t('dashboard.macrosTitle')}</CardTitle>
-            <CardDescription>{t('dashboard.macrosDesc')}</CardDescription>
+          <CardHeader className="flex flex-row items-center justify-between">
+            <div>
+                <CardTitle>{t('dashboard.macrosTitle')}</CardTitle>
+                <CardDescription>{t('dashboard.macrosDesc')}</CardDescription>
+            </div>
+            <Button variant="outline" size="sm" onClick={handleShareOnWhatsApp}>
+                <MessageSquare className="mr-2 h-4 w-4" />
+                {t('dashboard.shareOnWhatsApp')}
+            </Button>
           </CardHeader>
           <CardContent className="space-y-4">
             <MacroProgress nutrientKey="calories" label={t('dashboard.calories')} unit="kcal" currentValue={totals.calories} goalValue={dailyGoals.calories} tooltip={t('dashboard.tooltips.calories')} />

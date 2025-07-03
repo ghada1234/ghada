@@ -6,10 +6,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Camera, Utensils, Upload, Video, X, Loader2, SwitchCamera, Percent } from 'lucide-react';
+import { Camera, Utensils, Upload, Video, X, Loader2, SwitchCamera, Percent, Barcode } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { analyzeFoodImage, type NutritionalInfo } from '@/ai/flows/analyze-food-image';
 import { analyzeDishName } from '@/ai/flows/analyze-dish-name';
+import { analyzeBarcode } from '@/ai/flows/analyze-barcode';
 import { useLanguage } from '@/contexts/language-context';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -66,7 +67,7 @@ export default function AddFoodPage() {
     });
   };
   
-  const handleAnalyze = async (mode: 'photo' | 'describe') => {
+  const handleAnalyze = async (mode: 'photo' | 'describe' | 'barcode') => {
     setIsAnalyzing(true);
     setAnalysisResult(null);
     try {
@@ -75,16 +76,23 @@ export default function AddFoodPage() {
         if (!image) return;
         const photoDataUri = await toDataUri(image);
         result = await analyzeFoodImage({ photoDataUri, portionSize });
-      } else {
+      } else if (mode === 'describe') {
         if (!description) return;
         result = await analyzeDishName({ description, portionSize });
+      } else { // barcode
+        if (!image) return;
+        const photoDataUri = await toDataUri(image);
+        result = await analyzeBarcode({ photoDataUri });
       }
       setAnalysisResult(result);
     } catch (error) {
       toast({
         variant: 'destructive',
         title: t('addFood.toastErrorTitle'),
-        description: mode === 'photo' ? t('addFood.toastErrorPhoto') : t('addFood.toastErrorDescription'),
+        description: 
+            mode === 'photo' ? t('addFood.toastErrorPhoto') :
+            mode === 'describe' ? t('addFood.toastErrorDescription') :
+            t('addFood.toastErrorBarcode'),
       });
       console.error(error);
     } finally {
@@ -180,7 +188,7 @@ export default function AddFoodPage() {
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="photo" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
+            <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="photo" onClick={resetForm}>
                 <Camera className="mx-2" />
                 {t('addFood.tabPhoto')}
@@ -188,6 +196,10 @@ export default function AddFoodPage() {
               <TabsTrigger value="describe" onClick={resetForm}>
                 <Utensils className="mx-2" />
                 {t('addFood.tabDescribe')}
+              </TabsTrigger>
+              <TabsTrigger value="barcode" onClick={resetForm}>
+                <Barcode className="mx-2" />
+                {t('addFood.tabBarcode')}
               </TabsTrigger>
             </TabsList>
 
@@ -263,6 +275,37 @@ export default function AddFoodPage() {
                       {isAnalyzing ? <><Loader2 className="animate-spin" /> {t('addFood.analyzing')}</> : t('addFood.analyzeDescriptionButton')}
                     </Button>
                   </>
+                )}
+              </div>
+            </TabsContent>
+
+            <TabsContent value="barcode">
+              <div className="space-y-4 pt-4">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                   <Button variant="outline" onClick={() => fileInputRef.current?.click()}>
+                     <Upload className="mx-2"/>{t('addFood.uploadFromDevice')}
+                   </Button>
+                   <Input id="barcode-picture" type="file" accept="image/*" onChange={handleImageChange} ref={fileInputRef} className="hidden" />
+                   <Button variant="outline" onClick={() => setIsCameraOpen(true)}>
+                     <Video className="mx-2"/>{t('addFood.useCamera')}
+                   </Button>
+                </div>
+
+                {imagePreview && (
+                  <div className="mt-4">
+                    <p className="text-sm font-medium">{t('addFood.preview')}</p>
+                    <img
+                      src={imagePreview}
+                      alt="Barcode preview"
+                      className="mt-2 max-h-64 w-full rounded-md object-contain"
+                    />
+                  </div>
+                )}
+                
+                {image && !analysisResult && (
+                  <Button onClick={() => handleAnalyze('barcode')} disabled={isAnalyzing} className="w-full">
+                    {isAnalyzing ? <><Loader2 className="animate-spin" /> {t('addFood.analyzing')}</> : t('addFood.analyzeBarcodeButton')}
+                  </Button>
                 )}
               </div>
             </TabsContent>

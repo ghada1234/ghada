@@ -8,7 +8,6 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { cn } from '@/lib/utils';
 import { useUserSettings } from '@/contexts/user-settings-context';
-import FeedbackForm from '@/components/feedback-form';
 import { useTestimonials } from '@/contexts/testimonials-context';
 
 export default function HomePage() {
@@ -120,12 +119,6 @@ export default function HomePage() {
               </Card>
             ))}
           </div>
-        </div>
-      </section>
-      
-      <section className="py-16">
-        <div className="container mx-auto max-w-2xl px-4">
-          <FeedbackForm />
         </div>
       </section>
     </div>

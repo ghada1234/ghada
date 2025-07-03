@@ -294,19 +294,6 @@ export default function DashboardPage() {
               <div className="mt-4 space-y-4">
                 {todaysMeals.map(meal => (
                   <div key={meal.id} className="group flex items-center gap-4">
-                    {meal.photoDataUri ? (
-                      <Image
-                        src={meal.photoDataUri}
-                        alt={meal.dishName}
-                        width={64}
-                        height={64}
-                        className="h-16 w-16 rounded-md object-cover"
-                      />
-                    ) : (
-                      <div className="flex h-16 w-16 items-center justify-center rounded-md bg-muted">
-                        <Utensils className="h-8 w-8 text-muted-foreground" />
-                      </div>
-                    )}
                     <div className="flex-1">
                       <p className="font-semibold">{meal.dishName}</p>
                       <div className="flex items-center gap-2">
@@ -387,4 +374,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-

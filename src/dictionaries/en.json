@@ -11,6 +11,7 @@
     "mealPlanner": "Meal Planner",
     "settings": "Settings",
     "login": "Login",
+    "logout": "Logout",
     "toggleLanguage": "Switch to Arabic"
   },
   "home": {
@@ -123,7 +124,11 @@
     "hasAccount": "Already have an account?",
     "signInLink": "Sign in",
     "toastSuccessTitle": "Registration Successful!",
-    "toastSuccessDescription": "You can now log in with your new account."
+    "toastSuccessDescription": "Your account has been created. Welcome to NutriSnap!",
+    "avatarLabel": "Choose your Avatar",
+    "male": "Male",
+    "female": "Female",
+    "uploadAvatar": "Or upload your own"
   },
   "mealPlanner": {
     "title": "Meal Planner",
@@ -134,12 +139,16 @@
   },
   "settings": {
     "title": "Settings",
-    "description": "Customize your daily nutritional goals.",
+    "description": "Customize your daily nutritional goals and profile.",
+    "profileTitle": "Profile Settings",
+    "profile": {
+      "name": "Name"
+    },
     "macrosTitle": "Macronutrient Goals",
     "microsTitle": "Micronutrient Goals",
     "saveButton": "Save Changes",
     "toastSuccessTitle": "Settings Saved",
-    "toastSuccessDescription": "Your daily goals have been updated.",
+    "toastSuccessDescription": "Your daily goals and profile have been updated.",
     "goals": {
       "calories": "Calories",
       "protein": "Protein",

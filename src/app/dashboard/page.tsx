@@ -17,7 +17,8 @@ import { isToday } from 'date-fns';
 export default function DashboardPage() {
   const { t, lang } = useLanguage();
   const { loggedMeals } = useMealLog();
-  const { dailyGoals } = useUserSettings(); // Use settings from context
+  const { settings } = useUserSettings(); // Use settings from context
+  const { dailyGoals } = settings;
   const [suggestions, setSuggestions] = useState<SuggestMealsOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 

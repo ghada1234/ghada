@@ -11,6 +11,7 @@
     "mealPlanner": "مخطط الوجبات",
     "settings": "الإعدادات",
     "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج",
     "toggleLanguage": "التبديل إلى الإنجليزية"
   },
   "home": {
@@ -123,7 +124,11 @@
     "hasAccount": "لديك حساب بالفعل؟",
     "signInLink": "تسجيل الدخول",
     "toastSuccessTitle": "تم التسجيل بنجاح!",
-    "toastSuccessDescription": "يمكنك الآن تسجيل الدخول بحسابك الجديد."
+    "toastSuccessDescription": "تم إنشاء حسابك. أهلاً بك في نوتري سناب!",
+    "avatarLabel": "اختر صورتك الرمزية",
+    "male": "ذكر",
+    "female": "أنثى",
+    "uploadAvatar": "أو قم بتحميل صورتك الخاصة"
   },
   "mealPlanner": {
     "title": "مخطط الوجبات",
@@ -134,12 +139,16 @@
   },
   "settings": {
     "title": "الإعدادات",
-    "description": "خصص أهدافك الغذائية اليومية.",
+    "description": "خصص أهدافك الغذائية اليومية وملفك الشخصي.",
+    "profileTitle": "إعدادات الملف الشخصي",
+    "profile": {
+      "name": "الاسم"
+    },
     "macrosTitle": "أهداف المغذيات الكبيرة",
     "microsTitle": "أهداف المغذيات الدقيقة",
     "saveButton": "حفظ التغييرات",
     "toastSuccessTitle": "تم حفظ الإعدادات",
-    "toastSuccessDescription": "تم تحديث أهدافك اليومية.",
+    "toastSuccessDescription": "تم تحديث أهدافك وملفك الشخصي.",
     "goals": {
       "calories": "السعرات الحرارية",
       "protein": "البروتين",

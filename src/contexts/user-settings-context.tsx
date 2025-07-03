@@ -1,6 +1,13 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+  useCallback,
+} from 'react';
 
 // Default goals
 export const DEFAULT_GOALS = {
@@ -16,49 +23,96 @@ export const DEFAULT_GOALS = {
   calcium: 1000,
   iron: 18,
 };
-
 export type DailyGoals = typeof DEFAULT_GOALS;
 
-interface UserSettingsContextType {
-  dailyGoals: DailyGoals;
-  updateGoals: (newGoals: Partial<DailyGoals>) => void;
+export interface UserProfile {
+  name: string | null;
+  avatar: string | null; // URL to avatar image
 }
 
-const UserSettingsContext = createContext<UserSettingsContextType | undefined>(undefined);
+export interface UserSettings {
+  profile: UserProfile;
+  dailyGoals: DailyGoals;
+}
+
+const DEFAULT_SETTINGS: UserSettings = {
+  profile: {
+    name: null,
+    avatar: null,
+  },
+  dailyGoals: DEFAULT_GOALS,
+};
+
+interface UserSettingsContextType {
+  settings: UserSettings;
+  updateGoals: (newGoals: Partial<DailyGoals>) => void;
+  updateProfile: (newProfile: Partial<UserProfile>) => void;
+}
+
+const UserSettingsContext = createContext<UserSettingsContextType | undefined>(
+  undefined
+);
 
 const SETTINGS_STORAGE_KEY = 'nutrisnap_user_settings';
 
 export const UserSettingsProvider = ({ children }: { children: ReactNode }) => {
-  const [dailyGoals, setDailyGoals] = useState<DailyGoals>(DEFAULT_GOALS);
+  const [settings, setSettings] = useState<UserSettings>(DEFAULT_SETTINGS);
 
   useEffect(() => {
     try {
       const storedSettings = localStorage.getItem(SETTINGS_STORAGE_KEY);
       if (storedSettings) {
-        // Merge stored settings with defaults to ensure all keys are present
         const parsedSettings = JSON.parse(storedSettings);
-        setDailyGoals(currentGoals => ({ ...currentGoals, ...parsedSettings }));
+        // Deep merge with defaults to ensure all keys are present
+        setSettings((currentSettings) => ({
+          ...currentSettings,
+          ...parsedSettings,
+          profile: { ...currentSettings.profile, ...parsedSettings.profile },
+          dailyGoals: {
+            ...currentSettings.dailyGoals,
+            ...parsedSettings.dailyGoals,
+          },
+        }));
       }
     } catch (error) {
-      console.error("Failed to load user settings from localStorage", error);
+      console.error('Failed to load user settings from localStorage', error);
     }
   }, []);
 
+  const saveSettings = (newSettings: UserSettings) => {
+    try {
+      localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(newSettings));
+    } catch (error) {
+      console.error('Failed to save user settings to localStorage', error);
+    }
+  };
+
   const updateGoals = useCallback((newGoals: Partial<DailyGoals>) => {
-    setDailyGoals(prevGoals => {
-      const updatedGoals = { ...prevGoals, ...newGoals };
-      try {
-        localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(updatedGoals));
-      } catch (error) {
-        console.error("Failed to save user settings to localStorage", error);
-      }
-      return updatedGoals;
+    setSettings((prevSettings) => {
+      const updatedSettings = {
+        ...prevSettings,
+        dailyGoals: { ...prevSettings.dailyGoals, ...newGoals },
+      };
+      saveSettings(updatedSettings);
+      return updatedSettings;
+    });
+  }, []);
+
+  const updateProfile = useCallback((newProfile: Partial<UserProfile>) => {
+    setSettings((prevSettings) => {
+      const updatedSettings = {
+        ...prevSettings,
+        profile: { ...prevSettings.profile, ...newProfile },
+      };
+      saveSettings(updatedSettings);
+      return updatedSettings;
     });
   }, []);
 
   const value = {
-    dailyGoals,
+    settings,
     updateGoals,
+    updateProfile,
   };
 
   return (

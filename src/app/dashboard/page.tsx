@@ -147,18 +147,18 @@ export default function DashboardPage() {
     const message =
       `*${t('dashboard.shareMessage.intro')}*${mealLogText}\n` +
       `*═ ${t('dashboard.shareMessage.macrosHeader')} ═*\n` +
-      `_${t('dashboard.calories')}_ 🔥: *${totals.calories.toLocaleString()}* / ${dailyGoals.calories.toLocaleString()} kcal\n` +
-      `_${t('dashboard.protein')}_ 💪: *${totals.protein.toFixed(1)}* / ${dailyGoals.protein} g\n` +
-      `_${t('dashboard.carbs')}_ 🍞: *${totals.carbs.toFixed(1)}* / ${dailyGoals.carbs} g\n` +
-      `_${t('dashboard.fats')}_ 🥑: *${totals.fats.toFixed(1)}* / ${dailyGoals.fats} g\n` +
-      `_${t('dashboard.fiber')}_ 🌾: *${totals.fiber.toFixed(1)}* / ${dailyGoals.fiber} g\n\n` +
+      `🔥 _${t('dashboard.calories')}_: *${totals.calories.toLocaleString()}* / ${dailyGoals.calories.toLocaleString()} kcal\n` +
+      `💪 _${t('dashboard.protein')}_: *${totals.protein.toFixed(1)}* / ${dailyGoals.protein} g\n` +
+      `🍞 _${t('dashboard.carbs')}_: *${totals.carbs.toFixed(1)}* / ${dailyGoals.carbs} g\n` +
+      `🥑 _${t('dashboard.fats')}_: *${totals.fats.toFixed(1)}* / ${dailyGoals.fats} g\n` +
+      `🌾 _${t('dashboard.fiber')}_: *${totals.fiber.toFixed(1)}* / ${dailyGoals.fiber} g\n\n` +
       `*═ ${t('dashboard.shareMessage.microsHeader')} ═*\n` +
-      `_${t('dashboard.sodium')}_ 🧂: *${totals.sodium.toLocaleString()}* / ${dailyGoals.sodium.toLocaleString()} mg\n` +
-      `_${t('dashboard.sugar')}_ 🍬: *${totals.sugar.toFixed(1)}* / ${dailyGoals.sugar} g\n` +
-      `_${t('dashboard.potassium')}_ 🍌: *${totals.potassium.toLocaleString()}* / ${dailyGoals.potassium.toLocaleString()} mg\n` +
-      `_${t('dashboard.vitaminC')}_ 🍊: *${totals.vitaminC.toFixed(1)}* / ${dailyGoals.vitaminC} mg\n` +
-      `_${t('dashboard.calcium')}_ 🥛: *${totals.calcium.toLocaleString()}* / ${dailyGoals.calcium.toLocaleString()} mg\n` +
-      `_${t('dashboard.iron')}_ 🔩: *${totals.iron.toFixed(1)}* / ${dailyGoals.iron} mg\n\n` +
+      `🧂 _${t('dashboard.sodium')}_: *${totals.sodium.toLocaleString()}* / ${dailyGoals.sodium.toLocaleString()} mg\n` +
+      `🍬 _${t('dashboard.sugar')}_: *${totals.sugar.toFixed(1)}* / ${dailyGoals.sugar} g\n` +
+      `🍌 _${t('dashboard.potassium')}_: *${totals.potassium.toLocaleString()}* / ${dailyGoals.potassium.toLocaleString()} mg\n` +
+      `🍊 _${t('dashboard.vitaminC')}_: *${totals.vitaminC.toFixed(1)}* / ${dailyGoals.vitaminC} mg\n` +
+      `🥛 _${t('dashboard.calcium')}_: *${totals.calcium.toLocaleString()}* / ${dailyGoals.calcium.toLocaleString()} mg\n` +
+      `🔩 _${t('dashboard.iron')}_: *${totals.iron.toFixed(1)}* / ${dailyGoals.iron} mg\n\n` +
       `*${t('dashboard.shareMessage.outro')}*`;
 
     const encodedMessage = encodeURIComponent(message);

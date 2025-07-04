@@ -353,14 +353,17 @@ export default function DashboardPage() {
               </div>
             )}
 
-            <Button onClick={handleGenerateSuggestions} disabled={isLoading} variant="outline" className="mt-4 w-full">
+            <Button onClick={handleGenerateSuggestions} disabled={isLoading} className="mt-4 w-full">
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   {t('dashboard.generating')}
                 </>
               ) : (
-                t('dashboard.generateButton')
+                <>
+                  <Sparkles className="mr-2 h-4 w-4" />
+                  {t('dashboard.generateButton')}
+                </>
               )}
             </Button>
           </CardContent>

@@ -26,29 +26,6 @@ export default function HomePage() {
     ...defaultTestimonials
   ];
 
-  if (user && user.name) {
-    // Logged-in view
-    return (
-      <div className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] p-4 text-center">
-        <Leaf className="h-16 w-16 text-primary" />
-        <h1 className="mt-6 text-4xl font-bold font-headline">
-          {t('dashboard.greeting').replace('{name}', user.name)}
-        </h1>
-        <p className="max-w-md mx-auto mt-4 text-lg text-muted-foreground">
-          {t('home.loggedIn.subtitle')}
-        </p>
-        <div className="mt-8 flex flex-col sm:flex-row gap-4">
-          <Button asChild size="lg">
-            <Link href="/dashboard">{t('home.loggedIn.goToDashboard')}</Link>
-          </Button>
-          <Button asChild size="lg" variant="outline">
-            <Link href="/add-food">{t('header.addFood')}</Link>
-          </Button>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div>
       <section className="flex flex-col items-center justify-center min-h-[calc(80vh-4rem)] p-4 text-center">
@@ -62,12 +39,20 @@ export default function HomePage() {
           {t('home.subtitle')}
         </p>
         <div className="flex flex-col sm:flex-row gap-4">
-          <Button asChild size="lg">
-            <Link href="/register">{t('home.getStarted')}</Link>
-          </Button>
-          <Button asChild size="lg" variant="outline">
-            <Link href="/login">{t('header.login')}</Link>
-          </Button>
+           {user && user.name ? (
+              <Button asChild size="lg">
+                <Link href="/dashboard">{t('home.loggedIn.goToDashboard')}</Link>
+              </Button>
+            ) : (
+              <>
+                <Button asChild size="lg">
+                  <Link href="/register">{t('home.getStarted')}</Link>
+                </Button>
+                <Button asChild size="lg" variant="outline">
+                  <Link href="/login">{t('header.login')}</Link>
+                </Button>
+              </>
+          )}
         </div>
       </section>
 

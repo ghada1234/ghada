@@ -26,12 +26,16 @@ const prompt = ai.definePrompt({
   name: 'analyzeBarcodePrompt',
   input: {schema: AnalyzeBarcodeImageInputSchema},
   output: {schema: NutritionalInfoSchema},
-  prompt: `You are a product database expert. Your task is to analyze the provided image to find a product barcode. If a barcode is identified, look up the product associated with that barcode and provide a detailed nutritional analysis for a standard serving size.
-  
-  Photo: {{media url=photoDataUri}}
-  
-  If no barcode is visible or identifiable, or if the product cannot be found, you must return an analysis with a confidence score of 0. All other nutritional values can be 0 in this case.
-  Always provide a confidence score (from 0.0 to 1.0) for the accuracy of the entire analysis.`,
+  prompt: `You are a product database expert with access to global barcode information and nutritional databases. Your task is to analyze the provided image to find a product barcode. If a barcode is identified, look up the product associated with that barcode and provide a detailed nutritional analysis based on the product's official nutrition label.
+
+Follow these steps:
+1.  **Identify Barcode**: Scan the image to locate a product barcode (UPC, EAN, etc.).
+2.  **Look up Product**: Use the barcode to identify the exact product.
+3.  **Extract Nutritional Information**: Provide the nutritional analysis *exactly as it would appear on the product's nutrition label for the standard serving size listed on the package*. Do not estimate or guess.
+4.  **Handle Failures**: If no barcode is visible, if the barcode is unreadable, or if the product cannot be found in the database, you must return an analysis with a confidence score of 0. All other nutritional values should also be 0 in this case.
+5.  **Provide Confidence Score**: Always provide a confidence score (from 0.0 to 1.0). A score of 1.0 means you successfully identified the barcode and found the exact product data. A score of 0 means you failed.
+
+Photo: {{media url=photoDataUri}}`,
 });
 
 const analyzeBarcodeFlow = ai.defineFlow(

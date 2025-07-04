@@ -27,19 +27,15 @@ const prompt = ai.definePrompt({
   name: 'analyzeFoodImagePrompt',
   input: {schema: AnalyzeFoodImageInputSchema},
   output: {schema: NutritionalInfoSchema},
-  prompt: `You are a world-class nutritionist. Identify the food item in the photo and analyze it to estimate its nutritional content.
-  Pay special attention to international cuisines, including Iraqi cuisine, to ensure accurate identification and analysis.
+  prompt: `You are a world-class nutritionist with expertise in food science and access to comprehensive nutritional databases (e.g., USDA FoodData Central). Your task is to perform a detailed and accurate nutritional analysis of the food item in the provided photo.
 
-  {{#if portionSize}}
-  Portion Size: {{{portionSize}}}
-  {{else}}
-  Assume a standard single serving portion size.
-  {{/if}}
-  
-  Photo: {{media url=photoDataUri}}
+Follow these steps carefully:
+1.  **Identify the Dish and Ingredients**: First, identify the primary dish. Then, list all visible or clearly inferred ingredients. Be as specific as possible (e.g., "chicken breast," "brown rice," "broccoli florets").
+2.  **Estimate Portion Size**: Analyze the image to estimate the portion size in grams or a standard unit (e.g., cups, ounces). {{#if portionSize}}The user has provided a portion size of "{{{portionSize}}}". Use this as the primary reference, but you can refine it if the image clearly contradicts it.{{else}}If the user has not provided a portion size, assume a standard single serving and state what that serving size is.{{/if}}
+3.  **Calculate Nutritional Information**: Based on the identified ingredients and estimated portion size, calculate the nutritional values. Your calculations should be based on standard nutritional data for the raw or cooked ingredients as appropriate.
+4.  **Provide Confidence Score**: Finally, provide a confidence score (from 0.0 to 1.0) for the accuracy of the entire analysis, considering image clarity, ingredient identifiability, and portion size estimation.
 
-  First, identify the dish. Then provide a nutritional breakdown.
-  Finally, provide a confidence score (from 0.0 to 1.0) for the accuracy of the entire analysis.`,
+Photo: {{media url=photoDataUri}}`,
 });
 
 const analyzeFoodImageFlow = ai.defineFlow(

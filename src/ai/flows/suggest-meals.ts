@@ -20,10 +20,10 @@ export type SuggestMealsOutput = z.infer<typeof SuggestMealsOutputSchema>;
 
 const SuggestMealsInputSchema = z.object({
     language: z.enum(['en', 'ar']).default('ar').describe('The language for the meal suggestions.'),
-    dietaryPreference: z.string().optional().describe('Optional dietary preference, e.g., vegetarian, low-carb.'),
-    allergies: z.string().optional().describe('A list of allergies to avoid, e.g., Peanuts, Shellfish.'),
-    likes: z.string().optional().describe('A list of preferred foods or flavors.'),
-    dislikes: z.string().optional().describe('A list of foods or flavors to avoid.'),
+    dietaryPreference: z.string().nullable().optional().describe('Optional dietary preference, e.g., vegetarian, low-carb.'),
+    allergies: z.string().nullable().optional().describe('A list of allergies to avoid, e.g., Peanuts, Shellfish.'),
+    likes: z.string().nullable().optional().describe('A list of preferred foods or flavors.'),
+    dislikes: z.string().nullable().optional().describe('A list of foods or flavors to avoid.'),
     remainingCalories: z.number().optional().describe('The remaining calories for the day to target for the suggested meals.'),
     positiveFeedbackOn: z.array(z.string()).optional().describe('A list of dishes the user has previously liked.'),
     negativeFeedbackOn: z.array(z.string()).optional().describe('A list of dishes the user has previously disliked.'),

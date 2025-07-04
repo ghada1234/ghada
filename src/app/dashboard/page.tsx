@@ -16,6 +16,7 @@ import { useMealLog, type LoggedMeal } from '@/contexts/meal-log-context';
 import { useUserSettings } from '@/contexts/user-settings-context';
 import { isToday } from 'date-fns';
 import type { DailyGoals } from '@/contexts/user-settings-context';
+import { Badge } from '@/components/ui/badge';
 
 
 const MacroProgress = ({
@@ -232,9 +233,9 @@ export default function DashboardPage() {
   const MealTypeTag = ({ mealType }: { mealType: LoggedMeal['mealType']}) => {
     if (!mealType) return null;
     return (
-      <div className="text-xs capitalize px-2 py-0.5 rounded-full bg-muted text-muted-foreground">
+      <Badge variant="secondary" className="capitalize text-xs font-normal">
         {t(`addFood.mealTypes.${mealType}`)}
-      </div>
+      </Badge>
     );
   };
 
@@ -293,18 +294,24 @@ export default function DashboardPage() {
                   <Utensils className="h-10 w-10 text-secondary-foreground" />
                 </div>
                 <h3 className="text-lg font-semibold">{t('dashboard.logEmpty.title')}</h3>
-                <p className="text-sm text-muted-foreground">{t('dashboard.logEmpty.subtitle')}</p>
+                <p className="mb-4 text-sm text-muted-foreground">{t('dashboard.logEmpty.subtitle')}</p>
+                <Button asChild>
+                  <Link href="/add-food">
+                    <PlusCircle className="mr-2 h-4 w-4" />
+                    {t('header.addFood')}
+                  </Link>
+                </Button>
               </div>
             ) : (
               <div className="mt-4 space-y-4">
                 {todaysMeals.map(meal => (
                   <div key={meal.id} className="group flex items-center gap-4">
                     <div className="flex-1">
-                      <p className="font-semibold">{meal.dishName}</p>
-                      <div className="flex items-center gap-2">
-                        <p className="text-sm text-muted-foreground">{meal.calories} {t('dashboard.log.calories')}</p>
+                      <div className="flex items-baseline gap-2">
+                        <p className="font-semibold">{meal.dishName}</p>
                         <MealTypeTag mealType={meal.mealType} />
                       </div>
+                      <p className="text-sm text-muted-foreground">{meal.calories} {t('dashboard.log.calories')}</p>
                     </div>
                     <Button
                       variant="ghost"

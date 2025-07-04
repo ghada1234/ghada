@@ -18,6 +18,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { useMealLog, type MealType } from '@/contexts/meal-log-context';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useUserSettings } from '@/contexts/user-settings-context';
+import { Badge } from '@/components/ui/badge';
 
 export default function AddFoodPage() {
   const { t } = useLanguage();
@@ -357,18 +358,36 @@ export default function AddFoodPage() {
                    </div>
                 </div>
               </CardHeader>
-              <CardContent className="space-y-2">
-                {renderNutrient(t('addFood.nutrients.calories'), analysisResult.calories, 'kcal')}
-                {renderNutrient(t('addFood.nutrients.protein'), analysisResult.protein, 'g')}
-                {renderNutrient(t('addFood.nutrients.carbs'), analysisResult.carbs, 'g')}
-                {renderNutrient(t('addFood.nutrients.fats'), analysisResult.fats, 'g')}
-                {renderNutrient(t('addFood.nutrients.fiber'), analysisResult.fiber, 'g')}
-                {renderNutrient(t('addFood.nutrients.sugar'), analysisResult.sugar, 'g')}
-                {renderNutrient(t('addFood.nutrients.sodium'), analysisResult.sodium, 'mg')}
-                {renderNutrient(t('addFood.nutrients.potassium'), analysisResult.potassium, 'mg')}
-                {renderNutrient(t('addFood.nutrients.calcium'), analysisResult.calcium, 'mg')}
-                {renderNutrient(t('addFood.nutrients.iron'), analysisResult.iron, 'mg')}
-                {renderNutrient(t('addFood.nutrients.vitaminC'), analysisResult.vitaminC, 'mg')}
+              <CardContent className="space-y-4">
+                {analysisResult.ingredients && analysisResult.ingredients.length > 0 && (
+                  <div>
+                    <h4 className="mb-2 font-semibold">{t('dashboard.suggestions.ingredients')}</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {analysisResult.ingredients.map((ingredient, index) => (
+                        <Badge key={index} variant="secondary" className="text-sm">
+                          {ingredient}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <div>
+                  <h4 className="mb-2 font-semibold">{t('dashboard.suggestions.nutrition')}</h4>
+                  <div className="space-y-2">
+                    {renderNutrient(t('addFood.nutrients.calories'), analysisResult.calories, 'kcal')}
+                    {renderNutrient(t('addFood.nutrients.protein'), analysisResult.protein, 'g')}
+                    {renderNutrient(t('addFood.nutrients.carbs'), analysisResult.carbs, 'g')}
+                    {renderNutrient(t('addFood.nutrients.fats'), analysisResult.fats, 'g')}
+                    {renderNutrient(t('addFood.nutrients.fiber'), analysisResult.fiber, 'g')}
+                    {renderNutrient(t('addFood.nutrients.sugar'), analysisResult.sugar, 'g')}
+                    {renderNutrient(t('addFood.nutrients.sodium'), analysisResult.sodium, 'mg')}
+                    {renderNutrient(t('addFood.nutrients.potassium'), analysisResult.potassium, 'mg')}
+                    {renderNutrient(t('addFood.nutrients.calcium'), analysisResult.calcium, 'mg')}
+                    {renderNutrient(t('addFood.nutrients.iron'), analysisResult.iron, 'mg')}
+                    {renderNutrient(t('addFood.nutrients.vitaminC'), analysisResult.vitaminC, 'mg')}
+                  </div>
+                </div>
               </CardContent>
               <CardFooter className="flex-col items-stretch gap-4">
                 <div>

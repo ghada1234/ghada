@@ -28,9 +28,10 @@ const prompt = ai.definePrompt({
 
 Follow these steps carefully:
 1.  **Identify the Dish and Common Ingredients**: First, identify the dish from the description. Then, list the most common ingredients used to prepare this dish.
-2.  **Determine Portion Size**: {{#if portionSize}}The user has provided a portion size of "{{{portionSize}}}". Use this as the primary reference for your calculation.{{else}}Assume a standard single serving portion size. State the assumed portion size in your reasoning (but not in the final output fields).{{/if}}
-3.  **Calculate Nutritional Information**: Based on the common ingredients and the portion size, calculate the nutritional values. Your calculations should be based on standard nutritional data.
-4.  **Provide Confidence Score**: Finally, provide a confidence score (from 0.0 to 1.0) for the accuracy of the entire analysis, considering the clarity of the description and the variability of the dish's recipe.
+2.  **Populate Ingredients List**: You MUST populate the \`ingredients\` field in the output with the list of ingredients you identified in step 1.
+3.  **Determine Portion Size**: {{#if portionSize}}The user has provided a portion size of "{{{portionSize}}}". Use this as the primary reference for your calculation.{{else}}Assume a standard single serving portion size. State the assumed portion size in your reasoning (but not in the final output fields).{{/if}}
+4.  **Calculate Nutritional Information**: Based on the common ingredients and the portion size, calculate the nutritional values. Your calculations should be based on standard nutritional data.
+5.  **Provide Confidence Score**: Finally, provide a confidence score (from 0.0 to 1.0) for the accuracy of the entire analysis, considering the clarity of the description and the variability of the dish's recipe.
 
 Dish Description: {{{description}}}`,
 });

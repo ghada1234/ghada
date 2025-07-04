@@ -31,9 +31,10 @@ const prompt = ai.definePrompt({
 Follow these steps:
 1.  **Identify Barcode**: Scan the image to locate a product barcode (UPC, EAN, etc.).
 2.  **Look up Product**: Use the barcode to identify the exact product.
-3.  **Extract Nutritional Information**: Provide the nutritional analysis *exactly as it would appear on the product's nutrition label for the standard serving size listed on the package*. Do not estimate or guess.
-4.  **Handle Failures**: If no barcode is visible, if the barcode is unreadable, or if the product cannot be found in the database, you must return an analysis with a confidence score of 0. All other nutritional values should also be 0 in this case.
-5.  **Provide Confidence Score**: Always provide a confidence score (from 0.0 to 1.0). A score of 1.0 means you successfully identified the barcode and found the exact product data. A score of 0 means you failed.
+3.  **Extract Ingredients List**: Look up the product's ingredients list as it appears on the packaging and populate the \`ingredients\` field in the output. If you cannot find the ingredients list, return an empty array for the \`ingredients\` field.
+4.  **Extract Nutritional Information**: Provide the nutritional analysis *exactly as it would appear on the product's nutrition label for the standard serving size listed on the package*. Do not estimate or guess.
+5.  **Handle Failures**: If no barcode is visible, if the barcode is unreadable, or if the product cannot be found in the database, you must return an analysis with a confidence score of 0. All other nutritional values should also be 0, and the \`ingredients\` list should be empty.
+6.  **Provide Confidence Score**: Always provide a confidence score (from 0.0 to 1.0). A score of 1.0 means you successfully identified the barcode and found the exact product data. A score of 0 means you failed.
 
 Photo: {{media url=photoDataUri}}`,
 });

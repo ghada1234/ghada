@@ -180,7 +180,11 @@
     "signUpLink": "Sign up",
     "orContinueWith": "Or continue with",
     "google": "Google",
-    "facebook": "Facebook"
+    "facebook": "Facebook",
+    "socialSuccessTitle": "Login Successful!",
+    "socialSuccessDescription": "Welcome back, you're now logged in with {provider}.",
+    "socialErrorTitle": "Login Failed",
+    "socialErrorDescription": "There was a problem signing in. Please try again."
   },
   "register": {
     "title": "Create an Account",
@@ -199,7 +203,11 @@
     "uploadAvatar": "Upload a Photo",
     "orContinueWith": "Or continue with",
     "google": "Google",
-    "facebook": "Facebook"
+    "facebook": "Facebook",
+    "socialSuccessTitle": "Registration Successful!",
+    "socialSuccessDescription": "You've successfully registered with {provider}.",
+    "socialErrorTitle": "Registration Failed",
+    "socialErrorDescription": "There was a problem signing up. Please try again."
   },
   "mealPlanner": {
     "title": "Meal Planner",

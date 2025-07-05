@@ -19,6 +19,7 @@ import { useRouter } from 'next/navigation';
 import { useUserSettings } from '@/contexts/user-settings-context';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { User, Upload } from 'lucide-react';
+import { signInWithGoogle, signInWithFacebook } from '@/services/auth';
 
 // Helper component for SVG icons to avoid repeating the className
 const SocialIcon = ({ children }: { children: React.ReactNode }) => (
@@ -88,6 +89,32 @@ export default function RegisterPage() {
       description: t('register.toastSuccessDescription'),
     });
     router.push('/'); // Push to home page instead of dashboard
+  };
+
+  const handleSocialLogin = async (provider: 'google' | 'facebook') => {
+    const socialSignIn =
+      provider === 'google' ? signInWithGoogle : signInWithFacebook;
+    const user = await socialSignIn();
+    if (user) {
+      updateProfile({
+        name: user.displayName,
+        avatar: user.photoURL,
+      });
+      toast({
+        title: t('register.socialSuccessTitle'),
+        description: t('register.socialSuccessDescription').replace(
+          '{provider}',
+          provider.charAt(0).toUpperCase() + provider.slice(1)
+        ),
+      });
+      router.push('/dashboard');
+    } else {
+      toast({
+        variant: 'destructive',
+        title: t('register.socialErrorTitle'),
+        description: t('register.socialErrorDescription'),
+      });
+    }
   };
 
   return (
@@ -178,10 +205,18 @@ export default function RegisterPage() {
               </div>
             </div>
             <div className="grid w-full grid-cols-2 gap-2">
-              <Button variant="outline" type="button">
+              <Button
+                variant="outline"
+                type="button"
+                onClick={() => handleSocialLogin('google')}
+              >
                 <GoogleIcon /> {t('register.google')}
               </Button>
-              <Button variant="outline" type="button">
+              <Button
+                variant="outline"
+                type="button"
+                onClick={() => handleSocialLogin('facebook')}
+              >
                 <FacebookIcon /> {t('register.facebook')}
               </Button>
             </div>

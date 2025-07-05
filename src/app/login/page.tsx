@@ -13,6 +13,10 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useLanguage } from '@/contexts/language-context';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useUserSettings } from '@/contexts/user-settings-context';
+import { useToast } from '@/hooks/use-toast';
+import { signInWithGoogle, signInWithFacebook } from '@/services/auth';
 
 // Helper component for SVG icons to avoid repeating the className
 const SocialIcon = ({ children }: { children: React.ReactNode }) => (
@@ -39,6 +43,35 @@ const FacebookIcon = () => (
 
 export default function LoginPage() {
   const { t } = useLanguage();
+  const { updateProfile } = useUserSettings();
+  const router = useRouter();
+  const { toast } = useToast();
+
+  const handleSocialLogin = async (provider: 'google' | 'facebook') => {
+    const socialSignIn =
+      provider === 'google' ? signInWithGoogle : signInWithFacebook;
+    const user = await socialSignIn();
+    if (user) {
+      updateProfile({
+        name: user.displayName,
+        avatar: user.photoURL,
+      });
+      toast({
+        title: t('login.socialSuccessTitle'),
+        description: t('login.socialSuccessDescription').replace(
+          '{provider}',
+          provider.charAt(0).toUpperCase() + provider.slice(1)
+        ),
+      });
+      router.push('/dashboard');
+    } else {
+      toast({
+        variant: 'destructive',
+        title: t('login.socialErrorTitle'),
+        description: t('login.socialErrorDescription'),
+      });
+    }
+  };
 
   return (
     <div className="flex h-[calc(100vh-4rem)] items-center justify-center p-4">
@@ -77,10 +110,18 @@ export default function LoginPage() {
             </div>
           </div>
           <div className="grid w-full grid-cols-2 gap-2">
-            <Button variant="outline" type="button">
+            <Button
+              variant="outline"
+              type="button"
+              onClick={() => handleSocialLogin('google')}
+            >
               <GoogleIcon /> {t('login.google')}
             </Button>
-            <Button variant="outline" type="button">
+            <Button
+              variant="outline"
+              type="button"
+              onClick={() => handleSocialLogin('facebook')}
+            >
               <FacebookIcon /> {t('login.facebook')}
             </Button>
           </div>

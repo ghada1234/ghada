@@ -180,7 +180,11 @@
     "signUpLink": "إنشاء حساب",
     "orContinueWith": "أو المتابعة باستخدام",
     "google": "جوجل",
-    "facebook": "فيسبوك"
+    "facebook": "فيسبوك",
+    "socialSuccessTitle": "تم تسجيل الدخول بنجاح!",
+    "socialSuccessDescription": "أهلاً بعودتك، لقد سجلت الدخول الآن باستخدام {provider}.",
+    "socialErrorTitle": "فشل تسجيل الدخول",
+    "socialErrorDescription": "حدثت مشكلة أثناء تسجيل الدخول. يرجى المحاولة مرة أخرى."
   },
   "register": {
     "title": "إنشاء حساب",
@@ -199,7 +203,11 @@
     "uploadAvatar": "تحميل صورة",
     "orContinueWith": "أو المتابعة باستخدام",
     "google": "جوجل",
-    "facebook": "فيسبوك"
+    "facebook": "فيسبوك",
+    "socialSuccessTitle": "تم التسجيل بنجاح!",
+    "socialSuccessDescription": "لقد سجلت بنجاح باستخدام {provider}.",
+    "socialErrorTitle": "فشل التسجيل",
+    "socialErrorDescription": "حدثت مشكلة أثناء إنشاء الحساب. يرجى المحاولة مرة أخرى."
   },
   "mealPlanner": {
     "title": "مخطط الوجبات",

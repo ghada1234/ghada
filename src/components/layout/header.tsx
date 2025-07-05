@@ -17,6 +17,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useRouter } from 'next/navigation';
+import { signOutUser } from '@/services/auth';
 
 export default function Header() {
   const { t } = useLanguage();
@@ -24,7 +25,8 @@ export default function Header() {
   const user = settings.profile;
   const router = useRouter();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await signOutUser();
     // Clear user settings for logout
     updateProfile({ name: null, avatar: null });
     // In a real app, you would also clear tokens, etc.

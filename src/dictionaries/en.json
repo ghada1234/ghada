@@ -265,6 +265,7 @@
   "reports": {
     "title": "Progress Reports",
     "description": "Track your nutritional journey and celebrate your progress.",
+    "daily": "Daily",
     "weekly": "Weekly",
     "monthly": "Monthly",
     "calories": "Calories",
@@ -282,6 +283,7 @@
     "shareOnWhatsApp": "Share Report on WhatsApp",
     "shareMessage": {
       "title": {
+        "daily": "🍎 My 7-Day Average NutriSnap Report 🍎",
         "weekly": "🍎 My Weekly Average NutriSnap Report 🍎",
         "monthly": "🍎 My Monthly Average NutriSnap Report 🍎"
       },

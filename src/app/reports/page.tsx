@@ -20,7 +20,6 @@ import {
   eachWeekOfInterval,
   eachMonthOfInterval,
   isSameDay,
-  differenceInCalendarDays,
   subDays,
 } from 'date-fns';
 import { useUserSettings } from '@/contexts/user-settings-context';
@@ -65,16 +64,18 @@ export default function ReportsPage() {
     },
   } satisfies ChartConfig;
 
-  const [activeTab, setActiveTab] = useState('weekly');
+  const [activeTab, setActiveTab] = useState('daily');
 
   const aggregateDataByPeriod = (
     startDate: Date,
     endDate: Date,
-    period: 'week' | 'month'
+    period: 'daily' | 'week' | 'month'
   ): AggregatedData[] => {
     let intervals;
     const weekStartsOn = 1; // Monday
-    if (period === 'week') {
+    if (period === 'daily') {
+      intervals = eachDayOfInterval({ start: startDate, end: endDate });
+    } else if (period === 'week') {
       intervals = eachWeekOfInterval({ start: startDate, end: endDate }, { weekStartsOn });
     } else {
       intervals = eachMonthOfInterval({ start: startDate, end: endDate });
@@ -82,24 +83,26 @@ export default function ReportsPage() {
 
     const aggregated = intervals.map(intervalStart => {
       let name: string;
-      const mealsInInterval: LoggedMeal[];
-
+      let mealsInInterval: LoggedMeal[];
       let intervalEnd;
-      if (period === 'week') {
-        intervalEnd = endOfWeek(intervalStart, { weekStartsOn });
-        name = format(intervalStart, 'd MMM');
-      } else { // month
-        intervalEnd = endOfMonth(intervalStart);
-        name = format(intervalStart, 'MMMM');
-      }
-      mealsInInterval = loggedMeals.filter(meal => {
-        const mealDate = parseISO(meal.loggedAt);
-        return mealDate >= intervalStart && mealDate <= intervalEnd;
-      });
-      
-      const daysWithLogs = new Set(mealsInInterval.map(m => format(parseISO(m.loggedAt), 'yyyy-MM-dd'))).size;
-      const divisor = daysWithLogs || 1;
 
+      if (period === 'daily') {
+        name = format(intervalStart, 'EEE');
+        mealsInInterval = loggedMeals.filter(meal => isSameDay(parseISO(meal.loggedAt), intervalStart));
+      } else {
+        if (period === 'week') {
+          intervalEnd = endOfWeek(intervalStart, { weekStartsOn });
+          name = format(intervalStart, 'd MMM');
+        } else { // month
+          intervalEnd = endOfMonth(intervalStart);
+          name = format(intervalStart, 'MMMM');
+        }
+        mealsInInterval = loggedMeals.filter(meal => {
+          const mealDate = parseISO(meal.loggedAt);
+          return mealDate >= intervalStart && mealDate <= intervalEnd;
+        });
+      }
+      
       const initialTotals = {
         calories: 0, protein: 0, carbs: 0, fats: 0, fiber: 0,
         sodium: 0, sugar: 0, potassium: 0, vitaminC: 0, calcium: 0, iron: 0,
@@ -122,44 +125,51 @@ export default function ReportsPage() {
         initialTotals
       );
       
-      const avg = {
-        calories: totals.calories / divisor,
-        protein: totals.protein / divisor,
-        carbs: totals.carbs / divisor,
-        fats: totals.fats / divisor,
-        fiber: totals.fiber / divisor,
-        sodium: totals.sodium / divisor,
-        sugar: totals.sugar / divisor,
-        potassium: totals.potassium / divisor,
-        vitaminC: totals.vitaminC / divisor,
-        calcium: totals.calcium / divisor,
-        iron: totals.iron / divisor,
-      };
+      if (period === 'daily') {
+        return { name, ...totals };
+      }
       
-      return {
-        name,
-        calories: Math.round(avg.calories),
-        protein: Math.round(avg.protein),
-        carbs: Math.round(avg.carbs),
-        fats: Math.round(avg.fats),
-        fiber: Math.round(avg.fiber),
-        sodium: Math.round(avg.sodium),
-        sugar: Math.round(avg.sugar),
-        potassium: Math.round(avg.potassium),
-        vitaminC: Math.round(avg.vitaminC),
-        calcium: Math.round(avg.calcium),
-        iron: Math.round(avg.iron * 10) / 10, // Round to one decimal place
-      };
+      const daysWithLogs = new Set(mealsInInterval.map(m => format(parseISO(m.loggedAt), 'yyyy-MM-dd'))).size;
+      const divisor = daysWithLogs || 1;
+      
+      const avg: Omit<AggregatedData, 'name'> = {} as any;
+      (Object.keys(totals) as Array<keyof typeof totals>).forEach(key => {
+          (avg as any)[key] = totals[key] / divisor;
+      });
+      
+      return { name, ...avg };
     });
     
-    // For weekly/monthly, only show periods with logged meals
-    return aggregated.filter(data => data.calories > 0 || data.protein > 0 || data.carbs > 0 || data.fats > 0);
+     const roundedAggregated = aggregated.map(data => ({
+        ...data,
+        calories: Math.round(data.calories),
+        protein: Math.round(data.protein),
+        carbs: Math.round(data.carbs),
+        fats: Math.round(data.fats),
+        fiber: Math.round(data.fiber),
+        sodium: Math.round(data.sodium),
+        sugar: Math.round(data.sugar),
+        potassium: Math.round(data.potassium),
+        vitaminC: Math.round(data.vitaminC),
+        calcium: Math.round(data.calcium),
+        iron: Math.round(data.iron * 10) / 10,
+    }));
+
+    if (period === 'daily') {
+        return roundedAggregated;
+    }
+
+    return roundedAggregated.filter(data => data.calories > 0 || data.protein > 0 || data.carbs > 0 || data.fats > 0);
   };
 
   const chartData = useMemo(() => {
     const today = new Date();
     if (loggedMeals.length === 0) return [];
     
+    if (activeTab === 'daily') {
+      const startDate = subDays(today, 6);
+      return aggregateDataByPeriod(startDate, today, 'daily');
+    }
     if (activeTab === 'weekly') {
       const firstLogDate = parseISO(loggedMeals.reduce((earliest, meal) => (meal.loggedAt < earliest ? meal.loggedAt : earliest), loggedMeals[0].loggedAt));
       return aggregateDataByPeriod(firstLogDate, today, 'week');
@@ -170,7 +180,7 @@ export default function ReportsPage() {
     }
     return [];
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeTab, loggedMeals, t]);
+  }, [activeTab, loggedMeals]);
 
   const currentStreak = useMemo(() => {
     if (loggedMeals.length === 0) return 0;
@@ -229,14 +239,14 @@ export default function ReportsPage() {
         sodium: 0, sugar: 0, potassium: 0, vitaminC: 0, calcium: 0, iron: 0,
     };
     
+    const divisor = chartData.length > 0 ? chartData.length : 1;
     (Object.keys(averageTotals) as Array<keyof typeof averageTotals>).forEach(key => {
-        if (chartData.length > 0) {
-            averageTotals[key] = sumTotals[key] / chartData.length;
-        }
+        averageTotals[key] = sumTotals[key] / divisor;
     });
 
 
     const getTitle = () => {
+      if (activeTab === 'daily') return t('reports.shareMessage.title.daily');
       if (activeTab === 'weekly') return t('reports.shareMessage.title.weekly');
       if (activeTab === 'monthly') return t('reports.shareMessage.title.monthly');
       return '';
@@ -314,8 +324,9 @@ export default function ReportsPage() {
 
         <Card>
           <CardHeader>
-            <Tabs defaultValue="weekly" onValueChange={setActiveTab}>
-              <TabsList className="grid w-full grid-cols-2">
+            <Tabs defaultValue="daily" onValueChange={setActiveTab}>
+              <TabsList className="grid w-full grid-cols-3">
+                <TabsTrigger value="daily">{t('reports.daily')}</TabsTrigger>
                 <TabsTrigger value="weekly">{t('reports.weekly')}</TabsTrigger>
                 <TabsTrigger value="monthly">{t('reports.monthly')}</TabsTrigger>
               </TabsList>

@@ -5,7 +5,7 @@ import { useState, useMemo } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useLanguage } from '@/contexts/language-context';
-import { useMealLog } from '@/contexts/meal-log-context';
+import { useMealLog, type LoggedMeal } from '@/contexts/meal-log-context';
 import { Bar, BarChart as RechartsBarChart, CartesianGrid, XAxis, YAxis } from 'recharts';
 import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from '@/components/ui/chart';
 import { Flame, MessageSquare } from 'lucide-react';
@@ -83,24 +83,28 @@ export default function ReportsPage() {
     }
 
     const aggregated = intervals.map(intervalStart => {
-      let intervalEnd;
-      let name;
+      let name: string;
+      const mealsInInterval: LoggedMeal[];
 
       if (period === 'day') {
-        intervalEnd = intervalStart;
         name = format(intervalStart, 'EEE');
-      } else if (period === 'week') {
-        intervalEnd = endOfWeek(intervalStart, { weekStartsOn });
-        name = format(intervalStart, 'd MMM');
-      } else { // month
-        intervalEnd = endOfMonth(intervalStart);
-        name = format(intervalStart, 'MMMM');
+        mealsInInterval = loggedMeals.filter(meal => 
+          isSameDay(parseISO(meal.loggedAt), intervalStart)
+        );
+      } else {
+        let intervalEnd;
+        if (period === 'week') {
+          intervalEnd = endOfWeek(intervalStart, { weekStartsOn });
+          name = format(intervalStart, 'd MMM');
+        } else { // month
+          intervalEnd = endOfMonth(intervalStart);
+          name = format(intervalStart, 'MMMM');
+        }
+        mealsInInterval = loggedMeals.filter(meal => {
+          const mealDate = parseISO(meal.loggedAt);
+          return mealDate >= intervalStart && mealDate <= intervalEnd;
+        });
       }
-
-      const mealsInInterval = loggedMeals.filter(meal => {
-        const mealDate = parseISO(meal.loggedAt);
-        return mealDate >= intervalStart && mealDate <= intervalEnd;
-      });
 
       const daysWithLogs = new Set(mealsInInterval.map(m => format(parseISO(m.loggedAt), 'yyyy-MM-dd'))).size;
       const divisor = period === 'day' ? 1 : (daysWithLogs || 1);

@@ -65,18 +65,16 @@ export default function ReportsPage() {
     },
   } satisfies ChartConfig;
 
-  const [activeTab, setActiveTab] = useState('daily');
+  const [activeTab, setActiveTab] = useState('weekly');
 
   const aggregateDataByPeriod = (
     startDate: Date,
     endDate: Date,
-    period: 'day' | 'week' | 'month'
+    period: 'week' | 'month'
   ): AggregatedData[] => {
     let intervals;
     const weekStartsOn = 1; // Monday
-    if (period === 'day') {
-      intervals = eachDayOfInterval({ start: startDate, end: endDate });
-    } else if (period === 'week') {
+    if (period === 'week') {
       intervals = eachWeekOfInterval({ start: startDate, end: endDate }, { weekStartsOn });
     } else {
       intervals = eachMonthOfInterval({ start: startDate, end: endDate });
@@ -86,28 +84,21 @@ export default function ReportsPage() {
       let name: string;
       const mealsInInterval: LoggedMeal[];
 
-      if (period === 'day') {
-        name = format(intervalStart, 'EEE');
-        mealsInInterval = loggedMeals.filter(meal => 
-          isSameDay(parseISO(meal.loggedAt), intervalStart)
-        );
-      } else {
-        let intervalEnd;
-        if (period === 'week') {
-          intervalEnd = endOfWeek(intervalStart, { weekStartsOn });
-          name = format(intervalStart, 'd MMM');
-        } else { // month
-          intervalEnd = endOfMonth(intervalStart);
-          name = format(intervalStart, 'MMMM');
-        }
-        mealsInInterval = loggedMeals.filter(meal => {
-          const mealDate = parseISO(meal.loggedAt);
-          return mealDate >= intervalStart && mealDate <= intervalEnd;
-        });
+      let intervalEnd;
+      if (period === 'week') {
+        intervalEnd = endOfWeek(intervalStart, { weekStartsOn });
+        name = format(intervalStart, 'd MMM');
+      } else { // month
+        intervalEnd = endOfMonth(intervalStart);
+        name = format(intervalStart, 'MMMM');
       }
-
+      mealsInInterval = loggedMeals.filter(meal => {
+        const mealDate = parseISO(meal.loggedAt);
+        return mealDate >= intervalStart && mealDate <= intervalEnd;
+      });
+      
       const daysWithLogs = new Set(mealsInInterval.map(m => format(parseISO(m.loggedAt), 'yyyy-MM-dd'))).size;
-      const divisor = period === 'day' ? 1 : (daysWithLogs || 1);
+      const divisor = daysWithLogs || 1;
 
       const initialTotals = {
         calories: 0, protein: 0, carbs: 0, fats: 0, fiber: 0,
@@ -161,10 +152,6 @@ export default function ReportsPage() {
       };
     });
     
-    // For daily, we want to show all days, even with 0 meals
-    if (period === 'day') {
-        return aggregated;
-    }
     // For weekly/monthly, only show periods with logged meals
     return aggregated.filter(data => data.calories > 0 || data.protein > 0 || data.carbs > 0 || data.fats > 0);
   };
@@ -173,9 +160,6 @@ export default function ReportsPage() {
     const today = new Date();
     if (loggedMeals.length === 0) return [];
     
-    if (activeTab === 'daily') {
-      return aggregateDataByPeriod(subDays(today, 6), today, 'day');
-    }
     if (activeTab === 'weekly') {
       const firstLogDate = parseISO(loggedMeals.reduce((earliest, meal) => (meal.loggedAt < earliest ? meal.loggedAt : earliest), loggedMeals[0].loggedAt));
       return aggregateDataByPeriod(firstLogDate, today, 'week');
@@ -253,7 +237,6 @@ export default function ReportsPage() {
 
 
     const getTitle = () => {
-      if (activeTab === 'daily') return t('reports.shareMessage.title.daily');
       if (activeTab === 'weekly') return t('reports.shareMessage.title.weekly');
       if (activeTab === 'monthly') return t('reports.shareMessage.title.monthly');
       return '';
@@ -331,9 +314,8 @@ export default function ReportsPage() {
 
         <Card>
           <CardHeader>
-            <Tabs defaultValue="daily" onValueChange={setActiveTab}>
-              <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="daily">{t('reports.daily')}</TabsTrigger>
+            <Tabs defaultValue="weekly" onValueChange={setActiveTab}>
+              <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="weekly">{t('reports.weekly')}</TabsTrigger>
                 <TabsTrigger value="monthly">{t('reports.monthly')}</TabsTrigger>
               </TabsList>

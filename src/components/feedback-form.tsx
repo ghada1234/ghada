@@ -16,13 +16,11 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
-import { useTestimonials } from '@/contexts/testimonials-context';
 import { useUserSettings } from '@/contexts/user-settings-context';
 
 export default function FeedbackForm() {
   const { t } = useLanguage();
   const { toast } = useToast();
-  const { addTestimonial } = useTestimonials();
   const { settings } = useUserSettings();
 
   const [rating, setRating] = useState(0);
@@ -33,19 +31,20 @@ export default function FeedbackForm() {
   };
 
   const handleFeedbackSubmit = () => {
-    addTestimonial({
-      name: settings.profile.name || 'Anonymous',
-      avatar: settings.profile.avatar,
-      rating: rating,
-      text: feedback,
-    });
-    
+    const subject = encodeURIComponent(t('feedbackpage.email.subject'));
+    const body = encodeURIComponent(
+      `Rating: ${rating}/5\n\nFeedback:\n${feedback}\n\nFrom: ${
+        settings.profile.name || 'Anonymous User'
+      }`
+    );
+
+    // This will open the user's default email client
+    window.location.href = `mailto:ghadaabdulaziz1@gmail.com?subject=${subject}&body=${body}`;
+
     toast({
       title: t('feedbackpage.form.thanksTitle'),
-      description: t('feedbackpage.form.thanksDescription'),
+      description: t('feedbackpage.form.redirectDescription'),
     });
-    setRating(0);
-    setFeedback('');
   };
 
   return (
@@ -54,9 +53,7 @@ export default function FeedbackForm() {
         <CardTitle className="text-2xl font-headline">
           {t('feedbackpage.title')}
         </CardTitle>
-        <CardDescription>
-          {t('feedbackpage.description')}
-        </CardDescription>
+        <CardDescription>{t('feedbackpage.description')}</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
@@ -87,12 +84,16 @@ export default function FeedbackForm() {
               onChange={(e) => setFeedback(e.target.value)}
               placeholder={t('feedbackpage.form.commentPlaceholder')}
               className="mt-2"
+              rows={5}
             />
           </div>
         </div>
       </CardContent>
       <CardFooter>
-        <Button onClick={handleFeedbackSubmit} disabled={rating === 0 || !feedback}>
+        <Button
+          onClick={handleFeedbackSubmit}
+          disabled={rating === 0 || !feedback}
+        >
           {t('feedbackpage.form.submitButton')}
         </Button>
       </CardFooter>

@@ -252,18 +252,14 @@
   },
   "feedbackpage": {
     "title": "Share Your Feedback",
-    "description": "We'd love to hear your thoughts. Your feedback will be opened in your default email client to be sent to our team.",
+    "description": "We'd love to hear your thoughts. Your feedback helps us improve NutriSnap for everyone. Your review might even be featured on our home page!",
     "form": {
       "ratingLabel": "How would you rate your experience?",
       "commentLabel": "Any comments or suggestions?",
       "commentPlaceholder": "Tell us what you think...",
-      "submitButton": "Send Feedback via Email",
-      "thanksTitle": "Redirecting to Email Client",
-      "redirectDescription": "Please complete sending your feedback in your email app.",
-      "thanksDescription": "Your feedback has been received. We appreciate you taking the time to help us improve."
-    },
-    "email": {
-      "subject": "NutriSnap App Feedback"
+      "submitButton": "Submit Feedback",
+      "thanksTitle": "Thank You!",
+      "thanksDescription": "Your feedback has been submitted successfully. We appreciate you taking the time to help us improve."
     }
   },
   "reports": {

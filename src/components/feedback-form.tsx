@@ -17,11 +17,13 @@ import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import { useUserSettings } from '@/contexts/user-settings-context';
+import { useTestimonials } from '@/contexts/testimonials-context';
 
 export default function FeedbackForm() {
   const { t } = useLanguage();
   const { toast } = useToast();
   const { settings } = useUserSettings();
+  const { addTestimonial } = useTestimonials();
 
   const [rating, setRating] = useState(0);
   const [feedback, setFeedback] = useState('');
@@ -31,20 +33,23 @@ export default function FeedbackForm() {
   };
 
   const handleFeedbackSubmit = () => {
-    const subject = encodeURIComponent(t('feedbackpage.email.subject'));
-    const body = encodeURIComponent(
-      `Rating: ${rating}/5\n\nFeedback:\n${feedback}\n\nFrom: ${
-        settings.profile.name || 'Anonymous User'
-      }`
-    );
+    if (rating > 0 && feedback) {
+      addTestimonial({
+        name: settings.profile.name || 'Anonymous User',
+        avatar: settings.profile.avatar,
+        rating,
+        text: feedback,
+      });
 
-    // This will open the user's default email client
-    window.location.href = `mailto:ghadaabdulaziz1@gmail.com?subject=${subject}&body=${body}`;
+      toast({
+        title: t('feedbackpage.form.thanksTitle'),
+        description: t('feedbackpage.form.thanksDescription'),
+      });
 
-    toast({
-      title: t('feedbackpage.form.thanksTitle'),
-      description: t('feedbackpage.form.redirectDescription'),
-    });
+      // Reset form
+      setRating(0);
+      setFeedback('');
+    }
   };
 
   return (

@@ -214,6 +214,11 @@
     "profileTitle": "Profile Settings",
     "profile": {
       "name": "Name",
+      "weight": "Weight (kg)",
+      "height": "Height (cm)",
+      "gender": "Gender",
+      "male": "Male",
+      "female": "Female",
       "dietaryPreference": "Dietary Preference",
       "dietaryPreferencePlaceholder": "e.g. Vegetarian, Low-Carb, Gluten-Free",
       "allergies": "Allergies",
@@ -222,6 +227,13 @@
       "likesPlaceholder": "e.g. Spicy food, Salmon, Avocado",
       "dislikes": "Dislikes",
       "dislikesPlaceholder": "e.g. Cilantro, Olives, Tofu"
+    },
+    "bmi": {
+      "title": "Body Mass Index (BMI)",
+      "underweight": "Underweight",
+      "normal": "Normal weight",
+      "overweight": "Overweight",
+      "obese": "Obese"
     },
     "macrosTitle": "Macronutrient Goals",
     "microsTitle": "Micronutrient Goals",

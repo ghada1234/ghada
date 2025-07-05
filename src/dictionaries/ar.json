@@ -214,6 +214,11 @@
     "profileTitle": "إعدادات الملف الشخصي",
     "profile": {
       "name": "الاسم",
+      "weight": "الوزن (كجم)",
+      "height": "الطول (سم)",
+      "gender": "الجنس",
+      "male": "ذكر",
+      "female": "أنثى",
       "dietaryPreference": "التفضيلات الغذائية",
       "dietaryPreferencePlaceholder": "مثال: نباتي، قليل الكربوهيدرات، خالي من الغلوتين",
       "allergies": "الحساسية",
@@ -222,6 +227,13 @@
       "likesPlaceholder": "مثال: طعام حار، سلمون، أفوكادو",
       "dislikes": "الأطعمة غير المفضلة",
       "dislikesPlaceholder": "مثال: كزبرة، زيتون، توفو"
+    },
+    "bmi": {
+      "title": "مؤشر كتلة الجسم (BMI)",
+      "underweight": "نقص الوزن",
+      "normal": "وزن طبيعي",
+      "overweight": "زيادة الوزن",
+      "obese": "سمنة"
     },
     "macrosTitle": "أهداف المغذيات الكبيرة",
     "microsTitle": "أهداف المغذيات الدقيقة",

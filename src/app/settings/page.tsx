@@ -18,9 +18,10 @@ import {
   type UserProfile,
 } from '@/contexts/user-settings-context';
 import { useToast } from '@/hooks/use-toast';
-import { Save, User, Upload } from 'lucide-react';
+import { Save, User, Upload, Calculator } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Textarea } from '@/components/ui/textarea';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
 export default function SettingsPage() {
   const { t } = useLanguage();
@@ -33,11 +34,33 @@ export default function SettingsPage() {
   const [profileFormState, setProfileFormState] =
     useState<UserProfile>(settings.profile);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [bmi, setBmi] = useState<number | null>(null);
 
   useEffect(() => {
     setGoalsFormState(settings.dailyGoals);
     setProfileFormState(settings.profile);
   }, [settings]);
+  
+  useEffect(() => {
+    const weightInKg = profileFormState.weight;
+    const heightInCm = profileFormState.height;
+
+    if (weightInKg && heightInCm && heightInCm > 0) {
+      const heightInM = heightInCm / 100;
+      const calculatedBmi = weightInKg / (heightInM * heightInM);
+      setBmi(parseFloat(calculatedBmi.toFixed(1)));
+    } else {
+      setBmi(null);
+    }
+  }, [profileFormState.weight, profileFormState.height]);
+
+  const getBmiCategory = (bmiValue: number | null) => {
+    if (!bmiValue) return '';
+    if (bmiValue < 18.5) return t('settings.bmi.underweight');
+    if (bmiValue < 25) return t('settings.bmi.normal');
+    if (bmiValue < 30) return t('settings.bmi.overweight');
+    return t('settings.bmi.obese');
+  };
 
   const handleGoalChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -54,10 +77,17 @@ export default function SettingsPage() {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setProfileFormState((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    if (name === 'weight' || name === 'height') {
+      const numericValue = value === '' ? null : parseFloat(value);
+       if (!isNaN(numericValue!) || numericValue === null) {
+          setProfileFormState((prevState) => ({ ...prevState, [name]: numericValue, }));
+       }
+    } else {
+      setProfileFormState((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
   };
 
   const toDataUri = (file: File): Promise<string> => {
@@ -144,6 +174,72 @@ export default function SettingsPage() {
                     onChange={handleProfileChange}
                     placeholder={t('register.namePlaceholder')}
                   />
+                </div>
+                 <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-2">
+                  <Label htmlFor="weight" className="text-base pt-2">
+                    {t('settings.profile.weight')}
+                  </Label>
+                   <div className="flex items-center gap-2">
+                     <Input
+                        id="weight"
+                        name="weight"
+                        type="number"
+                        value={profileFormState.weight || ''}
+                        onChange={handleProfileChange}
+                        placeholder="0"
+                        className="text-center"
+                      />
+                      <span className="text-sm text-muted-foreground">kg</span>
+                   </div>
+                </div>
+                 <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-2">
+                  <Label htmlFor="height" className="text-base pt-2">
+                    {t('settings.profile.height')}
+                  </Label>
+                   <div className="flex items-center gap-2">
+                     <Input
+                        id="height"
+                        name="height"
+                        type="number"
+                        value={profileFormState.height || ''}
+                        onChange={handleProfileChange}
+                        placeholder="0"
+                        className="text-center"
+                      />
+                      <span className="text-sm text-muted-foreground">cm</span>
+                   </div>
+                </div>
+                 <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-2">
+                    <Label className="text-base pt-2">{t('settings.bmi.title')}</Label>
+                    <div className="flex items-center gap-4 rounded-md border p-3">
+                        <Calculator className="h-6 w-6 text-muted-foreground" />
+                        <div>
+                            <p className="font-bold text-lg">{bmi ? bmi : 'N/A'}</p>
+                            <p className="text-sm text-muted-foreground">{getBmiCategory(bmi)}</p>
+                        </div>
+                    </div>
+                </div>
+                 <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-2">
+                    <Label className="text-base pt-2">{t('settings.profile.gender')}</Label>
+                    <RadioGroup
+                        name="gender"
+                        value={profileFormState.gender || ''}
+                        onValueChange={(value) => {
+                            if (value === 'male' || value === 'female') {
+                              setProfileFormState((prevState) => ({ ...prevState, gender: value }));
+                            }
+                        }}
+                        className="flex items-center gap-4 pt-2"
+                    >
+                        <div className="flex items-center space-x-2 rtl:space-x-reverse">
+                            <RadioGroupItem value="male" id="male" />
+                            <Label htmlFor="male" className="font-normal">{t('settings.profile.male')}</Label>
+                        </div>
+                        <div className="flex items-center space-x-2 rtl:space-x-reverse">
+                            <RadioGroupItem value="female" id="female" />
+                            <Label htmlFor="female" className="font-normal">{t('settings.profile.female')}</Label>
+                        </div>
+                    </RadioGroup>
                 </div>
                 <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-2">
                   <Label className="text-base pt-2">

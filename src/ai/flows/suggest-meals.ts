@@ -24,7 +24,10 @@ const SuggestMealsInputSchema = z.object({
     allergies: z.string().nullable().optional().describe('A list of allergies to avoid, e.g., Peanuts, Shellfish.'),
     likes: z.string().nullable().optional().describe('A list of preferred foods or flavors.'),
     dislikes: z.string().nullable().optional().describe('A list of foods or flavors to avoid.'),
-    remainingCalories: z.number().optional().describe('The remaining calories for the day to target for the suggested meals.'),
+    targetCalories: z.number().optional().describe('The target calories for the day to aim for with the suggested meals.'),
+    targetProtein: z.number().optional().describe('The target protein (in grams) for the day.'),
+    targetCarbs: z.number().optional().describe('The target carbohydrates (in grams) for the day.'),
+    targetFats: z.number().optional().describe('The target fat (in grams) for the day.'),
     positiveFeedbackOn: z.array(z.string()).optional().describe('A list of dishes the user has previously liked.'),
     negativeFeedbackOn: z.array(z.string()).optional().describe('A list of dishes the user has previously disliked.'),
 });
@@ -57,8 +60,12 @@ Consider the following user constraints:
 {{#if dislikes}}
 - User dislikes: {{{dislikes}}}
 {{/if}}
-{{#if remainingCalories}}
-- The total calories for all suggested meals (breakfast, lunch, dinner, snack, dessert) should be approximately {{{remainingCalories}}} calories.
+{{#if targetCalories}}
+- The total nutritional values for all suggested meals (breakfast, lunch, dinner, snack, dessert) should collectively be around these targets:
+  - Calories: {{{targetCalories}}} kcal
+  {{#if targetProtein}}- Protein: {{{targetProtein}}} g{{/if}}
+  {{#if targetCarbs}}- Carbs: {{{targetCarbs}}} g{{/if}}
+  {{#if targetFats}}- Fats: {{{targetFats}}} g{{/if}}
 {{else}}
 - Provide a generally healthy and balanced plan.
 {{/if}}

@@ -111,13 +111,20 @@ export default function DashboardPage() {
     setSuggestions(null);
     try {
       const remainingCalories = Math.max(0, dailyGoals.calories - totals.calories);
+      const remainingProtein = Math.max(0, dailyGoals.protein - totals.protein);
+      const remainingCarbs = Math.max(0, dailyGoals.carbs - totals.carbs);
+      const remainingFats = Math.max(0, dailyGoals.fats - totals.fats);
+      
       const result = await suggestMeals({
         language: lang,
         dietaryPreference: profile.dietaryPreference,
         allergies: profile.allergies,
         likes: profile.likes,
         dislikes: profile.dislikes,
-        remainingCalories: remainingCalories > 0 ? remainingCalories : undefined,
+        targetCalories: remainingCalories > 0 ? remainingCalories : undefined,
+        targetProtein: remainingProtein > 0 ? remainingProtein : undefined,
+        targetCarbs: remainingCarbs > 0 ? remainingCarbs : undefined,
+        targetFats: remainingFats > 0 ? remainingFats : undefined,
         positiveFeedbackOn: profile.positiveFeedbackOn,
         negativeFeedbackOn: profile.negativeFeedbackOn,
       });

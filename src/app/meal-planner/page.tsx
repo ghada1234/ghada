@@ -8,9 +8,12 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { Loader2 } from 'lucide-react';
 import { useLanguage } from '@/contexts/language-context';
 import { suggestMeals, type SuggestMealsOutput, type MealSuggestion } from '@/ai/flows/suggest-meals';
+import { useUserSettings } from '@/contexts/user-settings-context';
 
 export default function MealPlannerPage() {
   const { t, lang } = useLanguage();
+  const { settings } = useUserSettings();
+  const { profile, dailyGoals } = settings;
   const [suggestions, setSuggestions] = useState<SuggestMealsOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -18,7 +21,19 @@ export default function MealPlannerPage() {
     setIsLoading(true);
     setSuggestions(null);
     try {
-      const result = await suggestMeals({ language: lang });
+      const result = await suggestMeals({
+        language: lang,
+        dietaryPreference: profile.dietaryPreference,
+        allergies: profile.allergies,
+        likes: profile.likes,
+        dislikes: profile.dislikes,
+        targetCalories: dailyGoals.calories,
+        targetProtein: dailyGoals.protein,
+        targetCarbs: dailyGoals.carbs,
+        targetFats: dailyGoals.fats,
+        positiveFeedbackOn: profile.positiveFeedbackOn,
+        negativeFeedbackOn: profile.negativeFeedbackOn,
+      });
       setSuggestions(result);
     } catch (error) {
       console.error("Failed to generate meal suggestions:", error);

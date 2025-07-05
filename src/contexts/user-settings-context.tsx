@@ -34,6 +34,9 @@ export interface UserProfile {
   dislikes?: string | null;
   positiveFeedbackOn?: string[];
   negativeFeedbackOn?: string[];
+  weight?: number | null; // in kg
+  height?: number | null; // in cm
+  gender?: 'male' | 'female' | null;
 }
 
 export interface UserSettings {
@@ -51,6 +54,9 @@ const DEFAULT_SETTINGS: UserSettings = {
     dislikes: null,
     positiveFeedbackOn: [],
     negativeFeedbackOn: [],
+    weight: null,
+    height: null,
+    gender: null,
   },
   dailyGoals: DEFAULT_GOALS,
 };

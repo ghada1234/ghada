@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter, Cairo } from 'next/font/google';
+import { Space_Grotesk, Cairo } from 'next/font/google';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import Header from '@/components/layout/header';
@@ -12,7 +12,7 @@ import { MealLogProvider } from '@/contexts/meal-log-context';
 import { UserSettingsProvider } from '@/contexts/user-settings-context';
 import { TestimonialProvider } from '@/contexts/testimonials-context';
 
-const inter = Inter({
+const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-sans',
@@ -37,7 +37,7 @@ export default async function RootLayout({
   const lang = cookies().get('lang')?.value === 'en' ? 'en' : 'ar';
 
   return (
-    <html lang={lang} dir={lang === 'ar' ? 'rtl' : 'ltr'} className={`${inter.variable} ${cairo.variable}`}>
+    <html lang={lang} dir={lang === 'ar' ? 'rtl' : 'ltr'} className={`${spaceGrotesk.variable} ${cairo.variable}`}>
       <body className="min-h-dvh bg-background font-sans text-foreground antialiased">
         <LanguageProvider initialLang={lang}>
           <UserSettingsProvider>

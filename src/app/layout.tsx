@@ -39,13 +39,12 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const cookieStore = cookies();
-  const lang = cookieStore.get('lang')?.value === 'en' ? 'en' : 'ar';
+  const lang = cookies().get('lang')?.value === 'en' ? 'en' : 'ar';
 
   return (
     <html lang={lang} dir={lang === 'ar' ? 'rtl' : 'ltr'} className={`${spaceGrotesk.variable} ${sourceCodePro.variable} ${cairo.variable}`}>
       <body className="min-h-dvh bg-background font-body text-foreground antialiased">
-        <LanguageProvider>
+        <LanguageProvider initialLang={lang}>
           <UserSettingsProvider>
             <TestimonialProvider>
               <MealLogProvider>

@@ -29,12 +29,8 @@ function getDescendantProp(obj: any, desc: string): any {
   return current;
 }
 
-export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  // Read initial language from cookie, default to 'ar'
-  const [lang, setLang] = useState<Language>(() => {
-    const cookieLang = Cookies.get('lang');
-    return cookieLang === 'en' ? 'en' : 'ar';
-  });
+export const LanguageProvider = ({ children, initialLang }: { children: ReactNode, initialLang: Language }) => {
+  const [lang, setLang] = useState<Language>(initialLang);
 
   // Effect to update document direction when language changes
   useEffect(() => {

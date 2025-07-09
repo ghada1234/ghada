@@ -37,7 +37,7 @@ export default async function RootLayout({
   const lang = cookies().get('lang')?.value === 'en' ? 'en' : 'ar';
 
   return (
-    <html lang={lang} dir={lang === 'ar' ? 'rtl' : 'ltr'} className={`${inter.variable} ${cairo.variable} dark`}>
+    <html lang={lang} dir={lang === 'ar' ? 'rtl' : 'ltr'} className={`${inter.variable} ${cairo.variable}`}>
       <body className="min-h-dvh bg-background font-sans text-foreground antialiased">
         <LanguageProvider initialLang={lang}>
           <UserSettingsProvider>

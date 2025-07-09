@@ -79,8 +79,8 @@ Consider the following user constraints:
 For each meal, provide the following details in {{language}}:
 - A creative and appealing dish name.
 - A short, mouth-watering description.
-- A list of ingredients.
-- A detailed nutritional breakdown including estimated values for: calories, protein, carbs, fats, fiber, sodium, sugar, potassium, vitaminC, calcium, and iron.
+- A list of ingredients with their approximate quantities (e.g., 'Chicken breast (150g)', 'Brown rice (1 cup cooked)').
+- A detailed nutritional breakdown. You MUST calculate this by summing up the nutritional values of the individual ingredients you listed. Do not estimate the total values directly. The breakdown should include estimated values for: calories, protein, carbs, fats, fiber, sodium, sugar, potassium, vitaminC, calcium, and iron.
 - Simple, step-by-step cooking instructions.
 
 Ensure the suggestions are healthy, balanced, and appealing.`,

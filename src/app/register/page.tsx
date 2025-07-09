@@ -53,8 +53,6 @@ export default function RegisterPage() {
 
   const handleRegister = (event: React.FormEvent) => {
     event.preventDefault();
-    // In a real app, you'd handle registration logic here.
-    // For now, just save to context and local storage.
     updateProfile({
       name,
       avatar,
@@ -64,15 +62,15 @@ export default function RegisterPage() {
       title: t('register.toastSuccessTitle'),
       description: t('register.toastSuccessDescription'),
     });
-    router.push('/'); // Push to home page instead of dashboard
+    router.push('/dashboard');
   };
 
   return (
-    <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center p-4">
-      <Card className="w-full max-w-md">
+    <div className="flex min-h-[calc(100vh-5rem)] items-center justify-center p-4">
+      <Card className="w-full max-w-md border-border/50">
         <form onSubmit={handleRegister}>
-          <CardHeader>
-            <CardTitle className="text-2xl font-headline">
+          <CardHeader className="text-center">
+            <CardTitle className="text-2xl">
               {t('register.title')}
             </CardTitle>
             <CardDescription>{t('register.description')}</CardDescription>
@@ -113,40 +111,38 @@ export default function RegisterPage() {
             <div className="grid gap-2">
               <Label>{t('register.avatarLabel')}</Label>
               <div className="flex items-center gap-4">
-                <Avatar className="h-24 w-24">
+                <Avatar className="h-16 w-16">
                   <AvatarImage src={avatar || ''} alt="Selected Avatar" />
                   <AvatarFallback>
-                    <User className="h-12 w-12" />
+                    <User className="h-8 w-8" />
                   </AvatarFallback>
                 </Avatar>
-                <div className="flex-1">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => fileInputRef.current?.click()}
-                  >
-                    <Upload className="mr-2 h-4 w-4" />
-                    {t('register.uploadAvatar')}
-                  </Button>
-                  <Input
-                    id="custom-avatar"
-                    type="file"
-                    ref={fileInputRef}
-                    accept="image/*"
-                    className="hidden"
-                    onChange={handleCustomAvatarChange}
-                  />
-                </div>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  <Upload className="mr-2 h-4 w-4" />
+                  {t('register.uploadAvatar')}
+                </Button>
+                <Input
+                  id="custom-avatar"
+                  type="file"
+                  ref={fileInputRef}
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleCustomAvatarChange}
+                />
               </div>
             </div>
           </CardContent>
-          <CardFooter className="flex-col items-start gap-4">
+          <CardFooter className="flex-col items-center gap-4">
             <Button type="submit" className="w-full">
               {t('register.button')}
             </Button>
             <div className="w-full text-center text-sm text-muted-foreground">
               {t('register.hasAccount')}{' '}
-              <Link href="/login" className="text-primary underline">
+              <Link href="/login" className="text-primary hover:underline">
                 {t('register.signInLink')}
               </Link>
             </div>

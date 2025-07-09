@@ -19,14 +19,70 @@
     "toggleLanguage": "Switch to Arabic"
   },
   "home": {
+    "title": "Instant Nutritional Analysis at Your Fingertips",
     "subtitle": "The smart way to track your nutrition. Snap a photo or describe your meal to get an instant, AI-powered nutritional analysis. Take control of your health today.",
-    "getStarted": "Get Started",
+    "getStarted": "Get Started Free",
     "loggedIn": {
       "subtitle": "Ready to track your day or plan your next meal? Your dashboard is just a click away.",
       "goToDashboard": "Go to Dashboard"
     },
+    "howItWorks": {
+      "title": "How It Works",
+      "subtitle": "Achieve your health goals in three simple steps.",
+      "steps": [
+        {
+          "title": "1. Snap or Describe",
+          "description": "Take a picture of your meal, scan a barcode, or simply type in what you ate."
+        },
+        {
+          "title": "2. AI Analysis",
+          "description": "Our advanced AI instantly analyzes the food and provides a detailed nutritional breakdown."
+        },
+        {
+          "title": "3. Track & Improve",
+          "description": "Log your meals, track your progress against your goals, and get smart suggestions."
+        }
+      ]
+    },
+    "features": {
+      "title": "All-In-One Wellness Tracker",
+      "subtitle": "Everything you need to understand and improve your diet.",
+      "list": [
+        {
+          "icon": "Personalized Meal Plans",
+          "title": "Personalized Meal Plans",
+          "description": "Get AI-generated meal plans tailored to your goals, preferences, and allergies."
+        },
+        {
+          "icon": "Track Your Progress",
+          "title": "Track Your Progress",
+          "description": "Visualize your nutritional intake with daily, weekly, and monthly reports."
+        },
+        {
+          "icon": "Barcode Scanner",
+          "title": "Barcode Scanner",
+          "description": "Quickly log packaged foods by scanning the barcode with your phone's camera."
+        },
+        {
+          "icon": "Extensive Food Database",
+          "title": "Extensive Food Database",
+          "description": "Access nutritional info for millions of food items, including international cuisines."
+        },
+        {
+          "icon": "Community & Support",
+          "title": "Community & Support",
+          "description": "Share your progress and get motivated with our community features."
+        },
+        {
+          "icon": "Multi-language",
+          "title": "Multi-language Support",
+          "description": "Available in both English and Arabic, with culturally-aware food analysis."
+        }
+      ]
+    },
     "testimonials": {
-      "title": "What Our Users Say",
+      "title": "Loved by Users Worldwide",
+      "subtitle": "Don't just take our word for it. Here's what our users have to say.",
       "reviews": [
         {
           "name": "Sarah K.",
@@ -50,7 +106,38 @@
           "dataAiHint": "woman smiling"
         }
       ]
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Have questions? We have answers. If you can't find what you're looking for, feel free to contact us.",
+      "questions": [
+        {
+          "question": "Is NutriSnap free to use?",
+          "answer": "Yes, NutriSnap offers a generous free plan that includes core features like photo analysis and meal logging. We also have a premium plan with advanced features like unlimited meal planning and detailed historical reports."
+        },
+        {
+          "question": "How accurate is the nutritional analysis?",
+          "answer": "Our AI is trained on a massive database of food items and provides highly accurate estimates. For packaged foods, barcode scanning provides exact data from the manufacturer. For homemade meals, the accuracy depends on the image clarity and ingredients."
+        },
+        {
+          "question": "Can I use NutriSnap for special diets like keto or vegan?",
+          "answer": "Absolutely! You can set your dietary preferences in the settings, and our AI will tailor meal suggestions and analysis to fit your specific needs, whether you're vegan, vegetarian, pescatarian, or on a low-carb diet."
+        },
+        {
+          "question": "Does the app work for non-Western cuisines?",
+          "answer": "Yes! This is one of our core strengths. NutriSnap was specifically designed to recognize a wide variety of international dishes, including complex recipes from Middle Eastern, Asian, and other cuisines that are often poorly supported by other apps."
+        }
+      ]
     }
+  },
+  "footer": {
+    "description": "Your AI-powered companion for smart and simple nutrition tracking.",
+    "product": "Product",
+    "features": "Features",
+    "testimonials": "Testimonials",
+    "faq": "FAQ",
+    "company": "Company",
+    "rights": "All rights reserved."
   },
   "dashboard": {
     "title": "Daily Dashboard",
@@ -171,24 +258,17 @@
   },
   "login": {
     "title": "Welcome Back",
-    "description": "Log in to your NutriSnap account.",
+    "description": "Log in to your NutriSnap account to continue.",
     "emailLabel": "Email",
     "emailPlaceholder": "m@example.com",
     "passwordLabel": "Password",
-    "button": "Login",
+    "button": "Sign In",
     "noAccount": "Don't have an account?",
-    "signUpLink": "Sign up",
-    "orContinueWith": "Or continue with",
-    "google": "Google",
-    "facebook": "Facebook",
-    "socialSuccessTitle": "Login Successful!",
-    "socialSuccessDescription": "Welcome back, you're now logged in with {provider}.",
-    "socialErrorTitle": "Login Failed",
-    "socialErrorDescription": "There was a problem signing in. Please try again."
+    "signUpLink": "Sign up for free"
   },
   "register": {
     "title": "Create an Account",
-    "description": "Enter your details to get started with NutriSnap.",
+    "description": "Get started with NutriSnap today. It's free!",
     "nameLabel": "Username",
     "namePlaceholder": "Choose a username",
     "emailLabel": "Email",
@@ -200,14 +280,7 @@
     "toastSuccessTitle": "Registration Successful!",
     "toastSuccessDescription": "Your account has been created. Welcome to NutriSnap!",
     "avatarLabel": "Choose your Avatar",
-    "uploadAvatar": "Upload a Photo",
-    "orContinueWith": "Or continue with",
-    "google": "Google",
-    "facebook": "Facebook",
-    "socialSuccessTitle": "Registration Successful!",
-    "socialSuccessDescription": "You've successfully registered with {provider}.",
-    "socialErrorTitle": "Registration Failed",
-    "socialErrorDescription": "There was a problem signing up. Please try again."
+    "uploadAvatar": "Upload a Photo"
   },
   "mealPlanner": {
     "title": "Meal Planner",
@@ -263,7 +336,7 @@
     }
   },
   "about": {
-    "title": "About NutriSnap",
+    "title": "Our Mission",
     "story": {
       "p1": "NutriSnap was founded by Ghada Al-Ani, a talented software engineer from Baghdad, Iraq. Growing up with the rich flavors of Iraqi cuisine, she developed a deep appreciation for how food connects us to our heritage.",
       "p2": "While living abroad, she noticed a critical flaw in popular health and wellness apps: they struggled to accurately analyze diverse, international dishes. As an engineer, she saw a technical challenge and an opportunity. The apps lacked the sophisticated models to understand complex recipes from her culture and many others.",

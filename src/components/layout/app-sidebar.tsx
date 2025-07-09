@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Leaf, LayoutDashboard, PlusSquare, BookOpen, Settings, Home, Info, Star, BarChart } from 'lucide-react';
+import { Leaf, LayoutGrid, PlusCircle, BookCopy, LineChart, Settings2, Home, Info, Star } from 'lucide-react';
 
 import {
   Sidebar,
@@ -22,11 +22,11 @@ export default function AppSidebar() {
 
   const navLinks = [
     { href: '/', label: t('header.home'), icon: Home },
-    { href: '/dashboard', label: t('header.dashboard'), icon: LayoutDashboard },
-    { href: '/add-food', label: t('header.addFood'), icon: PlusSquare },
-    { href: '/meal-planner', label: t('header.mealPlanner'), icon: BookOpen },
-    { href: '/reports', label: t('header.reports'), icon: BarChart },
-    { href: '/settings', label: t('header.settings'), icon: Settings },
+    { href: '/dashboard', label: t('header.dashboard'), icon: LayoutGrid },
+    { href: '/add-food', label: t('header.addFood'), icon: PlusCircle },
+    { href: '/meal-planner', label: t('header.mealPlanner'), icon: BookCopy },
+    { href: '/reports', label: t('header.reports'), icon: LineChart },
+    { href: '/settings', label: t('header.settings'), icon: Settings2 },
     { href: '/feedback', label: t('header.feedback'), icon: Star },
     { href: '/about', label: t('header.about'), icon: Info },
   ];
@@ -34,9 +34,9 @@ export default function AppSidebar() {
   return (
     <Sidebar>
       <SidebarHeader>
-        <Link href="/" className="flex items-center gap-2">
+        <Link href="/dashboard" className="flex items-center gap-2">
           <Leaf className="h-6 w-6 text-primary" />
-          {state === 'expanded' && <span className="font-headline text-xl">{t('header.title')}</span>}
+          {state === 'expanded' && <span className="font-bold text-xl">{t('header.title')}</span>}
         </Link>
       </SidebarHeader>
       <SidebarContent>

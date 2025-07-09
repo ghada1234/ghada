@@ -14,48 +14,53 @@ import { Label } from '@/components/ui/label';
 import { useLanguage } from '@/contexts/language-context';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useUserSettings } from '@/contexts/user-settings-context';
-import { useToast } from '@/hooks/use-toast';
 
 export default function LoginPage() {
   const { t } = useLanguage();
-  const { updateProfile } = useUserSettings();
   const router = useRouter();
-  const { toast } = useToast();
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    // In a real app, you would have actual login logic here
+    // For now, we'll just redirect to the dashboard.
+    router.push('/dashboard');
+  };
 
   return (
-    <div className="flex h-[calc(100vh-4rem)] items-center justify-center p-4">
-      <Card className="w-full max-w-sm">
-        <CardHeader>
-          <CardTitle className="text-2xl font-headline">
-            {t('login.title')}
-          </CardTitle>
-          <CardDescription>{t('login.description')}</CardDescription>
-        </CardHeader>
-        <CardContent className="grid gap-4">
-          <div className="grid gap-2">
-            <Label htmlFor="email">{t('login.emailLabel')}</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder={t('login.emailPlaceholder')}
-              required
-            />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="password">{t('login.passwordLabel')}</Label>
-            <Input id="password" type="password" required />
-          </div>
-        </CardContent>
-        <CardFooter className="flex flex-col items-start gap-4">
-          <Button className="w-full">{t('login.button')}</Button>
-          <div className="w-full text-center text-sm text-muted-foreground">
-            {t('login.noAccount')}{' '}
-            <Link href="/register" className="text-primary underline">
-              {t('login.signUpLink')}
-            </Link>
-          </div>
-        </CardFooter>
+    <div className="flex h-[calc(100vh-5rem)] items-center justify-center p-4">
+      <Card className="w-full max-w-sm border-border/50">
+        <form onSubmit={handleLogin}>
+          <CardHeader className="text-center">
+            <CardTitle className="text-2xl">
+              {t('login.title')}
+            </CardTitle>
+            <CardDescription>{t('login.description')}</CardDescription>
+          </CardHeader>
+          <CardContent className="grid gap-4">
+            <div className="grid gap-2">
+              <Label htmlFor="email">{t('login.emailLabel')}</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder={t('login.emailPlaceholder')}
+                required
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="password">{t('login.passwordLabel')}</Label>
+              <Input id="password" type="password" required />
+            </div>
+          </CardContent>
+          <CardFooter className="flex flex-col items-center gap-4">
+            <Button type="submit" className="w-full">{t('login.button')}</Button>
+            <div className="text-center text-sm text-muted-foreground">
+              {t('login.noAccount')}{' '}
+              <Link href="/register" className="text-primary hover:underline">
+                {t('login.signUpLink')}
+              </Link>
+            </div>
+          </CardFooter>
+        </form>
       </Card>
     </div>
   );

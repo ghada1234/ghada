@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
-import { Space_Grotesk, Source_Code_Pro, Cairo } from 'next/font/google';
+import { Inter, Cairo } from 'next/font/google';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import Header from '@/components/layout/header';
+import Footer from '@/components/layout/footer';
 import { cookies } from 'next/headers';
 import { LanguageProvider } from '@/contexts/language-context';
 import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
@@ -11,16 +12,10 @@ import { MealLogProvider } from '@/contexts/meal-log-context';
 import { UserSettingsProvider } from '@/contexts/user-settings-context';
 import { TestimonialProvider } from '@/contexts/testimonials-context';
 
-const spaceGrotesk = Space_Grotesk({
+const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-space-grotesk',
-});
-
-const sourceCodePro = Source_Code_Pro({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-source-code-pro',
+  variable: '--font-sans',
 });
 
 const cairo = Cairo({
@@ -42,8 +37,8 @@ export default async function RootLayout({
   const lang = cookies().get('lang')?.value === 'en' ? 'en' : 'ar';
 
   return (
-    <html lang={lang} dir={lang === 'ar' ? 'rtl' : 'ltr'} className={`${spaceGrotesk.variable} ${sourceCodePro.variable} ${cairo.variable}`}>
-      <body className="min-h-dvh bg-background font-body text-foreground antialiased">
+    <html lang={lang} dir={lang === 'ar' ? 'rtl' : 'ltr'} className={`${inter.variable} ${cairo.variable} dark`}>
+      <body className="min-h-dvh bg-background font-sans text-foreground antialiased">
         <LanguageProvider initialLang={lang}>
           <UserSettingsProvider>
             <TestimonialProvider>
@@ -54,6 +49,7 @@ export default async function RootLayout({
                     <SidebarInset>
                       <Header />
                       <main className="flex-1">{children}</main>
+                      <Footer />
                     </SidebarInset>
                   </div>
                 </SidebarProvider>

@@ -124,7 +124,7 @@ export default function HomePage() {
                   <CardHeader>
                     <div className="flex items-center gap-4">
                       <Avatar className="h-12 w-12">
-                        <AvatarImage src={testimonial.avatar || undefined} alt={testimonial.name} data-ai-hint={testimonial.dataAiHint} />
+                        <AvatarImage src={testimonial.avatar || undefined} alt={testimonial.name} data-ai-hint="woman smiling" />
                         <AvatarFallback>{testimonial.name.charAt(0)}</AvatarFallback>
                       </Avatar>
                       <div>

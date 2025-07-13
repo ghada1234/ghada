@@ -4,7 +4,6 @@ import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
-import { cookies } from 'next/headers';
 import { LanguageProvider } from '@/contexts/language-context';
 import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
 import AppSidebar from '@/components/layout/app-sidebar';
@@ -34,12 +33,11 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const lang = cookies().get('lang')?.value === 'en' ? 'en' : 'ar';
 
   return (
-    <html lang={lang} dir={lang === 'ar' ? 'rtl' : 'ltr'} className={`${spaceGrotesk.variable} ${cairo.variable}`}>
+    <html lang="en" dir="ltr" className={`${spaceGrotesk.variable} ${cairo.variable}`}>
       <body className="min-h-dvh bg-background font-sans text-foreground antialiased">
-        <LanguageProvider initialLang={lang}>
+        <LanguageProvider>
           <UserSettingsProvider>
             <TestimonialProvider>
               <MealLogProvider>

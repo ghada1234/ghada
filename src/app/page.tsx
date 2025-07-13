@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -10,7 +11,6 @@ import { cn } from '@/lib/utils';
 import { useUserSettings } from '@/contexts/user-settings-context';
 import { useTestimonials } from '@/contexts/testimonials-context';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import AdBanner from '@/components/ad-banner';
 
 export default function HomePage() {
   const { t } = useLanguage();
@@ -100,12 +100,6 @@ export default function HomePage() {
                 );
               })}
             </div>
-          </div>
-        </section>
-
-        <section id="advertisement" className="py-16 sm:py-24">
-          <div className="container mx-auto px-4">
-            <AdBanner />
           </div>
         </section>
 

@@ -17,7 +17,6 @@ import { useUserSettings } from '@/contexts/user-settings-context';
 import { isToday } from 'date-fns';
 import type { DailyGoals } from '@/contexts/user-settings-context';
 import { Badge } from '@/components/ui/badge';
-import AdBanner from '@/components/ad-banner';
 
 
 const MacroProgress = ({
@@ -290,10 +289,6 @@ export default function DashboardPage() {
               {renderNutrient(t('dashboard.iron'), totals.iron, dailyGoals.iron, 'mg', 1)}
           </CardContent>
         </Card>
-
-        <div className="md:col-span-2">
-          <AdBanner />
-        </div>
 
         <Card className="md:col-span-2">
           <CardHeader>

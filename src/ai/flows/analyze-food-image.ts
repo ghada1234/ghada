@@ -31,10 +31,11 @@ const prompt = ai.definePrompt({
 
 Follow these steps carefully:
 1.  **Identify the Dish and Ingredients**: First, identify the primary dish. Then, list all visible or clearly inferred ingredients. Be as specific as possible (e.g., "chicken breast," "brown rice," "broccoli florets").
-2.  **Populate Ingredients List**: You MUST populate the \`ingredients\` field in the output with the list of ingredients you identified in step 1.
+2.  **Populate Ingredients List**: You MUST populate the \`ingredients\` field in the output with the list of ingredients you identified in step 1. The ingredients should be single, distinct items.
 3.  **Estimate Portion Size**: Analyze the image to estimate the portion size in grams or a standard unit (e.g., cups, ounces). {{#if portionSize}}The user has provided a portion size of "{{{portionSize}}}". Use this as the primary reference, but you can refine it if the image clearly contradicts it.{{else}}If the user has not provided a portion size, assume a standard single serving and state what that serving size is.{{/if}}
-4.  **Calculate Nutritional Information**: For each ingredient identified, estimate its quantity based on the portion size. Then, calculate the nutritional values for each ingredient individually. Finally, sum up the nutritional values from all ingredients to get the total for the dish. Base your calculations on standard nutritional data for the raw or cooked ingredients as appropriate.
-5.  **Provide Confidence Score**: Finally, provide a confidence score (from 0.0 to 1.0) for the accuracy of the entire analysis, considering image clarity, ingredient identifiability, and portion size estimation.
+4.  **Calculate Nutritional Information**: For each ingredient identified, estimate its quantity based on the portion size. Then, calculate the nutritional values for each ingredient individually. Finally, sum up the nutritional values from all ingredients to get the total for the dish. Base your calculations on standard nutritional data for the raw or cooked ingredients as appropriate. Do not estimate the total values directly; they MUST be the sum of the individual ingredient calculations.
+5.  **Assess if Main Dish**: Determine if the item is a complete meal (like a pasta dish) or a single-ingredient/simple product (like just an apple). Set the \`isNotMainDish\` field to true if it is not a complete meal.
+6.  **Provide Confidence Score**: Finally, provide a confidence score (from 0.0 to 1.0) for the accuracy of the entire analysis, considering image clarity, ingredient identifiability, and portion size estimation.
 
 Photo: {{media url=photoDataUri}}`,
 });

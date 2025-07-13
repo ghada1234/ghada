@@ -31,10 +31,11 @@ const prompt = ai.definePrompt({
 Follow these steps:
 1.  **Identify Barcode**: Scan the image to locate a product barcode (UPC, EAN, etc.).
 2.  **Look up Product**: Use the barcode to identify the exact product.
-3.  **Extract Ingredients List**: Look up the product's ingredients list as it appears on the packaging and populate the \`ingredients\` field in the output. If you cannot find the ingredients list, return an empty array for the \`ingredients\` field.
-4.  **Extract Nutritional Information**: Provide the nutritional analysis *exactly as it would appear on the product's official nutrition label for the standard serving size listed on the package*. **You must not estimate or guess these values.** If you cannot find the official data, you must treat it as a failure (see step 5).
-5.  **Handle Failures**: If no barcode is visible, if the barcode is unreadable, or if the product cannot be found in the database, you must return an analysis with a confidence score of 0. All other nutritional values should also be 0, and the \`ingredients\` list should be empty.
-6.  **Provide Confidence Score**: Always provide a confidence score (from 0.0 to 1.0). A score of 1.0 means you successfully identified the barcode and found the exact product data. A score of 0 means you failed.
+3.  **Extract Ingredients List**: Look up the product's ingredients list as it appears on the packaging and populate the \`ingredients\` field in the output. If you cannot find the ingredients list, return an empty array for the \`ingredients\` field. The ingredients should be single, distinct items. For example, if the label says "INGREDIENTS: Water, Sugar, Salt", the output should be ["Water", "Sugar", "Salt"].
+4.  **Extract Nutritional Information**: Provide the nutritional analysis *exactly as it would appear on the product's official nutrition label for the standard serving size listed on the package*. **You must not estimate or guess these values.** If you cannot find the official data, you must treat it as a failure (see step 6).
+5.  **Assess if Main Dish**: Determine if the item is a complete meal (like a ready-to-eat pasta) or a single-ingredient/simple product (like a can of soda or a bag of chips). Set the \`isNotMainDish\` field to true if it is not a complete meal.
+6.  **Handle Failures**: If no barcode is visible, if the barcode is unreadable, or if the product cannot be found in the database, you must return an analysis with a confidence score of 0. All other nutritional values should also be 0, and the \`ingredients\` list should be empty.
+7.  **Provide Confidence Score**: Always provide a confidence score (from 0.0 to 1.0). A score of 1.0 means you successfully identified the barcode and found the exact product data. A score of 0 means you failed.
 
 Photo: {{media url=photoDataUri}}`,
 });

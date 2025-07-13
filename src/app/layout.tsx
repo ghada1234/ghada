@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   description: 'Snap photos of your meals for instant nutritional analysis.',
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;

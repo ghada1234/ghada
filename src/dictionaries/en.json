@@ -198,7 +198,7 @@
   },
   "addFood": {
     "title": "Log Your Meal",
-    "description": "Add a meal by snapping a photo or describing it. Our AI will handle the rest.",
+    "description": "Add a meal by snapping a photo, describing it, or scanning a barcode. Our AI will handle the rest.",
     "tabPhoto": "Snap a Photo",
     "tabDescribe": "Describe Meal",
     "tabBarcode": "Scan Barcode",
@@ -255,6 +255,25 @@
     "feedback": {
       "question": "Was the analysis for '{dishName}' accurate and useful?",
       "thanks": "Thanks for your feedback!"
+    },
+    "howItWorks": {
+      "button": "How It Works",
+      "title": "How to Log Your Food",
+      "subtitle": "Get accurate nutritional information in three easy ways.",
+      "steps": [
+        {
+          "title": "1. Snap, Describe, or Scan",
+          "description": "Use one of the tabs to either take a photo of your meal, write a description of it, or scan a product's barcode."
+        },
+        {
+          "title": "2. Get AI Analysis",
+          "description": "Our AI will instantly analyze your input and provide a detailed nutritional breakdown for you to review."
+        },
+        {
+          "title": "3. Log and Track",
+          "description": "Confirm the analysis, select the meal type (e.g., lunch), and add it to your daily log to track your progress."
+        }
+      ]
     }
   },
   "login": {
@@ -290,7 +309,7 @@
     "generating": "Generating...",
     "suggestionsEmpty": "Click the button to generate a new meal plan."
   },
-  "settings": {
+  "profile": {
     "title": "Profile",
     "description": "Customize your daily nutritional goals and profile.",
     "profileTitle": "Profile Settings",

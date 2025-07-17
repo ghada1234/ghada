@@ -7,13 +7,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Camera, Utensils, Upload, Video, X, Loader2, SwitchCamera, Percent, Barcode, ThumbsUp, ThumbsDown } from 'lucide-react';
+import { Camera, Utensils, Upload, Video, X, Loader2, SwitchCamera, Percent, Barcode, ThumbsUp, ThumbsDown, HelpCircle, BrainCircuit, Target } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { analyzeFoodImage, type NutritionalInfo } from '@/ai/flows/analyze-food-image';
 import { analyzeDishName } from '@/ai/flows/analyze-dish-name';
 import { analyzeBarcode } from '@/ai/flows/analyze-barcode';
 import { useLanguage } from '@/contexts/language-context';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription, DialogTrigger } from '@/components/ui/dialog';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { useMealLog, type MealType } from '@/contexts/meal-log-context';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -207,13 +207,49 @@ export default function AddFoodPage() {
       <span className="font-medium">{value.toLocaleString()} {unit}</span>
     </div>
   );
+  
+  const howItWorksSteps = t('addFood.howItWorks.steps') as any[];
+
 
   return (
     <div className="container mx-auto max-w-2xl p-4 md:p-8">
       <Card>
         <CardHeader>
-          <CardTitle className="text-3xl font-headline">{t('addFood.title')}</CardTitle>
-          <CardDescription>{t('addFood.description')}</CardDescription>
+           <div className="flex justify-between items-center">
+            <div>
+              <CardTitle className="text-3xl font-headline">{t('addFood.title')}</CardTitle>
+              <CardDescription>{t('addFood.description')}</CardDescription>
+            </div>
+             <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="outline" size="icon">
+                  <HelpCircle className="h-5 w-5" />
+                   <span className="sr-only">{t('addFood.howItWorks.button')}</span>
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>{t('addFood.howItWorks.title')}</DialogTitle>
+                   <DialogDescription>{t('addFood.howItWorks.subtitle')}</DialogDescription>
+                </DialogHeader>
+                 <div className="grid grid-cols-1 gap-6 py-4">
+                  {howItWorksSteps.map((step, index) => (
+                    <div key={index} className="flex items-start gap-4">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary shrink-0">
+                        {index === 0 && <Camera className="h-5 w-5" />}
+                        {index === 1 && <BrainCircuit className="h-5 w-5" />}
+                        {index === 2 && <Target className="h-5 w-5" />}
+                      </div>
+                      <div>
+                        <h3 className="text-base font-semibold">{step.title}</h3>
+                        <p className="mt-1 text-sm text-muted-foreground">{step.description}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </DialogContent>
+            </Dialog>
+          </div>
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="photo" className="w-full">

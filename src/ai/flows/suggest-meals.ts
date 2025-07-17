@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview An AI flow to suggest meals.
@@ -10,11 +11,11 @@ import { MealSuggestionSchema, type MealSuggestion } from '@/ai/schemas';
 export type { MealSuggestion };
 
 const SuggestMealsOutputSchema = z.object({
-  breakfast: MealSuggestionSchema.describe('A suggestion for breakfast.'),
-  lunch: MealSuggestionSchema.describe('A suggestion for lunch.'),
-  dinner: MealSuggestionSchema.describe('A suggestion for dinner.'),
-  snack: MealSuggestionSchema.describe('A suggestion for a snack.'),
-  dessert: MealSuggestionSchema.describe('A suggestion for a dessert.'),
+  breakfast: MealSuggestionSchema.optional().describe('A suggestion for breakfast.'),
+  lunch: MealSuggestionSchema.optional().describe('A suggestion for lunch.'),
+  dinner: MealSuggestionSchema.optional().describe('A suggestion for dinner.'),
+  snack: MealSuggestionSchema.optional().describe('A suggestion for a snack.'),
+  dessert: MealSuggestionSchema.optional().describe('A suggestion for a dessert.'),
 });
 export type SuggestMealsOutput = z.infer<typeof SuggestMealsOutputSchema>;
 
@@ -44,7 +45,7 @@ const prompt = ai.definePrompt({
   output: { schema: SuggestMealsOutputSchema },
   prompt: `You are an expert nutritionist and chef specializing in healthy and delicious meals, with a deep knowledge of international cuisines, including Middle Eastern and specifically Iraqi cuisine.
 Your suggestions should be diverse and can include dishes from various culinary traditions around the world.
-Your task is to generate a full day's meal plan (breakfast, lunch, dinner, a snack, and a dessert) for a user.
+Your task is to generate a meal plan for a user. You can suggest a full day's plan or just a few meals depending on the calorie target.
 All output MUST be in the specified language: {{language}}.
 
 Consider the following user constraints:
@@ -61,13 +62,13 @@ Consider the following user constraints:
 - User dislikes: {{{dislikes}}}
 {{/if}}
 {{#if targetCalories}}
-- The total nutritional values for all suggested meals (breakfast, lunch, dinner, snack, dessert) should collectively be around these targets:
-  - Calories: {{{targetCalories}}} kcal
-  {{#if targetProtein}}- Protein: {{{targetProtein}}} g{{/if}}
-  {{#if targetCarbs}}- Carbs: {{{targetCarbs}}} g{{/if}}
-  {{#if targetFats}}- Fats: {{{targetFats}}} g{{/if}}
+- The total nutritional values for all suggested meals should collectively be around the target of {{{targetCalories}}} kcal.
+  {{#if targetProtein}}- Aim for around {{{targetProtein}}} g of protein.{{/if}}
+  {{#if targetCarbs}}- Aim for around {{{targetCarbs}}} g of carbs.{{/if}}
+  {{#if targetFats}}- Aim for around {{{targetFats}}} g of fats.{{/if}}
+- You do not need to provide a meal for every category (breakfast, lunch, etc.). Only provide suggestions that fit within the calorie budget.
 {{else}}
-- Provide a generally healthy and balanced plan.
+- Provide a generally healthy and balanced full day's plan (breakfast, lunch, dinner, snack, dessert).
 {{/if}}
 {{#if positiveFeedbackOn}}
 - The user has previously given positive feedback on these dishes, so you can suggest similar items: {{{positiveFeedbackOn}}}
@@ -76,12 +77,12 @@ Consider the following user constraints:
 - The user has previously given negative feedback on these dishes, so you should avoid them or dishes like them: {{{negativeFeedbackOn}}}
 {{/if}}
 
-For each meal, provide the following details in {{language}}:
-- A creative and appealing dish name.
-- A short, mouth-watering description.
-- A list of ingredients with their approximate quantities (e.g., 'Chicken breast (150g)', 'Brown rice (1 cup cooked)').
-- A detailed nutritional breakdown. You MUST calculate this by summing up the nutritional values of the individual ingredients you listed. Do not estimate the total values directly. The breakdown should include estimated values for: calories, protein, carbs, fats, fiber, sodium, sugar, potassium, vitaminC, calcium, and iron.
-- Simple, step-by-step cooking instructions.
+For each meal you suggest, provide the following details in {{language}}:
+1.  A creative and appealing dish name.
+2.  A short, mouth-watering description.
+3.  A list of primary ingredients with their approximate quantities (e.g., 'Chicken breast (150g)', 'Brown rice (1 cup cooked)').
+4.  A detailed nutritional breakdown. This is the most critical step. You MUST calculate this by first determining the nutritional value of each individual ingredient and then summing them up. Do not estimate the total values directly. Your calculation must be accurate. The breakdown should include estimated values for: calories, protein, carbs, fats, fiber, sodium, sugar, potassium, vitaminC, calcium, and iron.
+5.  Simple, step-by-step cooking instructions.
 
 Ensure the suggestions are healthy, balanced, and appealing.`,
 });

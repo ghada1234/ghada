@@ -303,11 +303,17 @@
     "uploadAvatar": "Upload a Photo"
   },
   "mealPlanner": {
-    "title": "Meal Planner",
-    "description": "Generate personalized daily meal plans with our AI.",
+    "title": "AI Meal Planner",
+    "description": "Generate personalized daily meal plans based on your remaining calories.",
+    "calorieStatusTitle": "Daily Calorie Status",
+    "goal": "Goal",
+    "consumed": "Consumed",
+    "remaining": "Remaining",
     "generateButton": "Generate Meal Plan",
     "generating": "Generating...",
-    "suggestionsEmpty": "Click the button to generate a new meal plan."
+    "suggestionsEmpty": "Click the button to generate a new meal plan.",
+    "cta": "Want to change your daily calorie goal?",
+    "profileLink": "Go to your Profile Page"
   },
   "profile": {
     "title": "Profile",

@@ -17,7 +17,7 @@ interface TestimonialContextType {
 
 const TestimonialContext = createContext<TestimonialContextType | undefined>(undefined);
 
-const TESTIMONIALS_STORAGE_KEY = 'nutrisnap_testimonials';
+const TESTIMONIALS_STORAGE_KEY = 'snaprisnaps_testimonials';
 
 export const TestimonialProvider = ({ children }: { children: ReactNode }) => {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);

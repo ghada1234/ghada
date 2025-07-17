@@ -24,7 +24,7 @@ const cairo = Cairo({
 });
 
 export const metadata: Metadata = {
-  title: 'NutriSnap',
+  title: 'Snapri Snaps',
   description: 'Snap photos of your meals for instant nutritional analysis.',
 };
 

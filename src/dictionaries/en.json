@@ -1,11 +1,11 @@
 
 {
   "metadata": {
-    "title": "NutriSnap",
+    "title": "Snapri Snaps",
     "description": "Snap photos of your meals for instant nutritional analysis."
   },
   "header": {
-    "title": "NutriSnap",
+    "title": "Snapri Snaps",
     "home": "Home",
     "about": "About",
     "feedback": "Feedback",
@@ -86,7 +86,7 @@
       "reviews": [
         {
           "name": "Sarah K.",
-          "text": "NutriSnap has revolutionized how I track my meals. The photo analysis is incredibly accurate and saves me so much time!",
+          "text": "Snapri Snaps has revolutionized how I track my meals. The photo analysis is incredibly accurate and saves me so much time!",
           "rating": 5,
           "avatar": "https://placehold.co/100x100.png",
           "dataAiHint": "woman portrait"
@@ -112,20 +112,20 @@
       "subtitle": "Have questions? We have answers. If you can't find what you're looking for, feel free to contact us.",
       "questions": [
         {
-          "question": "Is NutriSnap free to use?",
-          "answer": "Yes, NutriSnap offers a generous free plan that includes core features like photo analysis and meal logging. We also have a premium plan with advanced features like unlimited meal planning and detailed historical reports."
+          "question": "Is Snapri Snaps free to use?",
+          "answer": "Yes, Snapri Snaps offers a generous free plan that includes core features like photo analysis and meal logging. We also have a premium plan with advanced features like unlimited meal planning and detailed historical reports."
         },
         {
           "question": "How accurate is the nutritional analysis?",
           "answer": "Our AI is trained on a massive database of food items and provides highly accurate estimates. For packaged foods, barcode scanning provides exact data from the manufacturer. For homemade meals, the accuracy depends on the image clarity and ingredients."
         },
         {
-          "question": "Can I use NutriSnap for special diets like keto or vegan?",
+          "question": "Can I use Snapri Snaps for special diets like keto or vegan?",
           "answer": "Absolutely! You can set your dietary preferences in the settings, and our AI will tailor meal suggestions and analysis to fit your specific needs, whether you're vegan, vegetarian, pescatarian, or on a low-carb diet."
         },
         {
           "question": "Does the app work for non-Western cuisines?",
-          "answer": "Yes! This is one of our core strengths. NutriSnap was specifically designed to recognize a wide variety of international dishes, including complex recipes from Middle Eastern, Asian, and other cuisines that are often poorly supported by other apps."
+          "answer": "Yes! This is one of our core strengths. Snapri Snaps was specifically designed to recognize a wide variety of international dishes, including complex recipes from Middle Eastern, Asian, and other cuisines that are often poorly supported by other apps."
         }
       ]
     }
@@ -188,10 +188,10 @@
     },
     "shareOnWhatsApp": "Share on WhatsApp",
     "shareMessage": {
-      "intro": "🍎 My NutriSnap Daily Summary 🍎",
+      "intro": "🍎 My Snapri Snaps Daily Summary 🍎",
       "macrosHeader": "═ MACRONUTRIENTS ═",
       "microsHeader": "═ MICRONUTRIENTS ═",
-      "outro": "Checked with NutriSnap! ✅",
+      "outro": "Checked with Snapri Snaps! ✅",
       "todaysMealsHeader": "*Today's Meals:*"
     }
   },
@@ -258,7 +258,7 @@
   },
   "login": {
     "title": "Welcome Back",
-    "description": "Log in to your NutriSnap account to continue.",
+    "description": "Log in to your Snapri Snaps account to continue.",
     "emailLabel": "Email",
     "emailPlaceholder": "m@example.com",
     "passwordLabel": "Password",
@@ -268,7 +268,7 @@
   },
   "register": {
     "title": "Create an Account",
-    "description": "Get started with NutriSnap today. It's free!",
+    "description": "Get started with Snapri Snaps today. It's free!",
     "nameLabel": "Username",
     "namePlaceholder": "Choose a username",
     "emailLabel": "Email",
@@ -278,7 +278,7 @@
     "hasAccount": "Already have an account?",
     "signInLink": "Sign in",
     "toastSuccessTitle": "Registration Successful!",
-    "toastSuccessDescription": "Your account has been created. Welcome to NutriSnap!",
+    "toastSuccessDescription": "Your account has been created. Welcome to Snapri Snaps!",
     "avatarLabel": "Choose your Avatar",
     "uploadAvatar": "Upload a Photo"
   },
@@ -338,14 +338,14 @@
   "about": {
     "title": "Our Mission",
     "story": {
-      "p1": "NutriSnap was founded by Ghada Al-Ani, a talented software engineer from Baghdad, Iraq. Growing up with the rich flavors of Iraqi cuisine, she developed a deep appreciation for how food connects us to our heritage.",
+      "p1": "Snapri Snaps was founded by Ghada Al-Ani, a talented software engineer from Baghdad, Iraq. Growing up with the rich flavors of Iraqi cuisine, she developed a deep appreciation for how food connects us to our heritage.",
       "p2": "While living abroad, she noticed a critical flaw in popular health and wellness apps: they struggled to accurately analyze diverse, international dishes. As an engineer, she saw a technical challenge and an opportunity. The apps lacked the sophisticated models to understand complex recipes from her culture and many others.",
-      "p3": "Driven to solve this problem, Ghada leveraged her engineering expertise to create a tool that was both technologically advanced and culturally intelligent. She built NutriSnap to empower individuals to understand their diet with precision, without sacrificing their traditions. It's more than just an app; it's a celebration of global cuisine and a commitment to making personalized nutrition accessible to everyone, one snap at a time."
+      "p3": "Driven to solve this problem, Ghada leveraged her engineering expertise to create a tool that was both technologically advanced and culturally intelligent. She built Snapri Snaps to empower individuals to understand their diet with precision, without sacrificing their traditions. It's more than just an app; it's a celebration of global cuisine and a commitment to making personalized nutrition accessible to everyone, one snap at a time."
     }
   },
   "feedbackpage": {
     "title": "Share Your Feedback",
-    "description": "We'd love to hear your thoughts. Your feedback helps us improve NutriSnap for everyone. Your review might even be featured on our home page!",
+    "description": "We'd love to hear your thoughts. Your feedback helps us improve Snapri Snaps for everyone. Your review might even be featured on our home page!",
     "form": {
       "ratingLabel": "How would you rate your experience?",
       "commentLabel": "Any comments or suggestions?",
@@ -376,13 +376,13 @@
     "shareOnWhatsApp": "Share Report on WhatsApp",
     "shareMessage": {
       "title": {
-        "daily": "🍎 My 7-Day Average NutriSnap Report 🍎",
-        "weekly": "🍎 My Weekly Average NutriSnap Report 🍎",
-        "monthly": "🍎 My Monthly Average NutriSnap Report 🍎"
+        "daily": "🍎 My 7-Day Average Snapri Snaps Report 🍎",
+        "weekly": "🍎 My Weekly Average Snapri Snaps Report 🍎",
+        "monthly": "🍎 My Monthly Average Snapri Snaps Report 🍎"
       },
       "macrosHeader": "AVERAGE MACRONUTRIENTS",
       "microsHeader": "AVERAGE MICRONUTRIENTS",
-      "outro": "Tracked with NutriSnap! ✅"
+      "outro": "Tracked with Snapri Snaps! ✅"
     }
   }
 }

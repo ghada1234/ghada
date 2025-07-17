@@ -73,7 +73,7 @@ const UserSettingsContext = createContext<UserSettingsContextType | undefined>(
   undefined
 );
 
-const SETTINGS_STORAGE_KEY = 'nutrisnap_user_settings';
+const SETTINGS_STORAGE_KEY = 'snaprisnaps_user_settings';
 
 export const UserSettingsProvider = ({ children }: { children: ReactNode }) => {
   const [settings, setSettings] = useState<UserSettings>(DEFAULT_SETTINGS);

@@ -20,7 +20,7 @@ interface MealLogContextType {
 
 const MealLogContext = createContext<MealLogContextType | undefined>(undefined);
 
-const MEAL_LOG_STORAGE_KEY = 'nutrisnap_meal_log';
+const MEAL_LOG_STORAGE_KEY = 'snaprisnaps_meal_log';
 
 export const MealLogProvider = ({ children }: { children: ReactNode }) => {
   const [loggedMeals, setLoggedMeals] = useState<LoggedMeal[]>([]);

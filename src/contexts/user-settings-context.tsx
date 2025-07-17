@@ -46,7 +46,7 @@ export interface UserSettings {
 
 const DEFAULT_SETTINGS: UserSettings = {
   profile: {
-    name: null,
+    name: 'Alex Doe',
     avatar: null,
     dietaryPreference: null,
     allergies: null,

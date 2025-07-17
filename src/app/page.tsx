@@ -111,14 +111,14 @@ export default function HomePage() {
             </div>
             <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
               {allTestimonials.slice(0, 3).map((testimonial, index) => (
-                <Card key={testimonial.id || index} className="flex flex-col border bg-background/50">
-                  <CardContent className="flex-1 pt-6">
+                <Card key={testimonial.id || index} className="flex flex-col justify-between border bg-background/50">
+                  <CardContent className="pt-6">
                     <p className="text-muted-foreground italic">&ldquo;{testimonial.text}&rdquo;</p>
                   </CardContent>
                   <CardHeader>
                     <div className="flex items-center gap-4">
                       <Avatar className="h-12 w-12">
-                        <AvatarImage src={testimonial.avatar || undefined} alt={testimonial.name} data-ai-hint="woman smiling" />
+                        <AvatarImage src={testimonial.avatar || undefined} alt={testimonial.name} data-ai-hint="person portrait" />
                         <AvatarFallback>{testimonial.name.charAt(0)}</AvatarFallback>
                       </Avatar>
                       <div>

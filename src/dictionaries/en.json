@@ -164,7 +164,8 @@
     },
     "log": {
       "calories": "kcal",
-      "removeMeal": "Remove meal"
+      "removeMeal": "Remove meal",
+      "subtitle": "You have {count} meal(s) logged today."
     },
     "smartMealIdeasTitle": "Smart Meal Ideas",
     "suggestionsDesc": "Personalized meal ideas based on your preferences and remaining calories.",

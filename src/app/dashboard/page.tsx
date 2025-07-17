@@ -61,7 +61,7 @@ const MacroProgress = ({
           </TooltipContent>
         </Tooltip>
         <span className={`${isCalories ? 'text-xl font-bold font-headline' : 'font-medium'}`}>
-          {currentValue.toLocaleString(undefined, { maximumFractionDigits: isCalories ? 0 : 1 })} / {goalValue.toLocaleString()} {unit}
+          {currentValue.toLocaleString(undefined, { maximumFractionDigits: 0 })} / {goalValue.toLocaleString()} {unit}
         </span>
       </div>
       <Progress
@@ -293,10 +293,15 @@ export default function DashboardPage() {
         <Card className="md:col-span-2">
           <CardHeader>
             <CardTitle>{t('dashboard.logTitle')}</CardTitle>
+             <CardDescription>
+              {todaysMeals.length > 0
+                ? t('dashboard.log.subtitle', { count: todaysMeals.length })
+                : t('dashboard.logEmpty.subtitle')}
+            </CardDescription>
           </CardHeader>
           <CardContent>
             {todaysMeals.length === 0 ? (
-              <div className="flex flex-col items-center justify-center py-8 text-center">
+              <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed py-12 text-center">
                 <div className="mb-4 rounded-full bg-secondary p-4">
                   <Utensils className="h-10 w-10 text-secondary-foreground" />
                 </div>
@@ -318,7 +323,7 @@ export default function DashboardPage() {
                         <p className="font-semibold">{meal.dishName}</p>
                         <MealTypeTag mealType={meal.mealType} />
                       </div>
-                      <p className="text-sm text-muted-foreground">{meal.calories} {t('dashboard.log.calories')}</p>
+                      <p className="text-sm text-muted-foreground">{meal.calories.toLocaleString()} {t('dashboard.log.calories')}</p>
                     </div>
                     <Button
                       variant="ghost"
@@ -358,7 +363,7 @@ export default function DashboardPage() {
               </Accordion>
             )}
             {!isLoading && !suggestions && (
-              <div className="flex flex-col items-center justify-center py-8 text-center">
+              <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed py-12 text-center">
                  <div className="mb-4 rounded-full bg-secondary p-4">
                    <Sparkles className="h-8 w-8 text-secondary-foreground" />
                  </div>

@@ -13,6 +13,7 @@ import {
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Check, Info } from 'lucide-react';
 import { useLanguage } from '@/contexts/language-context';
+import PayPalSubscribeButton from '@/components/paypal-subscribe-button';
 
 export default function PricingPage() {
   const { t } = useLanguage();
@@ -88,9 +89,7 @@ export default function PricingPage() {
             </ul>
           </CardContent>
           <CardFooter>
-            <Button variant="outline" className="w-full cursor-default">
-              {t('pricing.pro.button')}
-            </Button>
+             <PayPalSubscribeButton planId="P-5GM08505K2712284MNB3ZFAI" />
           </CardFooter>
         </Card>
       </div>

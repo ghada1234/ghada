@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -26,7 +27,7 @@ export default function AppSidebar() {
     { href: '/add-food', label: t('header.addFood'), icon: PlusCircle },
     { href: '/meal-planner', label: t('header.mealPlanner'), icon: BookCopy },
     { href: '/reports', label: t('header.reports'), icon: LineChart },
-    { href: '/settings', label: t('header.settings'), icon: Settings2 },
+    { href: '/profile', label: t('header.profile'), icon: Settings2 },
     { href: '/feedback', label: t('header.feedback'), icon: Star },
     { href: '/about', label: t('header.about'), icon: Info },
   ];

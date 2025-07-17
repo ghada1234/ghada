@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -48,7 +49,7 @@ export default function Header() {
                             pathname.startsWith('/add-food') || 
                             pathname.startsWith('/meal-planner') || 
                             pathname.startsWith('/reports') || 
-                            pathname.startsWith('/settings') || 
+                            pathname.startsWith('/profile') || 
                             pathname.startsWith('/feedback') || 
                             pathname.startsWith('/about');
   
@@ -102,7 +103,7 @@ export default function Header() {
                   <Link href="/dashboard">{t('header.dashboard')}</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link href="/settings">{t('header.settings')}</Link>
+                  <Link href="/profile">{t('header.profile')}</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleLogout}>

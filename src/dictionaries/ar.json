@@ -13,7 +13,7 @@
     "addFood": "إضافة طعام",
     "mealPlanner": "مخطط الوجبات",
     "reports": "التقارير",
-    "settings": "الإعدادات",
+    "profile": "الملف الشخصي",
     "login": "تسجيل الدخول",
     "logout": "تسجيل الخروج",
     "toggleLanguage": "التبديل إلى الإنجليزية"
@@ -85,6 +85,13 @@
       "subtitle": "لا تأخذ كلامنا فقط. إليك ما يقوله مستخدمونا.",
       "reviews": [
         {
+          "name": "غادة ربيع",
+          "text": "تطبيق ممتاز",
+          "rating": 5,
+          "avatar": "https://placehold.co/100x100.png",
+          "dataAiHint": "woman portrait"
+        },
+        {
           "name": "سارة ك.",
           "text": "لقد أحدث سنابري سنابس ثورة في طريقة تتبعي لوجباتي. تحليل الصور دقيق بشكل لا يصدق ويوفر لي الكثير من الوقت!",
           "rating": 5,
@@ -97,13 +104,6 @@
           "rating": 5,
           "avatar": "https://placehold.co/100x100.png",
           "dataAiHint": "man portrait"
-        },
-        {
-          "name": "فاطمة ع.",
-          "text": "أحب عرض لوحة القيادة! من السهل جداً رؤية تقدمي بلمحة. وماسح الباركود مريح جداً للأطعمة المعبأة.",
-          "rating": 4,
-          "avatar": "https://placehold.co/100x100.png",
-          "dataAiHint": "woman smiling"
         }
       ]
     },
@@ -290,7 +290,7 @@
     "suggestionsEmpty": "اضغط على الزر لإنشاء خطة وجبات جديدة."
   },
   "settings": {
-    "title": "الإعدادات",
+    "title": "الملف الشخصي",
     "description": "خصص أهدافك الغذائية اليومية وملفك الشخصي.",
     "profileTitle": "إعدادات الملف الشخصي",
     "profile": {

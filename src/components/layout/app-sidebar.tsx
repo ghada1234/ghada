@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Leaf, LayoutGrid, PlusCircle, BookCopy, LineChart, Settings2, Home, Info, Star } from 'lucide-react';
+import { Leaf, LayoutGrid, PlusCircle, BookCopy, LineChart, Settings2, Home, Info, Star, Tag } from 'lucide-react';
 
 import {
   Sidebar,
@@ -28,6 +28,7 @@ export default function AppSidebar() {
     { href: '/meal-planner', label: t('header.mealPlanner'), icon: BookCopy },
     { href: '/reports', label: t('header.reports'), icon: LineChart },
     { href: '/profile', label: t('header.profile'), icon: Settings2 },
+    { href: '/pricing', label: t('header.pricing'), icon: Tag },
     { href: '/feedback', label: t('header.feedback'), icon: Star },
     { href: '/about', label: t('header.about'), icon: Info },
   ];

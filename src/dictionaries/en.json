@@ -14,6 +14,7 @@
     "mealPlanner": "Meal Planner",
     "reports": "Reports",
     "profile": "Profile",
+    "pricing": "Pricing",
     "login": "Login",
     "logout": "Logout",
     "toggleLanguage": "Switch to Arabic"
@@ -409,6 +410,37 @@
       "macrosHeader": "AVERAGE MACRONUTRIENTS",
       "microsHeader": "AVERAGE MICRONUTRIENTS",
       "outro": "Tracked with Snapri Snaps! ✅"
+    }
+  },
+  "pricing": {
+    "title": "Choose Your Plan",
+    "subtitle": "Unlock your full potential with the right plan for you.",
+    "announcement": {
+      "title": "Pricing Announcement",
+      "description": "Paid plans will become active on August 1st, 2025. Until then, all Pro features are available for free."
+    },
+    "free": {
+      "title": "Free",
+      "description": "For getting started with a one-day trial.",
+      "price": "$0",
+      "features": [
+        "AI Meal Analysis (3/day)",
+        "Barcode Scanning",
+        "Daily Progress Tracking"
+      ],
+      "button": "Start Free Trial"
+    },
+    "pro": {
+      "title": "Pro",
+      "description": "For those serious about achieving their goals.",
+      "price": "$4.99",
+      "features": [
+        "Unlimited AI Meal Analysis",
+        "AI Meal Planner",
+        "Advanced Reports & Trends",
+        "Priority Support"
+      ],
+      "button": "You are a Pro Subscriber"
     }
   }
 }

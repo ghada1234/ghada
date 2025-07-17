@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
@@ -56,10 +57,10 @@ export default function SettingsPage() {
 
   const getBmiCategory = (bmiValue: number | null) => {
     if (!bmiValue) return '';
-    if (bmiValue < 18.5) return t('settings.bmi.underweight');
-    if (bmiValue < 25) return t('settings.bmi.normal');
-    if (bmiValue < 30) return t('settings.bmi.overweight');
-    return t('settings.bmi.obese');
+    if (bmiValue < 18.5) return t('profile.bmi.underweight');
+    if (bmiValue < 25) return t('profile.bmi.normal');
+    if (bmiValue < 30) return t('profile.bmi.overweight');
+    return t('profile.bmi.obese');
   };
 
   const handleGoalChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -117,15 +118,15 @@ export default function SettingsPage() {
     updateGoals(goalsFormState);
     updateProfile(profileFormState);
     toast({
-      title: t('settings.toastSuccessTitle'),
-      description: t('settings.toastSuccessDescription'),
+      title: t('profile.toastSuccessTitle'),
+      description: t('profile.toastSuccessDescription'),
     });
   };
 
   const renderGoalInput = (key: keyof DailyGoals, unit: string) => (
     <div className="grid grid-cols-2 items-center gap-4">
       <Label htmlFor={key} className="text-base">
-        {t(`settings.goals.${key}`)}
+        {t(`profile.goals.${key}`)}
       </Label>
       <div className="flex items-center gap-2">
         <Input
@@ -151,20 +152,20 @@ export default function SettingsPage() {
       <Card>
         <CardHeader>
           <CardTitle className="text-3xl font-headline">
-            {t('settings.title')}
+            {t('profile.title')}
           </CardTitle>
-          <CardDescription>{t('settings.description')}</CardDescription>
+          <CardDescription>{t('profile.description')}</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-8">
             <div>
               <h3 className="text-xl font-semibold font-headline">
-                {t('settings.profileTitle')}
+                {t('profile.profileTitle')}
               </h3>
               <div className="mt-4 space-y-4">
                 <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-2">
                   <Label htmlFor="name" className="text-base pt-2">
-                    {t('settings.profile.name')}
+                    {t('profile.profile.name')}
                   </Label>
                   <Input
                     id="name"
@@ -177,7 +178,7 @@ export default function SettingsPage() {
                 </div>
                  <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-2">
                   <Label htmlFor="weight" className="text-base pt-2">
-                    {t('settings.profile.weight')}
+                    {t('profile.profile.weight')}
                   </Label>
                    <div className="flex items-center gap-2">
                      <Input
@@ -194,7 +195,7 @@ export default function SettingsPage() {
                 </div>
                  <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-2">
                   <Label htmlFor="height" className="text-base pt-2">
-                    {t('settings.profile.height')}
+                    {t('profile.profile.height')}
                   </Label>
                    <div className="flex items-center gap-2">
                      <Input
@@ -210,7 +211,7 @@ export default function SettingsPage() {
                    </div>
                 </div>
                  <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-2">
-                    <Label className="text-base pt-2">{t('settings.bmi.title')}</Label>
+                    <Label className="text-base pt-2">{t('profile.bmi.title')}</Label>
                     <div className="flex items-center gap-4 rounded-md border p-3">
                         <Calculator className="h-6 w-6 text-muted-foreground" />
                         <div>
@@ -220,7 +221,7 @@ export default function SettingsPage() {
                     </div>
                 </div>
                  <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-2">
-                    <Label className="text-base pt-2">{t('settings.profile.gender')}</Label>
+                    <Label className="text-base pt-2">{t('profile.profile.gender')}</Label>
                     <RadioGroup
                         name="gender"
                         value={profileFormState.gender || ''}
@@ -233,11 +234,11 @@ export default function SettingsPage() {
                     >
                         <div className="flex items-center space-x-2 rtl:space-x-reverse">
                             <RadioGroupItem value="male" id="male" />
-                            <Label htmlFor="male" className="font-normal">{t('settings.profile.male')}</Label>
+                            <Label htmlFor="male" className="font-normal">{t('profile.profile.male')}</Label>
                         </div>
                         <div className="flex items-center space-x-2 rtl:space-x-reverse">
                             <RadioGroupItem value="female" id="female" />
-                            <Label htmlFor="female" className="font-normal">{t('settings.profile.female')}</Label>
+                            <Label htmlFor="female" className="font-normal">{t('profile.profile.female')}</Label>
                         </div>
                     </RadioGroup>
                 </div>
@@ -275,7 +276,7 @@ export default function SettingsPage() {
                 </div>
                 <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-2">
                   <Label htmlFor="dietaryPreference" className="text-base pt-2">
-                    {t('settings.profile.dietaryPreference')}
+                    {t('profile.profile.dietaryPreference')}
                   </Label>
                   <Input
                     id="dietaryPreference"
@@ -284,44 +285,44 @@ export default function SettingsPage() {
                     value={profileFormState.dietaryPreference || ''}
                     onChange={handleProfileChange}
                     placeholder={t(
-                      'settings.profile.dietaryPreferencePlaceholder'
+                      'profile.profile.dietaryPreferencePlaceholder'
                     )}
                   />
                 </div>
                 <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-2">
                   <Label htmlFor="allergies" className="text-base pt-2">
-                    {t('settings.profile.allergies')}
+                    {t('profile.profile.allergies')}
                   </Label>
                   <Textarea
                     id="allergies"
                     name="allergies"
                     value={profileFormState.allergies || ''}
                     onChange={handleProfileChange}
-                    placeholder={t('settings.profile.allergiesPlaceholder')}
+                    placeholder={t('profile.profile.allergiesPlaceholder')}
                   />
                 </div>
                 <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-2">
                   <Label htmlFor="likes" className="text-base pt-2">
-                    {t('settings.profile.likes')}
+                    {t('profile.profile.likes')}
                   </Label>
                   <Textarea
                     id="likes"
                     name="likes"
                     value={profileFormState.likes || ''}
                     onChange={handleProfileChange}
-                    placeholder={t('settings.profile.likesPlaceholder')}
+                    placeholder={t('profile.profile.likesPlaceholder')}
                   />
                 </div>
                 <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-2">
                   <Label htmlFor="dislikes" className="text-base pt-2">
-                    {t('settings.profile.dislikes')}
+                    {t('profile.profile.dislikes')}
                   </Label>
                   <Textarea
                     id="dislikes"
                     name="dislikes"
                     value={profileFormState.dislikes || ''}
                     onChange={handleProfileChange}
-                    placeholder={t('settings.profile.dislikesPlaceholder')}
+                    placeholder={t('profile.profile.dislikesPlaceholder')}
                   />
                 </div>
               </div>
@@ -329,7 +330,7 @@ export default function SettingsPage() {
 
             <div>
               <h3 className="text-xl font-semibold font-headline">
-                {t('settings.macrosTitle')}
+                {t('profile.macrosTitle')}
               </h3>
               <div className="mt-4 space-y-4">
                 {renderGoalInput('calories', 'kcal')}
@@ -342,7 +343,7 @@ export default function SettingsPage() {
 
             <div>
               <h3 className="mt-6 text-xl font-semibold font-headline">
-                {t('settings.microsTitle')}
+                {t('profile.microsTitle')}
               </h3>
               <div className="mt-4 space-y-4">
                 {renderGoalInput('sugar', 'g')}
@@ -356,7 +357,7 @@ export default function SettingsPage() {
 
             <Button type="submit" className="w-full">
               <Save className="mr-2 h-4 w-4" />
-              {t('settings.saveButton')}
+              {t('profile.saveButton')}
             </Button>
           </form>
         </CardContent>

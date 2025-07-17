@@ -38,6 +38,8 @@ export interface UserProfile {
   weight?: number | null; // in kg
   height?: number | null; // in cm
   gender?: 'male' | 'female' | null;
+  age?: number | null;
+  activityLevel?: string | null;
 }
 
 export interface UserSettings {
@@ -58,6 +60,8 @@ const DEFAULT_SETTINGS: UserSettings = {
     weight: null,
     height: null,
     gender: null,
+    age: null,
+    activityLevel: '1.55', // Moderately Active
   },
   dailyGoals: DEFAULT_GOALS,
 };

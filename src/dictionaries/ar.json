@@ -327,6 +327,10 @@
       "gender": "الجنس",
       "male": "ذكر",
       "female": "أنثى",
+      "age": "العمر",
+      "years": "سنوات",
+      "activityLevel": "مستوى النشاط",
+      "selectActivityLevel": "اختر مستوى النشاط",
       "dietaryPreference": "التفضيلات الغذائية",
       "dietaryPreferencePlaceholder": "مثال: نباتي، قليل الكربوهيدرات، خالي من الغلوتين",
       "allergies": "الحساسية",
@@ -335,6 +339,20 @@
       "likesPlaceholder": "مثال: طعام حار، سلمون، أفوكادو",
       "dislikes": "الأطعمة غير المفضلة",
       "dislikesPlaceholder": "مثال: كزبرة، زيتون، توفو"
+    },
+    "activityLevels": {
+      "sedentary": "خامل (قليل أو بدون تمرين)",
+      "lightlyActive": "قليل النشاط (1-3 أيام/أسبوع)",
+      "moderatelyActive": "متوسط النشاط (3-5 أيام/أسبوع)",
+      "veryActive": "نشيط جداً (6-7 أيام/أسبوع)",
+      "extraActive": "نشيط للغاية (وظيفة بدنية وتمرين)"
+    },
+    "calculator": {
+      "button": "حساب الأهداف",
+      "errorTitle": "خطأ في الحساب",
+      "errorDescription": "يرجى ملء الوزن والطول والعمر والجنس ومستوى النشاط لحساب الأهداف.",
+      "successTitle": "تم حساب الأهداف!",
+      "successDescription": "تم تحديث أهدافك من المغذيات الكبيرة. لا تنس الحفظ."
     },
     "bmi": {
       "title": "مؤشر كتلة الجسم (BMI)",

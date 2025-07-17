@@ -17,12 +17,14 @@ import {
   useUserSettings,
   type DailyGoals,
   type UserProfile,
+  DEFAULT_GOALS,
 } from '@/contexts/user-settings-context';
 import { useToast } from '@/hooks/use-toast';
-import { Save, User, Upload, Calculator } from 'lucide-react';
+import { Save, User, Upload, Calculator, RefreshCw } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Textarea } from '@/components/ui/textarea';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 export default function SettingsPage() {
   const { t } = useLanguage();
@@ -78,7 +80,7 @@ export default function SettingsPage() {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    if (name === 'weight' || name === 'height') {
+    if (name === 'weight' || name === 'height' || name === 'age') {
       const numericValue = value === '' ? null : parseFloat(value);
        if (!isNaN(numericValue!) || numericValue === null) {
           setProfileFormState((prevState) => ({ ...prevState, [name]: numericValue, }));
@@ -111,6 +113,48 @@ export default function SettingsPage() {
         avatar: dataUri,
       }));
     }
+  };
+
+  const handleCalculateGoals = () => {
+    const { weight, height, age, gender, activityLevel } = profileFormState;
+
+    if (!weight || !height || !age || !gender || !activityLevel) {
+      toast({
+        variant: 'destructive',
+        title: t('profile.calculator.errorTitle'),
+        description: t('profile.calculator.errorDescription'),
+      });
+      return;
+    }
+
+    // Mifflin-St Jeor Equation for BMR
+    let bmr = (10 * weight) + (6.25 * height) - (5 * age);
+    if (gender === 'male') {
+      bmr += 5;
+    } else {
+      bmr -= 161;
+    }
+
+    const tdee = Math.round(bmr * parseFloat(activityLevel)); // Total Daily Energy Expenditure
+
+    // Macronutrient distribution (40% carbs, 30% protein, 30% fat)
+    const calories = tdee;
+    const protein = Math.round((calories * 0.30) / 4);
+    const carbs = Math.round((calories * 0.40) / 4);
+    const fats = Math.round((calories * 0.30) / 9);
+
+    setGoalsFormState({
+      ...DEFAULT_GOALS, // Keep default micro goals
+      calories,
+      protein,
+      carbs,
+      fats,
+    });
+
+    toast({
+      title: t('profile.calculator.successTitle'),
+      description: t('profile.calculator.successDescription'),
+    });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -210,7 +254,7 @@ export default function SettingsPage() {
                       <span className="text-sm text-muted-foreground">cm</span>
                    </div>
                 </div>
-                 <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-2">
+                <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-2">
                     <Label className="text-base pt-2">{t('profile.bmi.title')}</Label>
                     <div className="flex items-center gap-4 rounded-md border p-3">
                         <Calculator className="h-6 w-6 text-muted-foreground" />
@@ -241,6 +285,44 @@ export default function SettingsPage() {
                             <Label htmlFor="female" className="font-normal">{t('profile.profile.female')}</Label>
                         </div>
                     </RadioGroup>
+                </div>
+                <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-2">
+                  <Label htmlFor="age" className="text-base pt-2">
+                    {t('profile.profile.age')}
+                  </Label>
+                   <div className="flex items-center gap-2">
+                     <Input
+                        id="age"
+                        name="age"
+                        type="number"
+                        value={profileFormState.age || ''}
+                        onChange={handleProfileChange}
+                        placeholder="0"
+                        className="text-center"
+                      />
+                      <span className="text-sm text-muted-foreground">{t('profile.profile.years')}</span>
+                   </div>
+                </div>
+                <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-2">
+                    <Label className="text-base pt-2">{t('profile.profile.activityLevel')}</Label>
+                    <Select
+                        name="activityLevel"
+                        value={profileFormState.activityLevel || ''}
+                        onValueChange={(value) => {
+                            setProfileFormState((prevState) => ({ ...prevState, activityLevel: value }));
+                        }}
+                    >
+                        <SelectTrigger>
+                            <SelectValue placeholder={t('profile.profile.selectActivityLevel')} />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="1.2">{t('profile.activityLevels.sedentary')}</SelectItem>
+                            <SelectItem value="1.375">{t('profile.activityLevels.lightlyActive')}</SelectItem>
+                            <SelectItem value="1.55">{t('profile.activityLevels.moderatelyActive')}</SelectItem>
+                            <SelectItem value="1.725">{t('profile.activityLevels.veryActive')}</SelectItem>
+                            <SelectItem value="1.9">{t('profile.activityLevels.extraActive')}</SelectItem>
+                        </SelectContent>
+                    </Select>
                 </div>
                 <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-2">
                   <Label className="text-base pt-2">
@@ -329,10 +411,16 @@ export default function SettingsPage() {
             </div>
 
             <div>
-              <h3 className="text-xl font-semibold font-headline">
-                {t('profile.macrosTitle')}
-              </h3>
-              <div className="mt-4 space-y-4">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-xl font-semibold font-headline">
+                  {t('profile.macrosTitle')}
+                </h3>
+                <Button type="button" variant="outline" onClick={handleCalculateGoals}>
+                   <RefreshCw className="mr-2 h-4 w-4" />
+                   {t('profile.calculator.button')}
+                </Button>
+              </div>
+              <div className="space-y-4">
                 {renderGoalInput('calories', 'kcal')}
                 {renderGoalInput('protein', 'g')}
                 {renderGoalInput('carbs', 'g')}
